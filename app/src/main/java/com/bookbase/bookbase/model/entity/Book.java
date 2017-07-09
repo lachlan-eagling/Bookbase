@@ -68,7 +68,7 @@ public class Book {
     public String getDescription(){ return description; }
     public String getEdition(){ return edition; }
     public String getIsbn(){ return isbn; }
-    public String title(){ return title; }
+    public String getTitle(){ return title; }
 
     public void setUid(int uid){
         this.uid = uid;
