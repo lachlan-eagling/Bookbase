@@ -17,9 +17,6 @@ public interface BookDao {
     @Insert
     void insert(Book book);
 
-    @Query("SELECT title FROM Book WHERE uid = :uid")
-    public String getName(int uid);
-
     @Query("SELECT * FROM Book")
     public List<Book> getBooks();
 
