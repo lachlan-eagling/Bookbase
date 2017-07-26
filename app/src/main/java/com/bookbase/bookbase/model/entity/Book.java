@@ -6,7 +6,6 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Base64;
 
 import com.bookbase.bookbase.model.Converters;
 
@@ -27,7 +26,7 @@ public class Book {
     private String isbn;
     private String title;
     private String review;
-    private String image;
+    private byte[] image;
     private Long purchaseDate;
     private Double purchasePrice;
 
@@ -65,7 +64,8 @@ public class Book {
         this.description = description;
         this.isbn = isbn;
         this.review = review;
-        this.image = imageToBase64(image);
+        //this.image = imageToBase64(image);
+        this.image = imageToByteArray(image);
         this.purchaseDate = purchaseDate;
         this.purchasePrice = purchasePrice;
 
@@ -83,10 +83,10 @@ public class Book {
     public String getIsbn(){ return isbn; }
     public String getTitle(){ return title; }
     public String getReview() { return review; }
-    public String getImage() { return image; }
+    public byte[] getImage() { return image; }
     public Long getPurchaseDate() { return this.purchaseDate; }
     public Double getPurchasePrice() { return this.purchasePrice; }
-    public Bitmap getRawImage(){ return base64toImage(this.image); }
+    public Bitmap getRawImage(){ return byteArrayToImage(this.image); }
 
     public void setUid(int uid){ this.uid = uid; }
     public void setIsRead(boolean isRead){ this.isRead = isRead; }
@@ -99,19 +99,16 @@ public class Book {
     public void setReview(String review){ this.review = review; }
     public void setPurchaseDate(Long date){ this.purchaseDate = date; }
     public void setPurchasePrice(Double price){ this.purchasePrice = price; }
-    public void setImage(String image){ this.image = image; }
-    public void setRawImage(Bitmap image){ this.image = imageToBase64(image); }
+    public void setImage(byte[] image){ this.image = image; }
+    public void setRawImage(Bitmap image){ this.image = imageToByteArray(image); }
 
-    private String imageToBase64(Bitmap image){
+    private byte[] imageToByteArray(Bitmap image){
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.PNG, 0, out);
-
-        byte[] bytes = out.toByteArray();
-        return Base64.encodeToString(bytes, Base64.DEFAULT);
+        return out.toByteArray();
     }
 
-    private Bitmap base64toImage(String in){
-        byte[] data = Base64.decode(in, Base64.DEFAULT);
+    private Bitmap byteArrayToImage(byte[] data){
         return BitmapFactory.decodeByteArray(data, 0, data.length);
     }
 
