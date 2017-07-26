@@ -100,6 +100,7 @@ public class Book {
     public void setPurchaseDate(Long date){ this.purchaseDate = date; }
     public void setPurchasePrice(Double price){ this.purchasePrice = price; }
     public void setImage(byte[] image){ this.image = image; }
+
     public void setRawImage(Bitmap image){ this.image = imageToByteArray(image); }
 
     private byte[] imageToByteArray(Bitmap image){
@@ -110,6 +111,11 @@ public class Book {
 
     private Bitmap byteArrayToImage(byte[] data){
         return BitmapFactory.decodeByteArray(data, 0, data.length);
+    }
+
+    public String authorName(){
+        // TODO: return name of author, will need to implement query in AuthorDao to get author name that that takes author uid as param.
+        return "";
     }
 
 }

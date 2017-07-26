@@ -19,7 +19,7 @@ public class DatabaseFactory{
 
     private static void createDb(Context context){
         if(db == null){
-            db = Room.databaseBuilder(context, AppDatabase.class, "bookbase-db").build();
+            db = Room.databaseBuilder(context, AppDatabase.class, "bookbase-db").allowMainThreadQueries().build();
         }
         return;
     }
