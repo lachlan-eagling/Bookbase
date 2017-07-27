@@ -18,7 +18,7 @@ import com.bookbase.bookbase.model.entity.Book;
 
 import java.util.List;
 
-public class BooksFragment extends Fragment {
+public class BooksFragment extends Fragment implements Runnable{
 
     private OnFragmentInteractionListener mListener;
     private List<Book> books;
@@ -75,7 +75,7 @@ public class BooksFragment extends Fragment {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
-            database = DatabaseFactory.getDb(this.getContext());
+            run();
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -90,5 +90,10 @@ public class BooksFragment extends Fragment {
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void run(){
+        database = DatabaseFactory.getDb(this.getContext());
     }
 }
