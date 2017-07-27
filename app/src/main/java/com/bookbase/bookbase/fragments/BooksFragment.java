@@ -75,7 +75,7 @@ public class BooksFragment extends Fragment {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
-            database = DatabaseFactory.getInstance(this.getContext()).getDb();
+            database = DatabaseFactory.getDb(this.getContext());
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");

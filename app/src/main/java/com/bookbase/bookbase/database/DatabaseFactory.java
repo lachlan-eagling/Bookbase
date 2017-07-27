@@ -9,14 +9,6 @@ public class DatabaseFactory{
 
     private static AppDatabase db;
 
-    public static DatabaseFactory getInstance(Context context){
-        if(instance == null){
-            createDb(context);
-            instance = new DatabaseFactory();
-        }
-        return instance;
-    }
-
     private static void createDb(Context context){
         if(db == null){
             db = Room.databaseBuilder(context, AppDatabase.class, "bookbase-db").allowMainThreadQueries().build();
@@ -24,7 +16,12 @@ public class DatabaseFactory{
         return;
     }
 
-    public static AppDatabase getDb(){
+    public static AppDatabase getDb(Context context){
+        if(instance == null){
+            createDb(context);
+            instance = new DatabaseFactory();
+            return db;
+        }
         return db;
     }
 
