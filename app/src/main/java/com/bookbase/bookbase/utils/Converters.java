@@ -1,4 +1,4 @@
-package com.bookbase.bookbase.model;
+package com.bookbase.bookbase.utils;
 
 import android.arch.persistence.room.TypeConverter;
 

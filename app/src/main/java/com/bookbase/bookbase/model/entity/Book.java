@@ -7,7 +7,7 @@ import android.arch.persistence.room.PrimaryKey;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import com.bookbase.bookbase.model.Converters;
+import com.bookbase.bookbase.utils.Converters;
 
 import java.io.ByteArrayOutputStream;
 
