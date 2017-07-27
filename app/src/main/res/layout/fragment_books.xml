@@ -32,6 +32,7 @@
     </android.support.constraint.ConstraintLayout>
 
     <android.support.design.widget.FloatingActionButton
+        app:layout_behavior="com.bookbase.bookbase.fragments.behaviour.FABScrollBehaviour"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
