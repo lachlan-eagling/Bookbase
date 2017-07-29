@@ -18,6 +18,9 @@ public interface BookDao {
     void insert(Book book);
 
     @Query("SELECT * FROM Book")
-    public List<Book> getBooks();
+    List<Book> getBooks();
+
+    @Query("DELETE FROM Book")
+    void deleteAll();
 
 }
