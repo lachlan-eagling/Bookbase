@@ -45,6 +45,7 @@ public class Book {
         this.author = -1;
         this.description = "";
         this.isbn = "";
+
     }
 
     @Ignore
@@ -115,7 +116,7 @@ public class Book {
 
     public String authorName(){
         // TODO: return name of author, will need to implement query in AuthorDao to get author name that that takes author uid as param.
-        return "";
+        return "Dummy Author";
     }
 
 }

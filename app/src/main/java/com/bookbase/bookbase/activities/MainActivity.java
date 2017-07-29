@@ -16,11 +16,17 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.bookbase.bookbase.R;
+import com.bookbase.bookbase.database.AppDatabase;
+import com.bookbase.bookbase.database.DatabaseFactory;
 import com.bookbase.bookbase.fragments.AboutFragment;
 import com.bookbase.bookbase.fragments.BooksFragment;
 import com.bookbase.bookbase.fragments.SettingsFragment;
 import com.bookbase.bookbase.fragments.StatsFragment;
 import com.bookbase.bookbase.fragments.WishlistFragment;
+import com.bookbase.bookbase.model.entity.Book;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements
         BooksFragment.OnFragmentInteractionListener,
@@ -60,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements
 
         // Bind nav drawer to ActionBarToggle.
         mDrawer.addDrawerListener(drawerToggle);
+        dummyBookFactory(20);
     }
 
     @Override
@@ -146,5 +153,23 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    // Inserts list of dummy book records for testing.
+    private void dummyBookFactory(int num){
+
+        // Generate a Book list of length == num param.
+        List<Book> books = new ArrayList<>();
+        for(int i = 1; i <= num; i++){
+            books.add(new Book("Dummy Book " + i, 2));
+        }
+
+        // Delete all existing book records and insert list.
+        AppDatabase db = DatabaseFactory.getDb(this);
+        db.bookDao().deleteAll();
+
+        for(Book book:books){
+            db.bookDao().insertAll(book);
+        }
     }
 }

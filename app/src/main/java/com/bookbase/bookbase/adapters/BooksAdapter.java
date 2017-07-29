@@ -1,6 +1,8 @@
 package com.bookbase.bookbase.adapters;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,6 +56,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
 
     }
 
+    @TargetApi(21)
     public void onBindViewHolder(BooksAdapter.ViewHolder viewHolder, int position){
         // Get reference to item at current position.
         Book book = books.get(position);
@@ -67,7 +70,8 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
         author = viewHolder.author;
 
         // Set view content from model.
-        coverImage.setImageBitmap(book.getRawImage());
+        Drawable img = getContext().getApplicationContext().getDrawable(R.drawable.dummy_book);
+        coverImage.setImageDrawable(img);
         title.setText(book.getTitle());
         author.setText(book.authorName());
     }
