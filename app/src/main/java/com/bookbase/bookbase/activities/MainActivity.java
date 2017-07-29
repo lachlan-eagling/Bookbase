@@ -67,6 +67,8 @@ public class MainActivity extends AppCompatActivity implements
         // Bind nav drawer to ActionBarToggle.
         mDrawer.addDrawerListener(drawerToggle);
         dummyBookFactory(20);
+
+        selectDrawerItem(nvDrawer.getMenu().getItem(0));
     }
 
     @Override
