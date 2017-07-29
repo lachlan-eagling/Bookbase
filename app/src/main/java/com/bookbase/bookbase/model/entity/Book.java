@@ -23,6 +23,7 @@ public class Book {
     private int rating;
     private int author;
     private String description;
+    private String genre;
     private String isbn;
     private String title;
     private String review;
@@ -53,6 +54,7 @@ public class Book {
                 Author author,
                 int published,
                 String description,
+                String genre,
                 String isbn,
                 String review,
                 Bitmap image,
@@ -63,6 +65,7 @@ public class Book {
         this.author = Converters.authorToInt(author);
         this.published = published;
         this.description = description;
+        this.genre = genre;
         this.isbn = isbn;
         this.review = review;
         //this.image = imageToBase64(image);
@@ -81,6 +84,7 @@ public class Book {
     public int getRating(){ return rating; }
     public int getAuthor(){ return author; }
     public String getDescription(){ return description; }
+    public String getGenre() { return genre; }
     public String getIsbn(){ return isbn; }
     public String getTitle(){ return title; }
     public String getReview() { return review; }
@@ -95,13 +99,13 @@ public class Book {
     public void setRating(int rating){ this.rating = rating; }
     public void setAuthor(int author){ this.author = author; }
     public void setDescription(String description){ this.description = description; }
+    public void setGenre(String genre) { this.genre = genre; }
     public void setIsbn(String isbn){ this.isbn = isbn; }
     public void setTitle(String title){ this.title = title; }
     public void setReview(String review){ this.review = review; }
     public void setPurchaseDate(Long date){ this.purchaseDate = date; }
     public void setPurchasePrice(Double price){ this.purchasePrice = price; }
     public void setImage(byte[] image){ this.image = image; }
-
     public void setRawImage(Bitmap image){ this.image = imageToByteArray(image); }
 
     private byte[] imageToByteArray(Bitmap image){
