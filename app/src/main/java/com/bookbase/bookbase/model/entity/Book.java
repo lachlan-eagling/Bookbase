@@ -4,12 +4,8 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
 import com.bookbase.bookbase.utils.Converters;
-
-import java.io.ByteArrayOutputStream;
 
 @Entity
 public class Book {
@@ -27,7 +23,8 @@ public class Book {
     private String isbn;
     private String title;
     private String review;
-    private byte[] image;
+    //private byte[] image;
+    private String image;
     private Long purchaseDate;
     private Double purchasePrice;
 
@@ -57,7 +54,7 @@ public class Book {
                 String genre,
                 String isbn,
                 String review,
-                Bitmap image,
+                String image,
                 Long purchaseDate,
                 Double purchasePrice){
 
@@ -68,8 +65,7 @@ public class Book {
         this.genre = genre;
         this.isbn = isbn;
         this.review = review;
-        //this.image = imageToBase64(image);
-        this.image = imageToByteArray(image);
+        this.image = image;
         this.purchaseDate = purchaseDate;
         this.purchasePrice = purchasePrice;
 
@@ -88,10 +84,9 @@ public class Book {
     public String getIsbn(){ return isbn; }
     public String getTitle(){ return title; }
     public String getReview() { return review; }
-    public byte[] getImage() { return image; }
+    public String getImage() { return image; }
     public Long getPurchaseDate() { return this.purchaseDate; }
     public Double getPurchasePrice() { return this.purchasePrice; }
-    public Bitmap getRawImage(){ return byteArrayToImage(this.image); }
 
     public void setUid(int uid){ this.uid = uid; }
     public void setIsRead(boolean isRead){ this.isRead = isRead; }
@@ -105,18 +100,7 @@ public class Book {
     public void setReview(String review){ this.review = review; }
     public void setPurchaseDate(Long date){ this.purchaseDate = date; }
     public void setPurchasePrice(Double price){ this.purchasePrice = price; }
-    public void setImage(byte[] image){ this.image = image; }
-    public void setRawImage(Bitmap image){ this.image = imageToByteArray(image); }
-
-    private byte[] imageToByteArray(Bitmap image){
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.PNG, 0, out);
-        return out.toByteArray();
-    }
-
-    private Bitmap byteArrayToImage(byte[] data){
-        return BitmapFactory.decodeByteArray(data, 0, data.length);
-    }
+    public void setImage(String imagee){ this.image = image; }
 
     public String authorName(){
         // TODO: return name of author, will need to implement query in AuthorDao to get author name that that takes author uid as param.

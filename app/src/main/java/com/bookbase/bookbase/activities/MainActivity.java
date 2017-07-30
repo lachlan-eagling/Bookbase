@@ -1,5 +1,6 @@
 package com.bookbase.bookbase.activities;
 
+import android.content.Context;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
@@ -42,9 +43,12 @@ public class MainActivity extends AppCompatActivity implements
     private View headerLayout;
     private TextView headerText;
 
+    private static Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = getApplicationContext();
         setContentView(R.layout.activity_main);
 
         // Get reference to and setup toolbar.
@@ -173,5 +177,9 @@ public class MainActivity extends AppCompatActivity implements
         for(Book book:books){
             db.bookDao().insertAll(book);
         }
+    }
+
+    public static Context getContext(){
+        return context;
     }
 }
