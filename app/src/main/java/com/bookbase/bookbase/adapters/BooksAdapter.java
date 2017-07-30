@@ -2,7 +2,6 @@ package com.bookbase.bookbase.adapters;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 
 import com.bookbase.bookbase.R;
 import com.bookbase.bookbase.model.entity.Book;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -70,8 +70,11 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
         author = viewHolder.author;
 
         // Set view content from model.
-        Drawable img = getContext().getApplicationContext().getDrawable(R.drawable.dummy_book);
-        coverImage.setImageDrawable(img);
+        Picasso.with(this.getContext())
+                .load(book.getImage())
+                .placeholder(R.drawable.book_default)
+                .error(R.drawable.book_default)
+                .into(coverImage);
         title.setText(book.getTitle());
         author.setText(book.authorName());
     }
