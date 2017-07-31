@@ -177,11 +177,15 @@ public class MainActivity extends AppCompatActivity implements
 
         // Delete all existing book records and insert list.
         AppDatabase db = DatabaseFactory.getDb(this);
-        db.bookDao().deleteAll();
+        List<Book> currBooks = db.bookDao().getBooks();
+        if(currBooks.isEmpty()){
+            db.bookDao().deleteAll();
 
-        for(Book book:books){
-            db.bookDao().insertAll(book);
+            for(Book book:books){
+                db.bookDao().insertAll(book);
+            }
         }
+
     }
 
     public static Context getContext(){
