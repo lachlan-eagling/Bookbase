@@ -1,6 +1,5 @@
 package com.bookbase.bookbase.adapters;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -56,7 +55,6 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
 
     }
 
-    @TargetApi(21)
     public void onBindViewHolder(BooksAdapter.ViewHolder viewHolder, int position){
         // Get reference to item at current position.
         Book book = books.get(position);
