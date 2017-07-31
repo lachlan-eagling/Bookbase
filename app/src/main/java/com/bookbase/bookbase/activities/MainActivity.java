@@ -70,7 +70,12 @@ public class MainActivity extends AppCompatActivity implements
 
         // Bind nav drawer to ActionBarToggle.
         mDrawer.addDrawerListener(drawerToggle);
-        dummyBookFactory(20);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                dummyBookFactory(20);
+            }
+        }).start();
 
         selectDrawerItem(nvDrawer.getMenu().getItem(0));
     }
@@ -162,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     // Inserts list of dummy book records for testing.
-    private void dummyBookFactory(int num){
+    synchronized private void dummyBookFactory(int num){
 
         // Generate a Book list of length == num param.
         List<Book> books = new ArrayList<>();
