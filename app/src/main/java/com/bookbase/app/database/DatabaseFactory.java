@@ -1,4 +1,4 @@
-package com.bookbase.bookbase.database;
+package com.bookbase.app.database;
 
 import android.arch.persistence.room.Room;
 import android.content.Context;

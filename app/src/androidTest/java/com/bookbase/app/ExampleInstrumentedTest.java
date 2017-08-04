@@ -1,4 +1,4 @@
-package com.bookbase.bookbase;
+package com.bookbase.app;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

@@ -1,11 +1,11 @@
-package com.bookbase.bookbase.utils;
+package com.bookbase.app.utils;
 
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 
-import com.bookbase.bookbase.activities.MainActivity;
-import com.bookbase.bookbase.model.entity.Book;
+import com.bookbase.app.activities.MainActivity;
+import com.bookbase.app.model.entity.Book;
 
 import java.io.File;
 import java.io.FileOutputStream;

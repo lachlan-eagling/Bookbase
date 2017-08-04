@@ -1,4 +1,4 @@
-package com.bookbase.bookbase.activities;
+package com.bookbase.app.activities;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -16,15 +16,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.bookbase.bookbase.R;
-import com.bookbase.bookbase.database.AppDatabase;
-import com.bookbase.bookbase.database.DatabaseFactory;
-import com.bookbase.bookbase.fragments.AboutFragment;
-import com.bookbase.bookbase.fragments.BooksFragment;
-import com.bookbase.bookbase.fragments.SettingsFragment;
-import com.bookbase.bookbase.fragments.StatsFragment;
-import com.bookbase.bookbase.fragments.WishlistFragment;
-import com.bookbase.bookbase.model.entity.Book;
+import com.bookbase.app.R;
+import com.bookbase.app.database.AppDatabase;
+import com.bookbase.app.database.DatabaseFactory;
+import com.bookbase.app.fragments.AboutFragment;
+import com.bookbase.app.fragments.BooksFragment;
+import com.bookbase.app.fragments.SettingsFragment;
+import com.bookbase.app.fragments.StatsFragment;
+import com.bookbase.app.fragments.WishlistFragment;
+import com.bookbase.app.model.entity.Book;
 
 import java.util.ArrayList;
 import java.util.List;

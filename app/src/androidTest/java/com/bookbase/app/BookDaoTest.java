@@ -1,13 +1,13 @@
-package com.bookbase.bookbase;
+package com.bookbase.app;
 
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.bookbase.bookbase.database.AppDatabase;
-import com.bookbase.bookbase.model.dao.BookDao;
-import com.bookbase.bookbase.model.entity.Book;
+import com.bookbase.app.database.AppDatabase;
+import com.bookbase.app.model.dao.BookDao;
+import com.bookbase.app.model.entity.Book;
 
 import org.junit.After;
 import org.junit.Before;

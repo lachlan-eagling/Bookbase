@@ -1,4 +1,4 @@
-package com.bookbase.bookbase.adapters;
+package com.bookbase.app.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bookbase.bookbase.R;
-import com.bookbase.bookbase.model.entity.Book;
+import com.bookbase.app.R;
+import com.bookbase.app.model.entity.Book;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
