@@ -1,9 +1,9 @@
-package com.bookbase.bookbase.activities;
+package com.bookbase.app.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.bookbase.bookbase.R;
+import com.bookbase.app.R;
 
 public class AddBookActivity extends AppCompatActivity {
 

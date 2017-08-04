@@ -1,4 +1,4 @@
-package com.bookbase.bookbase.fragments;
+package com.bookbase.app.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,12 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bookbase.bookbase.R;
-import com.bookbase.bookbase.activities.AddBookActivity;
-import com.bookbase.bookbase.adapters.BooksAdapter;
-import com.bookbase.bookbase.database.AppDatabase;
-import com.bookbase.bookbase.database.DatabaseFactory;
-import com.bookbase.bookbase.model.entity.Book;
+import com.bookbase.app.R;
+import com.bookbase.app.activities.AddBookActivity;
+import com.bookbase.app.adapters.BooksAdapter;
+import com.bookbase.app.database.AppDatabase;
+import com.bookbase.app.database.DatabaseFactory;
+import com.bookbase.app.model.entity.Book;
 
 import java.util.ArrayList;
 import java.util.List;

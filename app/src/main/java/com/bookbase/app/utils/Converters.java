@@ -1,8 +1,8 @@
-package com.bookbase.bookbase.utils;
+package com.bookbase.app.utils;
 
 import android.arch.persistence.room.TypeConverter;
 
-import com.bookbase.bookbase.model.entity.Author;
+import com.bookbase.app.model.entity.Author;
 
 import java.sql.Date;
 

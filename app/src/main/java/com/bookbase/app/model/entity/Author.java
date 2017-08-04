@@ -1,4 +1,4 @@
-package com.bookbase.bookbase.model.entity;
+package com.bookbase.app.model.entity;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;

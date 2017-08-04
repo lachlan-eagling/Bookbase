@@ -1,11 +1,11 @@
-package com.bookbase.bookbase.model.entity;
+package com.bookbase.app.model.entity;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
-import com.bookbase.bookbase.utils.Converters;
+import com.bookbase.app.utils.Converters;
 
 @Entity
 public class Book {

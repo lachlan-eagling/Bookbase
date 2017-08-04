@@ -1,10 +1,10 @@
-package com.bookbase.bookbase.model.dao;
+package com.bookbase.app.model.dao;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
-import com.bookbase.bookbase.model.entity.Book;
+import com.bookbase.app.model.entity.Book;
 
 import java.util.List;
 
