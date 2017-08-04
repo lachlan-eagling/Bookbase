@@ -1,9 +1,11 @@
 package com.bookbase.bookbase.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bookbase.bookbase.R;
+import com.bookbase.bookbase.activities.AddBookActivity;
 import com.bookbase.bookbase.adapters.BooksAdapter;
 import com.bookbase.bookbase.database.AppDatabase;
 import com.bookbase.bookbase.database.DatabaseFactory;
@@ -65,6 +68,16 @@ public class BooksFragment extends Fragment implements Runnable{
         View view = inflater.inflate(R.layout.fragment_books, container, false);
         bookList = (RecyclerView) view.findViewById(R.id.books_list);
         bookList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.add_book_fab);
+        fab.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(getActivity(), AddBookActivity.class);
+                startActivity(intent);
+
+                // TODO: Need to call queryBookData.execute() to refresh RecyclerView once add book finished.
+            }
+        });
         return view;
     }
 

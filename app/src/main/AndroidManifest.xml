@@ -16,6 +16,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activities.AddBookActivity"
+            android:label="@string/title_activity_add_book"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.bookbase.bookbase.activities.MainActivity"
+                />
+        </activity>
     </application>
 
 </manifest>
