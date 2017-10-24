@@ -16,9 +16,19 @@ public interface Book {
     void setRating(int rating);
     void setDescription(String description);
     void setIsRead(boolean isRead);
-    void setGenre(Genre genre);
+
+    /**
+     * Reference to a Genre type.
+     * @param genre references genreId of a Genre object.
+     */
+    void setGenre(int genre);
     void setIsOwned(boolean isOwned);
-    void addReview(Review review);
+
+    /**
+     * Reference to a Review type.
+     * @param review references reviewId of a Review object.
+     */
+    void setReview(int review);
 
     String getTitle();
 
@@ -28,11 +38,11 @@ public interface Book {
     String getCoverImage();
     Calendar getPurchaseDate();
     double getPurchasePrice();
-    Review getReview();
+    int getReview();
     int getRating();
     String getDescription();
     boolean getIsRead();
-    Genre getGenre();
+    int getGenre();
     boolean getIsOwned();
 
 

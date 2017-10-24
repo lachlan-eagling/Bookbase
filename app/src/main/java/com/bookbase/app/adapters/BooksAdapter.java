@@ -69,12 +69,12 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
 
         // Set view content from model.
         Picasso.with(this.getContext())
-                .load(book.getImage())
+                .load(book.getCoverImage())
                 .placeholder(R.drawable.book_default)
                 .error(R.drawable.book_default)
                 .into(coverImage);
         title.setText(book.getTitle());
-        author.setText(book.authorName());
+        author.setText("DUMMY AUTHOR");
     }
 
     @Override

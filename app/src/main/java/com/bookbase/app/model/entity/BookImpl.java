@@ -1,35 +1,37 @@
 package com.bookbase.app.model.entity;
 
-import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
-import com.bookbase.app.utils.Converters;
+import com.bookbase.app.model.interfaces.Book;
+
+import java.util.Calendar;
 
 @Entity
-public class BookImpl{
+public class BookImpl implements Book{
 
     @PrimaryKey(autoGenerate = true)
-    private int uid;
+    private int bookId;
 
-    @ColumnInfo(name="is_read")
     private boolean isRead;
     private int published;
     private int rating;
     private int author;
     private String description;
-    private String genre;
+
+    private int genre;
     private String isbn;
     private String title;
-    private String review;
-    //private byte[] image;
-    private String image;
-    private Long purchaseDate;
-    private Double purchasePrice;
+    private int review;
+    private String coverImage;
+    private Calendar purchaseDate;
+    private double purchasePrice;
+    private boolean isOwned;
 
+    // Default constructor for Room database.
     public BookImpl(){
-        // Privatise default constructor to force initialisation of required fields.
+
     }
 
     @Ignore
@@ -46,65 +48,58 @@ public class BookImpl{
 
     }
 
-    @Ignore
-    public BookImpl(String title,
-                    Author author,
-                    int published,
-                    String description,
-                    String genre,
-                    String isbn,
-                    String review,
-                    String image,
-                    Long purchaseDate,
-                    Double purchasePrice){
 
-        this.title = title;
-        this.author = Converters.authorToInt(author);
+    public BookImpl(int bookId, boolean isRead,
+                    int published, int rating,
+                    int author, String description,
+                    int genre, String isbn, String title,
+                    int review, String coverImage,
+                    Calendar purchaseDate,
+                    double purchasePrice, boolean isOwned) {
+        this.bookId = bookId;
+        this.isRead = isRead;
         this.published = published;
+        this.rating = rating;
+        this.author = author;
         this.description = description;
         this.genre = genre;
         this.isbn = isbn;
+        this.title = title;
         this.review = review;
-        this.image = image;
+        this.coverImage = coverImage;
         this.purchaseDate = purchaseDate;
         this.purchasePrice = purchasePrice;
-
-        this.isRead = false;
-        this.rating = 0;
-
+        this.isOwned = isOwned;
     }
 
-    public int getUid(){ return uid; }
+    public int getBookId(){ return bookId; }
     public boolean getIsRead(){ return isRead; }
     public int getPublished(){ return published; }
     public int getRating(){ return rating; }
     public int getAuthor(){ return author; }
     public String getDescription(){ return description; }
-    public String getGenre() { return genre; }
+    public int getGenre() { return genre; }
     public String getIsbn(){ return isbn; }
     public String getTitle(){ return title; }
-    public String getReview() { return review; }
-    public String getImage() { return image; }
-    public Long getPurchaseDate() { return this.purchaseDate; }
-    public Double getPurchasePrice() { return this.purchasePrice; }
+    public int getReview() { return review; }
+    public Calendar getPurchaseDate() { return purchaseDate; }
+    public double getPurchasePrice() { return purchasePrice; }
+    public String getCoverImage() { return coverImage; }
+    public boolean getIsOwned() { return isOwned; }
 
-    public void setUid(int uid){ this.uid = uid; }
+    public void setBookId(int bookId){ this.bookId = bookId; }
     public void setIsRead(boolean isRead){ this.isRead = isRead; }
     public void setPublished(int published){ this.published = published; }
     public void setRating(int rating){ this.rating = rating; }
     public void setAuthor(int author){ this.author = author; }
     public void setDescription(String description){ this.description = description; }
-    public void setGenre(String genre) { this.genre = genre; }
+    public void setGenre(int genre) { this.genre = genre; }
     public void setIsbn(String isbn){ this.isbn = isbn; }
     public void setTitle(String title){ this.title = title; }
-    public void setReview(String review){ this.review = review; }
-    public void setPurchaseDate(Long date){ this.purchaseDate = date; }
-    public void setPurchasePrice(Double price){ this.purchasePrice = price; }
-    public void setImage(String imagee){ this.image = image; }
-
-    public String authorName(){
-        // TODO: return name of author, will need to implement query in AuthorDao to get author name that that takes author uid as param.
-        return "Dummy Author";
-    }
+    public void setReview(int review){ this.review = review; }
+    public void setPurchaseDate(Calendar date){ this.purchaseDate = date; }
+    public void setPurchasePrice(double price){ this.purchasePrice = price; }
+    public void setCoverImage(String imageDirectory) { this.coverImage = imageDirectory; }
+    public void setIsOwned(boolean isOwned) { this.isOwned = isOwned; }
 
 }
