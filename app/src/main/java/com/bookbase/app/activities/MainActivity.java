@@ -24,7 +24,7 @@ import com.bookbase.app.fragments.BooksFragment;
 import com.bookbase.app.fragments.SettingsFragment;
 import com.bookbase.app.fragments.StatsFragment;
 import com.bookbase.app.fragments.WishlistFragment;
-import com.bookbase.app.model.entity.Book;
+import com.bookbase.app.model.entity.BookImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -169,19 +169,19 @@ public class MainActivity extends AppCompatActivity implements
     // Inserts list of dummy book records for testing.
     synchronized private void dummyBookFactory(int num){
 
-        // Generate a Book list of length == num param.
-        List<Book> books = new ArrayList<>();
+        // Generate a BookImpl list of length == num param.
+        List<BookImpl> books = new ArrayList<>();
         for(int i = 1; i <= num; i++){
-            books.add(new Book("Dummy Book " + i, 2));
+            books.add(new BookImpl("Dummy BookImpl " + i, 2));
         }
 
         // Delete all existing book records and insert list.
         AppDatabase db = DatabaseFactory.getDb(this);
-        List<Book> currBooks = db.bookDao().getBooks();
+        List<BookImpl> currBooks = db.bookDao().getBooks();
         if(currBooks.isEmpty()){
             db.bookDao().deleteAll();
 
-            for(Book book:books){
+            for(BookImpl book:books){
                 db.bookDao().insertAll(book);
             }
         }

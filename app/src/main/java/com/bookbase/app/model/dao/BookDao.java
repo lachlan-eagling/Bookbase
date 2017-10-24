@@ -4,7 +4,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
-import com.bookbase.app.model.entity.Book;
+import com.bookbase.app.model.entity.BookImpl;
 
 import java.util.List;
 
@@ -12,15 +12,15 @@ import java.util.List;
 public interface BookDao {
 
     @Insert
-    void insertAll(Book... books);
+    void insertAll(BookImpl... books);
 
     @Insert
-    void insert(Book book);
+    void insert(BookImpl book);
 
-    @Query("SELECT * FROM Book")
-    List<Book> getBooks();
+    @Query("SELECT * FROM BookImpl")
+    List<BookImpl> getBooks();
 
-    @Query("DELETE FROM Book")
+    @Query("DELETE FROM BookImpl")
     void deleteAll();
 
 }

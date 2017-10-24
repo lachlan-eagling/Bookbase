@@ -8,7 +8,7 @@ import android.arch.persistence.room.PrimaryKey;
 import com.bookbase.app.utils.Converters;
 
 @Entity
-public class Book {
+public class BookImpl{
 
     @PrimaryKey(autoGenerate = true)
     private int uid;
@@ -28,12 +28,12 @@ public class Book {
     private Long purchaseDate;
     private Double purchasePrice;
 
-    public Book(){
+    public BookImpl(){
         // Privatise default constructor to force initialisation of required fields.
     }
 
     @Ignore
-    public Book(String title, int author){
+    public BookImpl(String title, int author){
         this.title = title;
         this.author = author;
 
@@ -47,16 +47,16 @@ public class Book {
     }
 
     @Ignore
-    public Book(String title,
-                Author author,
-                int published,
-                String description,
-                String genre,
-                String isbn,
-                String review,
-                String image,
-                Long purchaseDate,
-                Double purchasePrice){
+    public BookImpl(String title,
+                    Author author,
+                    int published,
+                    String description,
+                    String genre,
+                    String isbn,
+                    String review,
+                    String image,
+                    Long purchaseDate,
+                    Double purchasePrice){
 
         this.title = title;
         this.author = Converters.authorToInt(author);
