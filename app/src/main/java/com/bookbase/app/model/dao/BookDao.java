@@ -17,10 +17,10 @@ public interface BookDao {
     @Insert
     void insert(BookImpl book);
 
-    @Query("SELECT * FROM BookImpl")
+    @Query("SELECT * FROM Book")
     List<BookImpl> getBooks();
 
-    @Query("DELETE FROM BookImpl")
+    @Query("DELETE FROM Book")
     void deleteAll();
 
 }

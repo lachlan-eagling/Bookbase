@@ -11,38 +11,37 @@ public interface Book {
      * @param imageDirectory a reference to the image in devices local storage.
      */
     void setCoverImage(String imageDirectory);
+
     void setPurchaseDate(Calendar date);
+
     void setPurchasePrice(double purchasePrice);
+
     void setRating(int rating);
+
     void setDescription(String description);
+
     void setIsRead(boolean isRead);
 
-    /**
-     * Reference to a Genre type.
-     * @param genre references genreId of a Genre object.
-     */
-    void setGenre(int genre);
+    void setGenre(Genre genre);
+
     void setIsOwned(boolean isOwned);
 
-    /**
-     * Reference to a Review type.
-     * @param review references reviewId of a Review object.
-     */
-    void setReview(int review);
+    void setReview(Review review);
 
     String getTitle();
 
     /**
      * @return a reference to the directory where image is stored on device.
+     * The retrieval of the actual image from device storage is delegated to the controller.
      */
     String getCoverImage();
     Calendar getPurchaseDate();
     double getPurchasePrice();
-    int getReview();
+    Review getReview();
     int getRating();
     String getDescription();
     boolean getIsRead();
-    int getGenre();
+    Genre getGenre();
     boolean getIsOwned();
 
 
