@@ -10,7 +10,7 @@ import java.util.Calendar;
 @Entity(tableName = "Review")
 public class ReviewImpl implements Review {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int reviewId;
     private Calendar reviewDate;
     private String reviewContent;
