@@ -6,23 +6,45 @@ import android.arch.persistence.room.PrimaryKey;
 
 import com.bookbase.app.model.interfaces.Genre;
 
-// TODO: Finish class implementation, have created this as a stub to get BookImpl working.
-
 @Entity
 public class GenreImpl implements Genre{
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int genreId;
+    private String genreName;
+    private String genreDescription;
 
     public GenreImpl(){
 
     }
 
+    @Override
     public int getGenreId() {
         return genreId;
     }
 
-    public void setGenreId(int genreId) {
-        this.genreId = genreId;
+    @Override
+    public String getGenreName() {
+        return genreName;
+    }
+
+    @Override
+    public String getGenreDescription() {
+        return genreDescription;
+    }
+
+    @Override
+    public void setGenreId(int id) {
+        this.genreId = id;
+    }
+
+    @Override
+    public void setGenreName(String genreName) {
+        this.genreName = genreName;
+    }
+
+    @Override
+    public void setGenreDescription(String genreDescription) {
+        this.genreDescription = genreDescription;
     }
 }

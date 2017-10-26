@@ -2,7 +2,11 @@ package com.bookbase.app.model.interfaces;
 
 public interface Genre {
 
-    // TODO: Finish interface definition, have created this as a stub to get BookImpl working.
     int getGenreId();
+    String getGenreName();
+    String getGenreDescription();
+
     void setGenreId(int id);
+    void setGenreName(String genreName);
+    void setGenreDescription(String genreDescription);
 }
