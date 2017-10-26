@@ -5,15 +5,23 @@ import android.arch.persistence.room.PrimaryKey;
 
 import com.bookbase.app.model.interfaces.Review;
 
-// TODO: Finish class implementation, have added this as a stub to get BookImpl working.
+import java.util.Calendar;
 
-@Entity
+@Entity(tableName = "Review")
 public class ReviewImpl implements Review {
 
     @PrimaryKey
     private int reviewId;
+    private Calendar reviewDate;
+    private String reviewContent;
 
     public ReviewImpl() {
+        this(Calendar.getInstance(), "");
+    }
+
+    public ReviewImpl(Calendar reviewDate, String reviewContent){
+        this.reviewDate = reviewDate;
+        this.reviewContent = reviewContent;
     }
 
     @Override
@@ -22,7 +30,28 @@ public class ReviewImpl implements Review {
     }
 
     @Override
+    public Calendar getReviewDate() {
+        return reviewDate;
+    }
+
+    @Override
+    public String getReviewContent() {
+        return reviewContent;
+    }
+
+    @Override
     public void setReviewId(int id) {
         this.reviewId = id;
     }
+
+    @Override
+    public void setReviewDate(Calendar reviewDate) {
+        this.reviewDate = reviewDate;
+    }
+
+    @Override
+    public void setReviewContent(String reviewContent) {
+        this.reviewContent = reviewContent;
+    }
+
 }

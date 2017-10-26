@@ -1,10 +1,14 @@
 package com.bookbase.app.model.interfaces;
 
-
-// TODO: Finish interface definition, have added this as a stub to get BookImpl working.
+import java.util.Calendar;
 
 public interface Review {
 
     int getReviewId();
+    Calendar getReviewDate();
+    String getReviewContent();
+
     void setReviewId(int id);
+    void setReviewDate(Calendar reviewDate);
+    void setReviewContent(String reviewContent);
 }
