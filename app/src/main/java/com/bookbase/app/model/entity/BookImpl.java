@@ -4,6 +4,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
+import com.bookbase.app.model.interfaces.Author;
 import com.bookbase.app.model.interfaces.Book;
 import com.bookbase.app.model.interfaces.Genre;
 import com.bookbase.app.model.interfaces.Review;
@@ -31,7 +32,7 @@ public class BookImpl implements Book{
 
     // Default constructor for Room database.
     public BookImpl(){
-        this("", new Author("", ""));
+        this("", new AuthorImpl("", ""));
     }
 
     @Ignore
@@ -41,7 +42,7 @@ public class BookImpl implements Book{
         this.isRead = false;
         this.published = 0;
         this.rating = 0;
-        this.author = new Author("James", "McBookFace");
+        this.author = new AuthorImpl("James", "McBookFace");
         this.description = "";
         this.isbn = "";
         this.genre = new GenreImpl();

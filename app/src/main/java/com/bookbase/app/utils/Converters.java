@@ -5,7 +5,7 @@ import android.arch.persistence.room.TypeConverter;
 import com.bookbase.app.activities.MainActivity;
 import com.bookbase.app.database.AppDatabase;
 import com.bookbase.app.database.DatabaseFactory;
-import com.bookbase.app.model.entity.Author;
+import com.bookbase.app.model.interfaces.Author;
 import com.bookbase.app.model.interfaces.Genre;
 import com.bookbase.app.model.interfaces.Review;
 
@@ -35,7 +35,7 @@ public class Converters {
 
     @TypeConverter
     public static int authorAsId(Author author){
-        return author.getUid();
+        return author.getAuthorId();
     }
 
     @TypeConverter

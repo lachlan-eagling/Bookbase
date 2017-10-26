@@ -24,7 +24,7 @@ import com.bookbase.app.fragments.BooksFragment;
 import com.bookbase.app.fragments.SettingsFragment;
 import com.bookbase.app.fragments.StatsFragment;
 import com.bookbase.app.fragments.WishlistFragment;
-import com.bookbase.app.model.entity.Author;
+import com.bookbase.app.model.entity.AuthorImpl;
 import com.bookbase.app.model.entity.BookImpl;
 
 import java.util.ArrayList;
@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements
         // Generate a BookImpl list of length == num param.
         List<BookImpl> books = new ArrayList<>();
         for(int i = 1; i <= num; i++){
-            books.add(new BookImpl("Dummy BookImpl " + i, new Author("", "")));
+            books.add(new BookImpl("Dummy BookImpl " + i, new AuthorImpl("", "")));
         }
 
         // Delete all existing book records and insert list.

@@ -8,13 +8,13 @@ import com.bookbase.app.model.dao.AuthorDao;
 import com.bookbase.app.model.dao.BookDao;
 import com.bookbase.app.model.dao.GenreDao;
 import com.bookbase.app.model.dao.ReviewDao;
-import com.bookbase.app.model.entity.Author;
+import com.bookbase.app.model.entity.AuthorImpl;
 import com.bookbase.app.model.entity.BookImpl;
 import com.bookbase.app.model.entity.GenreImpl;
 import com.bookbase.app.model.entity.ReviewImpl;
 import com.bookbase.app.utils.Converters;
 
-@Database(entities = {BookImpl.class, Author.class, GenreImpl.class, ReviewImpl.class}, version = 1, exportSchema = false)
+@Database(entities = {BookImpl.class, AuthorImpl.class, GenreImpl.class, ReviewImpl.class}, version = 1, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase{
 
