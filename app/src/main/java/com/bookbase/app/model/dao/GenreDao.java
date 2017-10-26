@@ -9,5 +9,6 @@ import com.bookbase.app.model.interfaces.Genre;
 public interface GenreDao {
 
     @Query("SELECT * FROM GenreImpl where genreId=:id")
-    Genre getAuthorById(int id);
+    Genre getGenreById(int id);
 }
+

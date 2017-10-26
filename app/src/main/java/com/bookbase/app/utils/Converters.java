@@ -50,7 +50,7 @@ public class Converters {
 
     @TypeConverter
     public static Genre intToGenre(int id){
-        return db.genreDao().getAuthorById(id);
+        return db.genreDao().getGenreById(id);
     }
 
     @TypeConverter
