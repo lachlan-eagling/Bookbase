@@ -12,7 +12,7 @@ import com.bookbase.app.model.interfaces.Genre;
 public class GenreImpl implements Genre{
 
     @PrimaryKey
-    int genreId;
+    private int genreId;
 
     public GenreImpl(){
 
