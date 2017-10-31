@@ -16,14 +16,17 @@ public class BookImpl implements Book{
 
     @PrimaryKey(autoGenerate = true)
     private int bookId;
-    private boolean isRead;
-    private int published;
-    private int rating;
+
+    // Basic properties.
+    private String title;
     private Author author;
     private String description;
     private Genre genre;
+
+    // Advanced properties.
+    private boolean isRead;
+    private int rating;
     private String isbn;
-    private String title;
     private Review review;
     private String coverImage;
     private Calendar purchaseDate;
@@ -40,7 +43,6 @@ public class BookImpl implements Book{
         this.title = title;
         this.author = author;
         this.isRead = false;
-        this.published = 0;
         this.rating = 0;
         this.author = new AuthorImpl("James", "McBookFace");
         this.description = "";
@@ -53,7 +55,6 @@ public class BookImpl implements Book{
 
     public BookImpl(int bookId,
                     boolean isRead,
-                    int published,
                     int rating,
                     Author author,
                     String description,
@@ -67,7 +68,6 @@ public class BookImpl implements Book{
                     boolean isOwned) {
         this.bookId = bookId;
         this.isRead = isRead;
-        this.published = published;
         this.rating = rating;
         this.author = author;
         this.description = description;
@@ -83,7 +83,6 @@ public class BookImpl implements Book{
 
     public int getBookId(){ return bookId; }
     public boolean getIsRead(){ return isRead; }
-    public int getPublished(){ return published; }
     public int getRating(){ return rating; }
     public Author getAuthor(){ return author; }
     public String getDescription(){ return description; }
@@ -98,7 +97,6 @@ public class BookImpl implements Book{
 
     public void setBookId(int bookId){ this.bookId = bookId; }
     public void setIsRead(boolean isRead){ this.isRead = isRead; }
-    public void setPublished(int published){ this.published = published; }
     public void setRating(int rating){ this.rating = rating; }
     public void setAuthor(Author author){ this.author = author; }
     public void setDescription(String description){ this.description = description; }
