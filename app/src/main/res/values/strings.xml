@@ -10,8 +10,17 @@
     <string name="lbl_done">Done</string>
     <string name="lbl_book_details_basic">Basic Book Details</string>
     <string name="lbl_title">Title</string>
-    <string name="hint_book_title">Title of book&#8230;</string>
+    <string name="lbl_author">Author</string>
+    <string name="lbl_description">Description</string>
+    <string name="lbl_genre">Genre</string>
 
+    <!--Hints-->
+    <string name="hint_book_title">Title of book&#8230;</string>
+    <string name="hint_author">Author of book&#8230;</string>
+    <string name="hint_description">Overview of book&#8230;</string>
+    <string name="hint_genre">Genre of book&#8230;</string>
+
+    <!--Misc-->
     <string name="hello_blank_fragment">TODO: Implement Fragment</string>
 
     <string name="drawer_open">Open navigation drawer</string>
