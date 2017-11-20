@@ -1,6 +1,7 @@
 package com.bookbase.app.activities;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -21,7 +22,7 @@ public class AddBookActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_book);
-        ViewPager addBooksPager = (ViewPager) findViewById(R.id.addBookPager);
+        final ViewPager addBooksPager = (ViewPager) findViewById(R.id.addBookPager);
         viewPagerAdapter = new AddBookPagerAdapter(getSupportFragmentManager());
         addBooksPager.setAdapter(viewPagerAdapter);
 
@@ -29,7 +30,29 @@ public class AddBookActivity extends AppCompatActivity {
         toolbar.setTitle("Add Book");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
+        TabLayout tabs = (TabLayout) findViewById(R.id.tab_slider);
+        tabs.setupWithViewPager(addBooksPager);
+
+//        final ActionBar actionBar = getSupportActionBar();
+//        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+//        ActionBar.TabListener tabListener = new ActionBar.TabListener() {
+//            @Override
+//            public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+//                addBooksPager.setCurrentItem(tab.getPosition());
+//            }
+//
+//            @Override
+//            public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+//
+//            }
+//
+//            @Override
+//            public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+//                // Ignore this event.
+//            }
+//        };
 
 
     }

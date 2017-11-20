@@ -73,6 +73,7 @@ public class AddBooksFragmentBasic extends Fragment {
 
         AutoCompleteTextView textView = getView().findViewById(R.id.add_book_genre_data);
         textView.setAdapter(adapter);
+        //adapter.notifyDataSetChanged();
 
     }
 }
