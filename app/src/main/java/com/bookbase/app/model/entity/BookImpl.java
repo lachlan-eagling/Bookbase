@@ -52,6 +52,20 @@ public class BookImpl implements Book{
 
     }
 
+    @Ignore
+    public BookImpl(String title, Author author, String description, Genre genre){
+        this.title = title;
+        this.author = author;
+        this.isRead = false;
+        this.rating = 0;
+        this.author = new AuthorImpl("James", "McBookFace");
+        this.description = "";
+        this.isbn = "";
+        this.genre = new GenreImpl();
+        this.review = new ReviewImpl();
+
+    }
+
 
     public BookImpl(int bookId,
                     boolean isRead,

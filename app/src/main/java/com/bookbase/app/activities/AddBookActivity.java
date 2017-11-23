@@ -9,10 +9,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.bookbase.app.R;
+import com.bookbase.app.database.AppDatabase;
+import com.bookbase.app.database.DatabaseFactory;
 import com.bookbase.app.fragments.AddBooksFragmentAdvanced;
 import com.bookbase.app.fragments.AddBooksFragmentBasic;
+import com.bookbase.app.model.entity.AuthorImpl;
+import com.bookbase.app.model.entity.BookImpl;
+import com.bookbase.app.model.entity.GenreImpl;
 
 public class AddBookActivity extends AppCompatActivity {
 
@@ -65,13 +72,61 @@ public class AddBookActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        finish();
-        return true;
+        Fragment basicFragment = AddBookPagerAdapter.BASIC_DETAILS_PAGE;
+        boolean mandatoryDetailsComplete = true;
+
+        EditText title = (EditText) findViewById(R.id.add_book_title_data);
+        EditText author = (EditText) findViewById(R.id.add_book_author_data);
+        EditText description = (EditText) findViewById(R.id.add_book_description_data);
+        EditText genre = (EditText) findViewById(R.id.add_book_genre_data);
+
+        if(title.getText().toString().trim().isEmpty()){
+            title.setError("Title is required!");
+            mandatoryDetailsComplete = false;
+        }
+
+        if(author.getText().toString().trim().isEmpty()){
+            author.setError("Author is required!");
+            mandatoryDetailsComplete = false;
+        }
+
+        if(description.getText().toString().trim().isEmpty()){
+            description.setError("Description is required!");
+            mandatoryDetailsComplete = false;
+        }
+
+        if(genre.getText().toString().trim().isEmpty()){
+            genre.setError("Genre is required!");
+            mandatoryDetailsComplete = false;
+        }
+
+        if(mandatoryDetailsComplete){
+            final BookImpl book = new BookImpl(title.getText().toString(), new AuthorImpl(author.getText().toString(), ""), description.getText().toString(), new GenreImpl());
+//            new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    addBook(book);
+//                }
+//            }).run();
+            finish();
+            return true;
+        } else{
+            Toast.makeText(this, "Missing manadtory fields!", Toast.LENGTH_LONG).show();
+            return  false;
+        }
+        //return true;
+    }
+
+    private synchronized void addBook(BookImpl book){
+        AppDatabase db = DatabaseFactory.getDb(this);
+        db.bookDao().insert(book);
     }
 
     public static class AddBookPagerAdapter extends FragmentPagerAdapter{
 
         private static int NUM_ITEMS = 2;
+        private static Fragment BASIC_DETAILS_PAGE;
+        private static Fragment ADVANCED_DETAILS_PAGE;
 
         public AddBookPagerAdapter(android.support.v4.app.FragmentManager fragmentManager){
             super(fragmentManager);
@@ -87,9 +142,11 @@ public class AddBookActivity extends AppCompatActivity {
 
             switch(position){
                 case 0:
-                    return AddBooksFragmentBasic.newInstance(1, "Basic");
+                    BASIC_DETAILS_PAGE = AddBooksFragmentBasic.newInstance(1, "Basic");
+                    return BASIC_DETAILS_PAGE;
                 case 1:
-                    return AddBooksFragmentAdvanced.newInstance(2, "Advanced");
+                    ADVANCED_DETAILS_PAGE = AddBooksFragmentAdvanced.newInstance(2, "Advanced");
+                    return ADVANCED_DETAILS_PAGE;
                 default:
                     return null;
             }
@@ -100,6 +157,7 @@ public class AddBookActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position){
             return getItem(position).getArguments().getString("title");
         }
+
     }
 
 }
