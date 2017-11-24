@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.bookbase.app.R;
 import com.bookbase.app.database.AppDatabase;
-import com.bookbase.app.database.DatabaseFactory;
 import com.bookbase.app.fragments.AboutFragment;
 import com.bookbase.app.fragments.BooksFragment;
 import com.bookbase.app.fragments.SettingsFragment;
@@ -177,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements
         }
 
         // Delete all existing book records and insert list.
-        AppDatabase db = DatabaseFactory.getDb(this);
+        AppDatabase db = AppDatabase.getDatabase(this);
         List<BookImpl> currBooks = db.bookDao().getBooks();
         if(currBooks.isEmpty()){
             db.bookDao().deleteAll();

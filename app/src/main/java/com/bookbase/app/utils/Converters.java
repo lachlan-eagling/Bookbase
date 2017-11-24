@@ -4,7 +4,6 @@ import android.arch.persistence.room.TypeConverter;
 
 import com.bookbase.app.activities.MainActivity;
 import com.bookbase.app.database.AppDatabase;
-import com.bookbase.app.database.DatabaseFactory;
 import com.bookbase.app.model.interfaces.Author;
 import com.bookbase.app.model.interfaces.Genre;
 import com.bookbase.app.model.interfaces.Review;
@@ -14,7 +13,7 @@ import java.util.Calendar;
 
 public class Converters {
 
-    private static AppDatabase db = DatabaseFactory.getDb(MainActivity.getContext());
+    private static AppDatabase db = AppDatabase.getDatabase(MainActivity.getContext());
 
     @TypeConverter
     public static Long dateToLong(Date date){

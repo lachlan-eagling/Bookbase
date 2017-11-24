@@ -17,7 +17,6 @@ import com.bookbase.app.R;
 import com.bookbase.app.activities.AddBookActivity;
 import com.bookbase.app.adapters.BooksAdapter;
 import com.bookbase.app.database.AppDatabase;
-import com.bookbase.app.database.DatabaseFactory;
 import com.bookbase.app.model.entity.BookImpl;
 
 import java.util.ArrayList;
@@ -105,7 +104,7 @@ public class BooksFragment extends Fragment implements Runnable{
 
     @Override
     public void run(){
-        database = DatabaseFactory.getDb(this.getContext());
+        database = AppDatabase.getDatabase(this.getContext());
     }
 
 

@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.bookbase.app.R;
 import com.bookbase.app.database.AppDatabase;
-import com.bookbase.app.database.DatabaseFactory;
 import com.bookbase.app.fragments.AddBooksFragmentAdvanced;
 import com.bookbase.app.fragments.AddBooksFragmentBasic;
 import com.bookbase.app.model.entity.AuthorImpl;
@@ -118,7 +117,7 @@ public class AddBookActivity extends AppCompatActivity {
     }
 
     private synchronized void addBook(BookImpl book){
-        AppDatabase db = DatabaseFactory.getDb(this);
+        AppDatabase db = AppDatabase.getDatabase(this);
         db.bookDao().insert(book);
     }
 
