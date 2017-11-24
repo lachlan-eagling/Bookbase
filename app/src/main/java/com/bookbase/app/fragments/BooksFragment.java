@@ -17,7 +17,7 @@ import com.bookbase.app.R;
 import com.bookbase.app.activities.AddBookActivity;
 import com.bookbase.app.adapters.BooksAdapter;
 import com.bookbase.app.database.AppDatabase;
-import com.bookbase.app.model.entity.BookImpl;
+import com.bookbase.app.model.entity.Book;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ import java.util.List;
 public class BooksFragment extends Fragment implements Runnable{
 
     private OnFragmentInteractionListener mListener;
-    private ArrayList<BookImpl> books;
+    private ArrayList<Book> books;
     private AppDatabase database;
     private RecyclerView bookList;
     private BooksAdapter adapter;
@@ -109,15 +109,15 @@ public class BooksFragment extends Fragment implements Runnable{
 
 
     // Query books on background thread and post results back to main thread.
-    private class queryBookData extends AsyncTask<Void, Void, List<BookImpl>>{
+    private class queryBookData extends AsyncTask<Void, Void, List<Book>>{
 
         @Override
-        protected List<BookImpl> doInBackground(Void... v) {
+        protected List<Book> doInBackground(Void... v) {
             return database.bookDao().getBooks();
         }
 
         @Override
-        protected void onPostExecute(List<BookImpl> books){
+        protected void onPostExecute(List<Book> books){
             super.onPostExecute(books);
             adapter = new BooksAdapter(getActivity(), books);
             bookList.setAdapter(adapter);

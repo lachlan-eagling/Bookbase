@@ -4,15 +4,10 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
-import com.bookbase.app.model.interfaces.Author;
-import com.bookbase.app.model.interfaces.Book;
-import com.bookbase.app.model.interfaces.Genre;
-import com.bookbase.app.model.interfaces.Review;
-
 import java.util.Calendar;
 
 @Entity(tableName = "Book")
-public class BookImpl implements Book{
+public class Book {
 
     @PrimaryKey(autoGenerate = true)
     private int bookId;
@@ -34,52 +29,52 @@ public class BookImpl implements Book{
     private boolean isOwned;
 
     // Default constructor for Room database.
-    public BookImpl(){
-        this("", new AuthorImpl("", ""));
+    public Book(){
+        this("", new Author("", ""));
     }
 
     @Ignore
-    public BookImpl(String title, Author author){
+    public Book(String title, Author author){
         this.title = title;
         this.author = author;
         this.isRead = false;
         this.rating = 0;
-        this.author = new AuthorImpl("James", "McBookFace");
+        this.author = new Author("James", "McBookFace");
         this.description = "";
         this.isbn = "";
-        this.genre = new GenreImpl();
-        this.review = new ReviewImpl();
+        this.genre = new Genre();
+        this.review = new Review();
 
     }
 
     @Ignore
-    public BookImpl(String title, Author author, String description, Genre genre){
+    public Book(String title, Author author, String description, Genre genre){
         this.title = title;
         this.author = author;
         this.isRead = false;
         this.rating = 0;
-        this.author = new AuthorImpl("James", "McBookFace");
+        this.author = new Author("James", "McBookFace");
         this.description = "";
         this.isbn = "";
-        this.genre = new GenreImpl();
-        this.review = new ReviewImpl();
+        this.genre = new Genre();
+        this.review = new Review();
 
     }
 
 
-    public BookImpl(int bookId,
-                    boolean isRead,
-                    int rating,
-                    Author author,
-                    String description,
-                    Genre genre,
-                    String isbn,
-                    String title,
-                    Review review,
-                    String coverImage,
-                    Calendar purchaseDate,
-                    double purchasePrice,
-                    boolean isOwned) {
+    public Book(int bookId,
+                boolean isRead,
+                int rating,
+                Author author,
+                String description,
+                Genre genre,
+                String isbn,
+                String title,
+                Review review,
+                String coverImage,
+                Calendar purchaseDate,
+                double purchasePrice,
+                boolean isOwned) {
         this.bookId = bookId;
         this.isRead = isRead;
         this.rating = rating;

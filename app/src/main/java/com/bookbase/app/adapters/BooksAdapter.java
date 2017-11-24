@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bookbase.app.R;
-import com.bookbase.app.model.entity.BookImpl;
+import com.bookbase.app.model.entity.Book;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -32,10 +32,10 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
 
     }
 
-    private List<BookImpl> books;
+    private List<Book> books;
     private Context context;
 
-    public BooksAdapter(Context context, List<BookImpl> books){
+    public BooksAdapter(Context context, List<Book> books){
         this.books = books;
         this.context = context;
     }
@@ -57,7 +57,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
 
     public void onBindViewHolder(BooksAdapter.ViewHolder viewHolder, int position){
         // Get reference to item at current position.
-        BookImpl book = books.get(position);
+        Book book = books.get(position);
 
         // Reference layout componenets.
         ImageView coverImage;

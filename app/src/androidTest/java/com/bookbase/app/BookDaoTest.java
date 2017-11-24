@@ -7,7 +7,7 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.bookbase.app.database.AppDatabase;
 import com.bookbase.app.model.dao.BookDao;
-import com.bookbase.app.model.entity.BookImpl;
+import com.bookbase.app.model.entity.Book;
 
 import org.junit.After;
 import org.junit.Before;
@@ -40,9 +40,9 @@ public class BookDaoTest {
 
     @Test
     public void insertAndAccessBook() throws Exception{
-        BookImpl book = new BookImpl("Test BookImpl One", 1);
+        Book book = new Book("Test Book One", 1);
         bookDao.insertAll(book);
-        List<BookImpl> books = bookDao.getBooks();
+        List<Book> books = bookDao.getBooks();
         assertThat(books.get(0).getTitle(), equalTo(book.getTitle()));
     }
 

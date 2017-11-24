@@ -4,9 +4,9 @@ import android.arch.persistence.room.TypeConverter;
 
 import com.bookbase.app.activities.MainActivity;
 import com.bookbase.app.database.AppDatabase;
-import com.bookbase.app.model.interfaces.Author;
-import com.bookbase.app.model.interfaces.Genre;
-import com.bookbase.app.model.interfaces.Review;
+import com.bookbase.app.model.entity.Author;
+import com.bookbase.app.model.entity.Genre;
+import com.bookbase.app.model.entity.Review;
 
 import java.sql.Date;
 import java.util.Calendar;

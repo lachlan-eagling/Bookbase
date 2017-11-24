@@ -23,8 +23,8 @@ import com.bookbase.app.fragments.BooksFragment;
 import com.bookbase.app.fragments.SettingsFragment;
 import com.bookbase.app.fragments.StatsFragment;
 import com.bookbase.app.fragments.WishlistFragment;
-import com.bookbase.app.model.entity.AuthorImpl;
-import com.bookbase.app.model.entity.BookImpl;
+import com.bookbase.app.model.entity.Author;
+import com.bookbase.app.model.entity.Book;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,12 +70,12 @@ public class MainActivity extends AppCompatActivity implements
 
         // Bind nav drawer to ActionBarToggle.
         mDrawer.addDrawerListener(drawerToggle);
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                dummyBookFactory(20);
-//            }
-//        }).start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                dummyBookFactory(20);
+            }
+        }).start();
 
         selectDrawerItem(nvDrawer.getMenu().getItem(0));
     }
@@ -169,19 +169,19 @@ public class MainActivity extends AppCompatActivity implements
     // Inserts list of dummy book records for testing.
     synchronized private void dummyBookFactory(int num){
 
-        // Generate a BookImpl list of length == num param.
-        List<BookImpl> books = new ArrayList<>();
+        // Generate a Book list of length == num param.
+        List<Book> books = new ArrayList<>();
         for(int i = 1; i <= num; i++){
-            books.add(new BookImpl("Dummy BookImpl " + i, new AuthorImpl("", "")));
+            books.add(new Book("Dummy Book " + i, new Author("", "")));
         }
 
         // Delete all existing book records and insert list.
         AppDatabase db = AppDatabase.getDatabase(this);
-        List<BookImpl> currBooks = db.bookDao().getBooks();
+        List<Book> currBooks = db.bookDao().getBooks();
         if(currBooks.isEmpty()){
             db.bookDao().deleteAll();
 
-            for(BookImpl book:books){
+            for(Book book:books){
                 db.bookDao().insertAll(book);
             }
         }

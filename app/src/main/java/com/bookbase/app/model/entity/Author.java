@@ -4,10 +4,8 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
-import com.bookbase.app.model.interfaces.Author;
-
 @Entity(tableName = "Author")
-public class AuthorImpl implements Author{
+public class Author {
 
     @PrimaryKey(autoGenerate = true)
     private int authorId;
@@ -18,11 +16,11 @@ public class AuthorImpl implements Author{
     @ColumnInfo(name = "name_family")
     private String lastName;
 
-    public AuthorImpl(){
+    public Author(){
         this("","");
     }
 
-    public AuthorImpl(String firstName, String lastName){
+    public Author(String firstName, String lastName){
         this.firstName = firstName;
         this.lastName = lastName;
     }

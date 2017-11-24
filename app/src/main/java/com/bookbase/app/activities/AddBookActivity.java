@@ -16,9 +16,9 @@ import com.bookbase.app.R;
 import com.bookbase.app.database.AppDatabase;
 import com.bookbase.app.fragments.AddBooksFragmentAdvanced;
 import com.bookbase.app.fragments.AddBooksFragmentBasic;
-import com.bookbase.app.model.entity.AuthorImpl;
-import com.bookbase.app.model.entity.BookImpl;
-import com.bookbase.app.model.entity.GenreImpl;
+import com.bookbase.app.model.entity.Author;
+import com.bookbase.app.model.entity.Book;
+import com.bookbase.app.model.entity.Genre;
 
 public class AddBookActivity extends AppCompatActivity {
 
@@ -100,7 +100,7 @@ public class AddBookActivity extends AppCompatActivity {
         }
 
         if(mandatoryDetailsComplete){
-            final BookImpl book = new BookImpl(title.getText().toString(), new AuthorImpl(author.getText().toString(), ""), description.getText().toString(), new GenreImpl());
+            final Book book = new Book(title.getText().toString(), new Author(author.getText().toString(), ""), description.getText().toString(), new Genre());
 //            new Thread(new Runnable() {
 //                @Override
 //                public void run() {
@@ -116,7 +116,7 @@ public class AddBookActivity extends AppCompatActivity {
         //return true;
     }
 
-    private synchronized void addBook(BookImpl book){
+    private synchronized void addBook(Book book){
         AppDatabase db = AppDatabase.getDatabase(this);
         db.bookDao().insert(book);
     }
