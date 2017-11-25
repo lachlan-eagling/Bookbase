@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bookbase.app.R;
@@ -33,9 +34,12 @@ public class AddBookActivity extends AppCompatActivity {
         addBooksPager.setAdapter(viewPagerAdapter);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Add Book");
+        TextView toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+        toolbarTitle.setText("Add New Book");
+        //toolbar.setTitle("Add Book")
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 
         TabLayout tabs = (TabLayout) findViewById(R.id.tab_slider);

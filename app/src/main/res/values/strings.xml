@@ -15,10 +15,10 @@
     <string name="lbl_genre">Genre</string>
 
     <!--Hints-->
-    <string name="hint_book_title">Title of book&#8230;</string>
-    <string name="hint_author">Author of book&#8230;</string>
-    <string name="hint_description">Overview of book&#8230;</string>
-    <string name="hint_genre">Genre of book&#8230;</string>
+    <string name="hint_book_title">To Kill A Mockingbird&#8230;</string>
+    <string name="hint_author">Stephen King, Agatha Christie&#8230;</string>
+    <string name="hint_description">An epic adventure&#8230;</string>
+    <string name="hint_genre">Fantasy, Crime, Thriller&#8230;</string>
 
     <!--Misc-->
     <string name="hello_blank_fragment">TODO: Implement Fragment</string>
