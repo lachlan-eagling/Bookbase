@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
+    private TextView toolbarTitle;
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
     private View headerLayout;
@@ -54,6 +55,9 @@ public class MainActivity extends AppCompatActivity implements
         // Get reference to and setup toolbar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
 
         // Reference main screen nav drawer layout.
         mDrawer = (DrawerLayout) findViewById(R.id.navigation_drawer);
@@ -186,6 +190,11 @@ public class MainActivity extends AppCompatActivity implements
             }
         }
 
+    }
+
+    @Override
+    public void setTitle(CharSequence title) {
+        toolbarTitle.setText(title);
     }
 
     public static Context getContext(){

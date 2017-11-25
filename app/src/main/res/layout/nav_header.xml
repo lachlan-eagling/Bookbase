@@ -7,14 +7,15 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:orientation="vertical"
     android:gravity="bottom">
-    
+
     <TextView
         android:id="@+id/header_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/dancing_script"
         android:text="@string/lbl_bookbase"
-        android:textColor="@android:color/white"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="24sp"/>
+        android:textColor="@android:color/white"
+        android:textSize="36sp" />
 
 </LinearLayout>

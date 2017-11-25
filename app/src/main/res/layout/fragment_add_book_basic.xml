@@ -14,49 +14,41 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-        <TextView
-            android:id="@+id/add_book_genre"
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/book_image_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/lbl_genre"
-            android:textColor="@android:color/black"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="160dp"
+            android:background="@android:color/background_light"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/add_book_description_data" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/add_book_description_data"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:ems="10"
-            android:hint="@string/hint_description"
-            android:inputType="textCapSentences|textMultiLine"
-            android:nextFocusDown="@id/add_book_genre_data"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/add_book_description" />
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        <AutoCompleteTextView
-            android:id="@+id/add_book_genre_data"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:hint="@string/hint_genre"
-            android:inputType="textCapWords"
-            android:singleLine="true"
-            android:imeOptions="actionDone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/add_book_genre" />
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="110dp"
+                    android:layout_height="124dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/book_default"
+                    android:cropToPadding="false"
+                    android:maxHeight="@android:dimen/thumbnail_height"
+                    android:maxWidth="@android:dimen/thumbnail_height"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+            </android.support.constraint.ConstraintLayout>
+
+
+        </android.support.design.widget.AppBarLayout>
+
 
         <TextView
             android:id="@+id/add_book_title"
@@ -64,12 +56,13 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="24dp"
             android:text="@string/lbl_title"
             android:textColor="@android:color/black"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/book_image_container" />
 
         <EditText
             android:id="@+id/add_book_title_data"
@@ -83,6 +76,7 @@
             android:inputType="textCapWords|textPersonName"
             android:nextFocusDown="@id/add_book_author_data"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/add_book_title" />
 
@@ -96,6 +90,7 @@
             android:text="@string/lbl_author"
             android:textColor="@android:color/black"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/add_book_title_data" />
 
@@ -112,6 +107,7 @@
             android:nextFocusDown="@id/add_book_description_data"
             android:singleLine="true"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/add_book_author" />
 
@@ -125,8 +121,67 @@
             android:text="@string/lbl_description"
             android:textColor="@android:color/black"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/add_book_author_data" />
+
+        <EditText
+            android:id="@+id/add_book_description_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:hint="@string/hint_description"
+            android:inputType="textCapSentences|textMultiLine"
+            android:nextFocusDown="@id/add_book_genre_data"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_book_description" />
+
+        <TextView
+            android:id="@+id/add_book_genre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/lbl_genre"
+            android:textColor="@android:color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_book_description_data" />
+
+        <AutoCompleteTextView
+            android:id="@+id/add_book_genre_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:hint="@string/hint_genre"
+            android:imeOptions="actionDone"
+            android:inputType="textCapWords"
+            android:singleLine="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_book_genre" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floatingActionButton3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:layout_marginRight="16dp"
+            android:clickable="true"
+            app:layout_constraintBottom_toTopOf="@+id/add_book_title"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/book_image_container"
+            app:srcCompat="@android:drawable/ic_menu_camera" />
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>
