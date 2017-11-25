@@ -118,9 +118,6 @@ public class MainActivity extends AppCompatActivity implements
             case R.id.nav_books:
                 fragmentClass = BooksFragment.class;
                 break;
-            case R.id.nav_stats:
-                fragmentClass = StatsFragment.class;
-                break;
             case R.id.nav_wishlist:
                 fragmentClass = WishlistFragment.class;
                 break;
