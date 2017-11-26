@@ -1,5 +1,6 @@
 package com.bookbase.app.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -105,7 +106,7 @@ public class AddBooksFragmentBasic extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == IMAGE_CAPTURE_REQUEST && resultCode == getActivity().RESULT_OK){
+        if(requestCode == IMAGE_CAPTURE_REQUEST && resultCode == Activity.RESULT_OK){
             Bundle extras = data.getExtras();
             Bitmap image = (Bitmap) extras.get("data");
             coverImage.setImageBitmap(image);

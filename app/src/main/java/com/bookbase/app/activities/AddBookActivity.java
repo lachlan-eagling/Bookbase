@@ -124,7 +124,7 @@ public class AddBookActivity extends AppCompatActivity {
         AppDatabase db = AppDatabase.getDatabase(this);
         db.bookDao().insert(book);
     }
-    
+
     public static class AddBookPagerAdapter extends FragmentPagerAdapter{
 
         private static int NUM_ITEMS = 2;
