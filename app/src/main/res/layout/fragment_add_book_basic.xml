@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@android:style/Widget.Material.ScrollView"
+    android:id="@+id/add_book_basic"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbarStyle="insideOverlay">
@@ -27,7 +28,7 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/cover_image"
                     android:layout_width="110dp"
                     android:layout_height="124dp"
                     android:layout_marginBottom="16dp"
@@ -180,7 +181,7 @@
             app:layout_constraintTop_toBottomOf="@+id/add_book_genre" />
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/floatingActionButton3"
+            android:id="@+id/camera_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
