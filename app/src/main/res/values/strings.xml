@@ -13,12 +13,21 @@
     <string name="lbl_author">Author</string>
     <string name="lbl_description">Description</string>
     <string name="lbl_genre">Genre</string>
+    <string name="lbl_review">Review</string>
+    <string name="lbl_rating">Rating</string>
+    <string name="lbl_read">Read</string>
+    <string name="lbl_purchase_date">Purchase Date</string>
+    <string name="lbl_purchase_price">Purchase Price</string>
+    <string name="lbl_owned">Owned</string>
 
     <!--Hints-->
     <string name="hint_book_title">To Kill A Mockingbird&#8230;</string>
     <string name="hint_author">Stephen King, Agatha Christie&#8230;</string>
     <string name="hint_description">An epic adventure&#8230;</string>
     <string name="hint_genre">Fantasy, Crime, Thriller&#8230;</string>
+    <string name="hint_review">A good overall read&#8230;</string>
+    <string name="hint_purchase_date">1/1/2017</string>
+    <string name="hint_purchase_price">$22.50</string>
 
     <!--Misc-->
     <string name="hello_blank_fragment">TODO: Implement Fragment</string>
