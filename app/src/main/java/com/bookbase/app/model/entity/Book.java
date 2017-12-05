@@ -17,13 +17,13 @@ public class Book {
     private Author author;
     private String description;
     private Genre genre;
+    private String coverImage;
+    private String isbn;
 
     // Advanced properties.
-    private boolean isRead;
     private int rating;
-    private String isbn;
     private Review review;
-    private String coverImage;
+    private boolean isRead;
     private Calendar purchaseDate;
     private double purchasePrice;
     private boolean isOwned;
