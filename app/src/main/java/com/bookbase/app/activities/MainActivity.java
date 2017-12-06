@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements
         // Generate a Book list of length == num param.
         List<Book> books = new ArrayList<>();
         for(int i = 1; i <= num; i++){
-            books.add(new Book("Dummy Book " + i, new Author("", "")));
+            books.add(new Book("Dummy Book " + i, new Author("Billy Bob")));
         }
 
         // Delete all existing book records and insert list.

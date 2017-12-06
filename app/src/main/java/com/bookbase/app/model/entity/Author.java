@@ -13,21 +13,16 @@ public class Author {
     @ColumnInfo(name = "name_first")
     private String firstName;
 
-    @ColumnInfo(name = "name_family")
-    private String lastName;
 
     public Author(){
-        this("","");
     }
 
-    public Author(String firstName, String lastName){
+    public Author(String firstName){
         this.firstName = firstName;
-        this.lastName = lastName;
     }
 
     public int getAuthorId(){ return authorId; }
     public String getFirstName(){ return firstName; }
-    public String getLastName() { return lastName; }
 
     public void setAuthorId(int authorId){
         this.authorId = authorId;
@@ -35,12 +30,9 @@ public class Author {
     public void setFirstName(String firstName){
         this.firstName = firstName;
     }
-    public void setLastName(String lastName){
-        this.lastName = lastName;
-    }
 
     @Override
-    public String toString(){
-        return firstName + " " + lastName;
+    public String toString() {
+        return firstName;
     }
 }

@@ -10,10 +10,9 @@ public class Genre {
     @PrimaryKey(autoGenerate = true)
     private int genreId;
     private String genreName;
-    private String genreDescription;
 
-    public Genre(){
-
+    public Genre(String genreName){
+        this.genreName = genreName;
     }
 
     public int getGenreId() {
@@ -24,9 +23,6 @@ public class Genre {
         return genreName;
     }
 
-    public String getGenreDescription() {
-        return genreDescription;
-    }
     
     public void setGenreId(int id) {
         this.genreId = id;
@@ -36,7 +32,4 @@ public class Genre {
         this.genreName = genreName;
     }
 
-    public void setGenreDescription(String genreDescription) {
-        this.genreDescription = genreDescription;
-    }
 }

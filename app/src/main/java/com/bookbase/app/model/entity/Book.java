@@ -22,7 +22,7 @@ public class Book {
 
     // Advanced properties.
     private int rating;
-    private Review review;
+    private String review;
     private boolean isRead;
     private Calendar purchaseDate;
     private double purchasePrice;
@@ -30,7 +30,7 @@ public class Book {
 
     // Default constructor for Room database.
     public Book(){
-        this("", new Author("", ""));
+        this("", new Author(""));
     }
 
     @Ignore
@@ -39,11 +39,11 @@ public class Book {
         this.author = author;
         this.isRead = false;
         this.rating = 0;
-        this.author = new Author("James", "McBookFace");
+        this.author = new Author("");
         this.description = "";
         this.isbn = "";
-        this.genre = new Genre();
-        this.review = new Review();
+        this.genre = new Genre("");
+        this.review = "";
 
     }
 
@@ -53,11 +53,11 @@ public class Book {
         this.author = author;
         this.isRead = false;
         this.rating = 0;
-        this.author = new Author("James", "McBookFace");
+        this.author = new Author("");
         this.description = "";
         this.isbn = "";
-        this.genre = new Genre();
-        this.review = new Review();
+        this.genre = new Genre("");
+        this.review = "";
 
     }
 
@@ -70,7 +70,7 @@ public class Book {
                 Genre genre,
                 String isbn,
                 String title,
-                Review review,
+                String review,
                 String coverImage,
                 Calendar purchaseDate,
                 double purchasePrice,
@@ -98,7 +98,7 @@ public class Book {
     public Genre getGenre() { return genre; }
     public String getIsbn(){ return isbn; }
     public String getTitle(){ return title; }
-    public Review getReview() { return review; }
+    public String getReview() { return review; }
     public Calendar getPurchaseDate() { return purchaseDate; }
     public double getPurchasePrice() { return purchasePrice; }
     public String getCoverImage() { return coverImage; }
@@ -112,7 +112,7 @@ public class Book {
     public void setGenre(Genre genre) { this.genre = genre; }
     public void setIsbn(String isbn){ this.isbn = isbn; }
     public void setTitle(String title){ this.title = title; }
-    public void setReview(Review review){ this.review = review; }
+    public void setReview(String review){ this.review = review; }
     public void setPurchaseDate(Calendar date){ this.purchaseDate = date; }
     public void setPurchasePrice(double price){ this.purchasePrice = price; }
     public void setCoverImage(String imageDirectory) { this.coverImage = imageDirectory; }

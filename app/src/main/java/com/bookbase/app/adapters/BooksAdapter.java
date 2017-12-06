@@ -74,7 +74,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
                 .error(R.drawable.book_default)
                 .into(coverImage);
         title.setText(book.getTitle());
-        author.setText("DUMMY AUTHOR");
+        author.setText("Billy Bob");
     }
 
     @Override
