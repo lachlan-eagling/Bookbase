@@ -85,19 +85,21 @@ public class AddBookActivity extends AppCompatActivity {
 
         if(mandatoryDetailsComplete){
             final Book book = new Book(title.getText().toString(), new Author(author.getText().toString(), ""), description.getText().toString(), new Genre());
-//            new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    addBook(book);
-//                }
-//            }).run();
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    addBook(book);
+                }
+            }).start();
+
             finish();
             return true;
         } else{
             Toast.makeText(this, "Missing manadtory fields!", Toast.LENGTH_LONG).show();
             return  false;
         }
-        //return true;
+
     }
 
     private synchronized void addBook(Book book){
