@@ -1,4 +1,4 @@
-package com.bookbase.app.fragments;
+package com.bookbase.app.reports;
 
 import android.content.Context;
 import android.net.Uri;
@@ -13,12 +13,12 @@ import com.bookbase.app.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link StatsFragment.OnFragmentInteractionListener} interface
+ * {@link ReportFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link StatsFragment#newInstance} factory method to
+ * Use the {@link ReportFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class StatsFragment extends Fragment {
+public class ReportFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,7 +30,7 @@ public class StatsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public StatsFragment() {
+    public ReportFragment() {
         // Required empty public constructor
     }
 
@@ -40,11 +40,11 @@ public class StatsFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment StatsFragment.
+     * @return A new instance of fragment ReportFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static StatsFragment newInstance(String param1, String param2) {
-        StatsFragment fragment = new StatsFragment();
+    public static ReportFragment newInstance(String param1, String param2) {
+        ReportFragment fragment = new ReportFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

@@ -20,8 +20,8 @@ import com.bookbase.app.R;
 import com.bookbase.app.database.AppDatabase;
 import com.bookbase.app.aboutScreen.AboutFragment;
 import com.bookbase.app.book.BooksFragment;
+import com.bookbase.app.reports.ReportFragment;
 import com.bookbase.app.settings.SettingsFragment;
-import com.bookbase.app.fragments.StatsFragment;
 import com.bookbase.app.wishlist.WishlistFragment;
 import com.bookbase.app.model.entity.Author;
 import com.bookbase.app.model.entity.Book;
@@ -31,7 +31,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements
         BooksFragment.OnFragmentInteractionListener,
-        StatsFragment.OnFragmentInteractionListener,
+        ReportFragment.OnFragmentInteractionListener,
         WishlistFragment.OnFragmentInteractionListener,
         SettingsFragment.OnFragmentInteractionListener,
         AboutFragment.OnFragmentInteractionListener {
