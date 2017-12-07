@@ -1,4 +1,4 @@
-package com.bookbase.app.activities;
+package com.bookbase.app.book;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -19,8 +19,6 @@ import android.widget.Toast;
 
 import com.bookbase.app.R;
 import com.bookbase.app.database.AppDatabase;
-import com.bookbase.app.fragments.AddBooksFragmentAdvanced;
-import com.bookbase.app.fragments.AddBooksFragmentBasic;
 import com.bookbase.app.model.entity.Author;
 import com.bookbase.app.model.entity.Book;
 import com.bookbase.app.model.entity.Genre;

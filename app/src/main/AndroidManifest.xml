@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.bookbase.app.activities.AddBookActivity"
+            android:name="com.bookbase.app.book.AddBookActivity"
             android:label="@string/title_activity_add_book"
             android:theme="@style/AppTheme">
             <meta-data

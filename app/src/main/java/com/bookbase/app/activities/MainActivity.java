@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.bookbase.app.R;
 import com.bookbase.app.database.AppDatabase;
 import com.bookbase.app.fragments.AboutFragment;
-import com.bookbase.app.fragments.BooksFragment;
+import com.bookbase.app.book.BooksFragment;
 import com.bookbase.app.fragments.SettingsFragment;
 import com.bookbase.app.fragments.StatsFragment;
 import com.bookbase.app.fragments.WishlistFragment;

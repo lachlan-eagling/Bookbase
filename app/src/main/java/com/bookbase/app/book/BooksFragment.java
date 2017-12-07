@@ -1,4 +1,4 @@
-package com.bookbase.app.fragments;
+package com.bookbase.app.book;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,8 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bookbase.app.R;
-import com.bookbase.app.activities.AddBookActivity;
-import com.bookbase.app.adapters.BooksAdapter;
 import com.bookbase.app.database.AppDatabase;
 import com.bookbase.app.model.entity.Book;
 

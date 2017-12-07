@@ -1,4 +1,4 @@
-package com.bookbase.app.fragments;
+package com.bookbase.app.book;
 
 import android.app.Activity;
 import android.content.Intent;
