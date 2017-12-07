@@ -1,4 +1,4 @@
-package com.bookbase.app.fragments;
+package com.bookbase.app.settings;
 
 import android.content.Context;
 import android.net.Uri;
