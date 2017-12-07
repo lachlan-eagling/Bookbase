@@ -1,4 +1,4 @@
-package com.bookbase.app.fragments.behaviour;
+package com.bookbase.app.utils;
 
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
