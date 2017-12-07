@@ -1,4 +1,4 @@
-package com.bookbase.app.fragments;
+package com.bookbase.app.wishlist;
 
 import android.content.Context;
 import android.net.Uri;
