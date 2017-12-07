@@ -18,11 +18,11 @@ import android.widget.TextView;
 
 import com.bookbase.app.R;
 import com.bookbase.app.database.AppDatabase;
-import com.bookbase.app.fragments.AboutFragment;
+import com.bookbase.app.aboutScreen.AboutFragment;
 import com.bookbase.app.book.BooksFragment;
 import com.bookbase.app.fragments.SettingsFragment;
 import com.bookbase.app.fragments.StatsFragment;
-import com.bookbase.app.fragments.WishlistFragment;
+import com.bookbase.app.wishlist.WishlistFragment;
 import com.bookbase.app.model.entity.Author;
 import com.bookbase.app.model.entity.Book;
 
