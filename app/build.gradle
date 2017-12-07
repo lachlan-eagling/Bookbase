@@ -37,6 +37,12 @@ dependencies {
     // Third party libraries.
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.squareup.okhttp3:okhttp:3.9.0'
+
+    compile 'com.google.dagger:dagger-android:2.13'
+    compile 'com.google.dagger:dagger-android-support:2.13'
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.13'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.13'
+
     testCompile 'junit:junit:4.12'
 
 }
