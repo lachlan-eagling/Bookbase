@@ -13,21 +13,23 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import com.bookbase.app.R;
-import com.bookbase.app.database.AppDatabase;
 import com.bookbase.app.aboutScreen.AboutFragment;
 import com.bookbase.app.book.BooksFragment;
+import com.bookbase.app.database.AppDatabase;
+import com.bookbase.app.model.entity.Author;
+import com.bookbase.app.model.entity.Book;
 import com.bookbase.app.reports.ReportFragment;
 import com.bookbase.app.settings.SettingsFragment;
 import com.bookbase.app.wishlist.WishlistFragment;
-import com.bookbase.app.model.entity.Author;
-import com.bookbase.app.model.entity.Book;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements
         BooksFragment.OnFragmentInteractionListener,
@@ -36,44 +38,32 @@ public class MainActivity extends AppCompatActivity implements
         SettingsFragment.OnFragmentInteractionListener,
         AboutFragment.OnFragmentInteractionListener {
 
-    private DrawerLayout mDrawer;
-    private Toolbar toolbar;
-    private TextView toolbarTitle;
-    private NavigationView nvDrawer;
-    private ActionBarDrawerToggle drawerToggle;
-    private View headerLayout;
-    private TextView headerText;
-
     private static Context context;
+
+    @BindView(R.id.navigation_drawer) DrawerLayout drawer;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
+    @BindView(R.id.nav_view) NavigationView navDrawer;
+
+    private ActionBarDrawerToggle drawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        context = getApplicationContext();
-        setContentView(R.layout.activity_main);
 
-        // Get reference to and setup toolbar.
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+
+        context = getApplicationContext();
+        
+        // Setup toolbar and nav drawer.
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-        toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
-
-        // Reference main screen nav drawer layout.
-        mDrawer = (DrawerLayout) findViewById(R.id.navigation_drawer);
         drawerToggle = setUpDrawerToggle();
+        setupDrawerContent(navDrawer);
+        navDrawer.inflateHeaderView(R.layout.nav_header);
 
-
-        // Get reference to nav drawer.
-        nvDrawer = (NavigationView) findViewById(R.id.nav_view);
-        setupDrawerContent(nvDrawer);
-
-        // Inflate nav drawer header and get reference to headerText.
-        headerLayout = nvDrawer.inflateHeaderView(R.layout.nav_header);
-        headerText = (TextView) headerLayout.findViewById(R.id.header_text);
-
-        // Bind nav drawer to ActionBarToggle.
-        mDrawer.addDrawerListener(drawerToggle);
+        drawer.addDrawerListener(drawerToggle);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -81,7 +71,8 @@ public class MainActivity extends AppCompatActivity implements
             }
         }).start();
 
-        selectDrawerItem(nvDrawer.getMenu().getItem(0));
+        selectDrawerItem(navDrawer.getMenu().getItem(0));
+
     }
 
     @Override
@@ -146,20 +137,17 @@ public class MainActivity extends AppCompatActivity implements
         // Update UI to indicate currently selected item.
         item.setChecked(true);
         setTitle(item.getTitle());
-        mDrawer.closeDrawers();
+        drawer.closeDrawers();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        if(drawerToggle.onOptionsItemSelected(item)){
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
     private ActionBarDrawerToggle setUpDrawerToggle(){
-        return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open, R.string.drawer_close);
+        return new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.drawer_open, R.string.drawer_close);
     }
 
     @Override
