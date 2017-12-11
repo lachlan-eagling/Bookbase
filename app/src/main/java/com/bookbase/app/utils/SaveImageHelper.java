@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 
-import com.bookbase.app.activities.MainActivity;
+import com.bookbase.app.activities.HomeScreen;
 import com.bookbase.app.model.entity.Book;
 
 import java.io.File;
@@ -17,7 +17,7 @@ public class SaveImageHelper {
 
     public static String saveImageToInternalStorage(Bitmap image, Book book){
         if(image != null){
-            ContextWrapper context = new ContextWrapper(MainActivity.getContext());
+            ContextWrapper context = new ContextWrapper(HomeScreen.getContext());
 
             // Setup date format and get current datetime to append to filename.
             SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmm");
