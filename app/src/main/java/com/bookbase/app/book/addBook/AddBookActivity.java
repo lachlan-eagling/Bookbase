@@ -1,4 +1,4 @@
-package com.bookbase.app.book;
+package com.bookbase.app.book.addBook;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
