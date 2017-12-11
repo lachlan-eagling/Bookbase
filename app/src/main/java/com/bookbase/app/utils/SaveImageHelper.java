@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 
-import com.bookbase.app.activities.HomeScreen;
+import com.bookbase.app.mainscreen.HomeScreen;
 import com.bookbase.app.model.entity.Book;
 
 import java.io.File;

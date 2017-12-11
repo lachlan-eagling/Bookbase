@@ -1,4 +1,4 @@
-package com.bookbase.app.activities;
+package com.bookbase.app.mainscreen;
 
 import android.content.Context;
 import android.content.res.Configuration;

@@ -2,7 +2,7 @@ package com.bookbase.app.utils;
 
 import android.arch.persistence.room.TypeConverter;
 
-import com.bookbase.app.activities.HomeScreen;
+import com.bookbase.app.mainscreen.HomeScreen;
 import com.bookbase.app.database.AppDatabase;
 import com.bookbase.app.model.entity.Author;
 import com.bookbase.app.model.entity.Genre;
