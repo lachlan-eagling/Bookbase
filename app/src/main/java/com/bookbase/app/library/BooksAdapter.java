@@ -14,20 +14,20 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder{
 
-        public ImageView coverImage;
-        public TextView title;
-        public TextView author;
+        @BindView(R.id.book_list_image) ImageView coverImage;
+        @BindView(R.id.book_list_title) TextView title;
+        @BindView(R.id.book_list_author) TextView author;
 
-        public ViewHolder(View view){
+        ViewHolder(View view){
             super(view);
-
-            coverImage = (ImageView) view.findViewById(R.id.book_list_image);
-            title = (TextView) view.findViewById(R.id.book_list_title);
-            author = (TextView) view.findViewById(R.id.book_list_author);
+            ButterKnife.bind(this, view);
         }
 
     }
@@ -35,7 +35,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
     private List<Book> books;
     private Context context;
 
-    public BooksAdapter(Context context, List<Book> books){
+    BooksAdapter(Context context, List<Book> books){
         this.books = books;
         this.context = context;
     }
@@ -56,16 +56,13 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
     }
 
     public void onBindViewHolder(BooksAdapter.ViewHolder viewHolder, int position){
+
         // Get reference to item at current position.
         Book book = books.get(position);
 
-        // Reference layout componenets.
-        ImageView coverImage;
-        TextView title;
-        TextView author;
-        coverImage = viewHolder.coverImage;
-        title = viewHolder.title;
-        author = viewHolder.author;
+        ImageView coverImage = viewHolder.coverImage;
+        TextView title = viewHolder.title;
+        TextView author = viewHolder.author;
 
         // Set view content from model.
         Picasso.with(this.getContext())
@@ -74,7 +71,8 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
                 .error(R.drawable.book_default)
                 .into(coverImage);
         title.setText(book.getTitle());
-        author.setText("Billy Bob");
+        author.setText("Author Placeholder");
+
     }
 
     @Override
