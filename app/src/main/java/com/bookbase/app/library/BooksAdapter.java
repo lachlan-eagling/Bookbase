@@ -1,4 +1,4 @@
-package com.bookbase.app.book;
+package com.bookbase.app.library;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
