@@ -17,16 +17,10 @@ import android.widget.TextView;
 
 import com.bookbase.app.R;
 import com.bookbase.app.aboutScreen.AboutFragment;
-import com.bookbase.app.book.BooksFragment;
-import com.bookbase.app.database.AppDatabase;
-import com.bookbase.app.model.entity.Author;
-import com.bookbase.app.model.entity.Book;
+import com.bookbase.app.library.BooksFragment;
 import com.bookbase.app.reports.ReportFragment;
 import com.bookbase.app.settings.SettingsFragment;
 import com.bookbase.app.wishlist.WishlistFragment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,18 +53,12 @@ public class HomeScreen extends AppCompatActivity implements
         // Setup toolbar and nav drawer.
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         drawerToggle = setUpDrawerToggle();
         setupDrawerContent(navDrawer);
         navDrawer.inflateHeaderView(R.layout.nav_header);
 
         drawer.addDrawerListener(drawerToggle);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                dummyBookFactory(20);
-            }
-        }).start();
-
         selectDrawerItem(navDrawer.getMenu().getItem(0));
 
     }
@@ -152,28 +140,6 @@ public class HomeScreen extends AppCompatActivity implements
 
     @Override
     public void onFragmentInteraction(Uri uri) {
-
-    }
-
-    // Inserts list of dummy book records for testing.
-    synchronized private void dummyBookFactory(int num){
-
-        // Generate a Book list of length == num param.
-        List<Book> books = new ArrayList<>();
-        for(int i = 1; i <= num; i++){
-            books.add(new Book("Dummy Book " + i, new Author("Billy Bob")));
-        }
-
-        // Delete all existing book records and insert list.
-        AppDatabase db = AppDatabase.getDatabase(this);
-        List<Book> currBooks = db.bookDao().getBooks();
-        if(currBooks.isEmpty()){
-            db.bookDao().deleteAll();
-
-            for(Book book:books){
-                db.bookDao().insertAll(book);
-            }
-        }
 
     }
 
