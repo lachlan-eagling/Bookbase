@@ -1,6 +1,5 @@
 package com.bookbase.app.model.entity;
 
-import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
@@ -10,29 +9,29 @@ public class Author {
     @PrimaryKey(autoGenerate = true)
     private int authorId;
 
-    @ColumnInfo(name = "name_first")
-    private String firstName;
+    private String name;
 
 
     public Author(){
     }
 
-    public Author(String firstName){
-        this.firstName = firstName;
+    public Author(String name){
+        this.name = name;
     }
 
     public int getAuthorId(){ return authorId; }
-    public String getFirstName(){ return firstName; }
+    public String getName(){ return name; }
 
     public void setAuthorId(int authorId){
         this.authorId = authorId;
     }
-    public void setFirstName(String firstName){
-        this.firstName = firstName;
+    public void setName(String name){
+        this.name = name;
     }
 
     @Override
     public String toString() {
-        return firstName;
+        return name;
     }
+    
 }
