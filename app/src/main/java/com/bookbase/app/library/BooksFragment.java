@@ -27,7 +27,6 @@ public class BooksFragment extends Fragment implements Runnable{
     private ArrayList<Book> books;
     private AppDatabase database;
     private RecyclerView bookList;
-    private BooksAdapter adapter;
 
     public BooksFragment() {
         // Required empty public constructor
@@ -67,28 +66,21 @@ public class BooksFragment extends Fragment implements Runnable{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_books, container, false);
-        bookList = (RecyclerView) view.findViewById(R.id.books_list);
+        bookList = view.findViewById(R.id.books_list);
         bookList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.add_book_fab);
+        FloatingActionButton fab = view.findViewById(R.id.add_book_fab);
+
         fab.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 Intent intent = new Intent(getActivity(), AddBookActivity.class);
                 startActivity(intent);
-
-                // TODO: Need to call queryBookData.execute() to refresh RecyclerView once add book finished.
             }
         });
         return view;
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override
@@ -117,6 +109,8 @@ public class BooksFragment extends Fragment implements Runnable{
 
         @Override
         protected void onPostExecute(List<Book> books){
+            BooksAdapter adapter;
+
             super.onPostExecute(books);
             adapter = new BooksAdapter(getActivity(), books);
             bookList.setAdapter(adapter);
