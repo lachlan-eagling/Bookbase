@@ -18,7 +18,6 @@ public class Genre {
     public int getGenreId() {
         return genreId;
     }
-
     public String getGenreName() {
         return genreName;
     }
@@ -27,7 +26,6 @@ public class Genre {
     public void setGenreId(int id) {
         this.genreId = id;
     }
-    
     public void setGenreName(String genreName) {
         this.genreName = genreName;
     }
