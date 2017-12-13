@@ -31,6 +31,7 @@ import java.util.Locale;
 public class AddBookActivity extends AppCompatActivity {
 
     FragmentPagerAdapter viewPagerAdapter;
+    private Bitmap imageToStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,10 +144,6 @@ public class AddBookActivity extends AppCompatActivity {
 
     }
 
-    private Bitmap getCoverImage(ImageView imageView){
-        return Bitmap.createBitmap(imageView.getDrawingCache());
-    }
-
     private Calendar parseDate(String date){
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("DD/MM/YYY", Locale.ENGLISH);
@@ -168,6 +165,10 @@ public class AddBookActivity extends AppCompatActivity {
     private synchronized void addBook(Book book){
         AppDatabase db = AppDatabase.getDatabase(this);
         db.bookDao().insert(book);
+    }
+
+    public void setImageToStore(Bitmap image){
+        imageToStore = image;
     }
 
     public static class AddBookPagerAdapter extends FragmentPagerAdapter{

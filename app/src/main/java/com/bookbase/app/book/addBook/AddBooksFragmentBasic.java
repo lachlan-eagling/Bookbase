@@ -25,6 +25,7 @@ public class AddBooksFragmentBasic extends Fragment {
 
     private FloatingActionButton cameraFab;
     private ImageView coverImage;
+    private String storedImageReference;
     public static final int IMAGE_CAPTURE_REQUEST = 1;
 
 
@@ -110,6 +111,7 @@ public class AddBooksFragmentBasic extends Fragment {
             Bundle extras = data.getExtras();
             Bitmap image = (Bitmap) extras.get("data");
             coverImage.setImageBitmap(image);
+            ((AddBookActivity)getActivity()).setImageToStore(image);
         }
     }
 }
