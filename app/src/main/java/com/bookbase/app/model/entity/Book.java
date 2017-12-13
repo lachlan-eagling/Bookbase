@@ -11,16 +11,12 @@ public class Book {
 
     @PrimaryKey(autoGenerate = true)
     private int bookId;
-
-    // Basic properties.
     private String title;
     private Author author;
     private String description;
     private Genre genre;
     private String coverImage;
     private String isbn;
-
-    // Advanced properties.
     private int rating;
     private String review;
     private boolean isRead;
@@ -30,7 +26,7 @@ public class Book {
 
     // Default constructor for Room database.
     public Book(){
-        this("", new Author(""));
+        
     }
 
     @Ignore
@@ -62,19 +58,9 @@ public class Book {
     }
 
 
-    public Book(int bookId,
-                boolean isRead,
-                int rating,
-                Author author,
-                String description,
-                Genre genre,
-                String isbn,
-                String title,
-                String review,
-                String coverImage,
-                Calendar purchaseDate,
-                double purchasePrice,
-                boolean isOwned) {
+    public Book(int bookId, boolean isRead, int rating, Author author, String description,
+                Genre genre, String isbn, String title, String review, String coverImage,
+                Calendar purchaseDate, double purchasePrice, boolean isOwned) {
         this.bookId = bookId;
         this.isRead = isRead;
         this.rating = rating;
