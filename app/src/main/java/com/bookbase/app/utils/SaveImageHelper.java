@@ -25,7 +25,7 @@ public class SaveImageHelper {
 
             // Setup directory, file and output stream.
             File dir = context.getDir("images", Context.MODE_PRIVATE);
-            File myPath = new File(dir, book.getTitle() + "_coverimage_" + df.format(now));
+            File myPath = new File(dir, book.getTitle() + "_coverimage_" + df.format(now) + ".bmp");
             FileOutputStream out = null;
 
             try{
@@ -40,7 +40,8 @@ public class SaveImageHelper {
                     e.printStackTrace();
                 }
             }
-            return dir.getAbsolutePath();
+            //return dir.getAbsolutePath();
+            return myPath.getAbsolutePath();
         }
 
         return null;

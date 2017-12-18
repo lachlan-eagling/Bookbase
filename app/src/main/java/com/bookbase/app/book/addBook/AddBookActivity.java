@@ -22,6 +22,7 @@ import com.bookbase.app.database.AppDatabase;
 import com.bookbase.app.model.entity.Author;
 import com.bookbase.app.model.entity.Book;
 import com.bookbase.app.model.entity.Genre;
+import com.bookbase.app.utils.SaveImageHelper;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -65,6 +66,7 @@ public class AddBookActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         Fragment basicFragment = AddBookPagerAdapter.BASIC_DETAILS_PAGE;
         final Book book = new Book();
+        final Author _author = new Author();
         boolean mandatoryDetailsComplete = true;
 
         // Basic details
@@ -110,13 +112,14 @@ public class AddBookActivity extends AppCompatActivity {
         if(mandatoryDetailsComplete){
 
             //final Book book = new Book(title.getText().toString(), new Author(author.getText().toString(), ""), description.getText().toString(), new Genre());
+            _author.setName(author.getText().toString());
 
             // Set basic details.
             book.setTitle(title.getText().toString());
-            book.setAuthor(new Author(author.getText().toString()));
+            book.setAuthor(_author);
             book.setDescription(description.getText().toString());
             book.setGenre(new Genre(genre.getText().toString()));
-            //book.setCoverImage(SaveImageHelper.saveImageToInternalStorage(getCoverImage(coverImage), book));
+            book.setCoverImage(SaveImageHelper.saveImageToInternalStorage(imageToStore, book));
 
             // Set advanced details.
             book.setReview(review.getText().toString());
@@ -130,7 +133,7 @@ public class AddBookActivity extends AppCompatActivity {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    addBook(book);
+                    addBook(_author, book);
                 }
             }).start();
 
@@ -159,11 +162,17 @@ public class AddBookActivity extends AppCompatActivity {
     }
 
     private double parseDouble(String in){
-        return Double.parseDouble(in);
+        try {
+            return Double.parseDouble(in);
+        } catch(NumberFormatException e){
+            return 0.0;
+        }
+        //return Double.parseDouble(in);
     }
 
-    private synchronized void addBook(Book book){
+    private synchronized void addBook(Author author, Book book){
         AppDatabase db = AppDatabase.getDatabase(this);
+        db.authorDao().insert(author);
         db.bookDao().insert(book);
     }
 

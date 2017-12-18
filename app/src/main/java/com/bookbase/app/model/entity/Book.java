@@ -1,12 +1,15 @@
 package com.bookbase.app.model.entity;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 import java.util.Calendar;
 
-@Entity(tableName = "Book")
+import static android.arch.persistence.room.ForeignKey.CASCADE;
+
+@Entity(tableName = "Book", foreignKeys = @ForeignKey(entity = Author.class, parentColumns = "authorId", childColumns = "author", onDelete = CASCADE))
 public class Book {
 
     @PrimaryKey(autoGenerate = true)

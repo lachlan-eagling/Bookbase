@@ -12,6 +12,7 @@ import com.bookbase.app.R;
 import com.bookbase.app.model.entity.Book;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
@@ -59,19 +60,30 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
 
         // Get reference to item at current position.
         Book book = books.get(position);
+        File file = null;
 
         ImageView coverImage = viewHolder.coverImage;
         TextView title = viewHolder.title;
         TextView author = viewHolder.author;
+        if(book.getCoverImage() != null){
+            file = new File(book.getCoverImage());
+        }
 
         // Set view content from model.
+//        Picasso.with(this.getContext())
+//                .load(book.getCoverImage())
+//                .placeholder(R.drawable.book_default)
+//                .error(R.drawable.book_default)
+//                .into(coverImage);
+
         Picasso.with(this.getContext())
-                .load(book.getCoverImage())
+                .load(file)
                 .placeholder(R.drawable.book_default)
                 .error(R.drawable.book_default)
                 .into(coverImage);
         title.setText(book.getTitle());
-        author.setText("Author Placeholder");
+        //author.setText(book.getAuthor().toString());
+        author.setText("George R.R Martin");
 
     }
 
