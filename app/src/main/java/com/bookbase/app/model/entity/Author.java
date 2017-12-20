@@ -8,7 +8,6 @@ public class Author {
 
     @PrimaryKey(autoGenerate = true)
     private int authorId;
-
     private String name;
 
 

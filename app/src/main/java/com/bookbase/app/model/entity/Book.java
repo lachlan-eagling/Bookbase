@@ -1,21 +1,20 @@
 package com.bookbase.app.model.entity;
 
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 import java.util.Calendar;
 
-import static android.arch.persistence.room.ForeignKey.CASCADE;
-
-@Entity(tableName = "Book", foreignKeys = @ForeignKey(entity = Author.class, parentColumns = "authorId", childColumns = "author", onDelete = CASCADE))
+@Entity(tableName = "Book")
 public class Book {
+
+    //, foreignKeys = @ForeignKey(entity = Author.class, parentColumns = "authorId", childColumns = "author", onDelete = CASCADE)
 
     @PrimaryKey(autoGenerate = true)
     private int bookId;
     private String title;
-    private Author author;
+    private int author;
     private String description;
     private Genre genre;
     private String coverImage;
@@ -33,12 +32,12 @@ public class Book {
     }
 
     @Ignore
-    public Book(String title, Author author){
+    public Book(String title, int author){
         this.title = title;
         this.author = author;
         this.isRead = false;
         this.rating = 0;
-        this.author = new Author("");
+        this.author = author;
         this.description = "";
         this.isbn = "";
         this.genre = new Genre("");
@@ -47,12 +46,12 @@ public class Book {
     }
 
     @Ignore
-    public Book(String title, Author author, String description, Genre genre){
+    public Book(String title, int author, String description, Genre genre){
         this.title = title;
         this.author = author;
         this.isRead = false;
         this.rating = 0;
-        this.author = new Author("");
+        this.author = author;
         this.description = "";
         this.isbn = "";
         this.genre = new Genre("");
@@ -61,7 +60,7 @@ public class Book {
     }
 
 
-    public Book(int bookId, boolean isRead, int rating, Author author, String description,
+    public Book(int bookId, boolean isRead, int rating, int author, String description,
                 Genre genre, String isbn, String title, String review, String coverImage,
                 Calendar purchaseDate, double purchasePrice, boolean isOwned) {
         this.bookId = bookId;
@@ -82,7 +81,7 @@ public class Book {
     public int getBookId(){ return bookId; }
     public boolean getIsRead(){ return isRead; }
     public int getRating(){ return rating; }
-    public Author getAuthor(){ return author; }
+    public int getAuthor(){ return author; }
     public String getDescription(){ return description; }
     public Genre getGenre() { return genre; }
     public String getIsbn(){ return isbn; }
@@ -96,7 +95,7 @@ public class Book {
     public void setBookId(int bookId){ this.bookId = bookId; }
     public void setIsRead(boolean isRead){ this.isRead = isRead; }
     public void setRating(int rating){ this.rating = rating; }
-    public void setAuthor(Author author){ this.author = author; }
+    public void setAuthor(int author){ this.author = author; }
     public void setDescription(String description){ this.description = description; }
     public void setGenre(Genre genre) { this.genre = genre; }
     public void setIsbn(String isbn){ this.isbn = isbn; }

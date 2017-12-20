@@ -11,7 +11,7 @@ import com.bookbase.app.model.entity.Author;
 public interface AuthorDao {
 
     @Insert
-    void insert(Author author);
+    long insert(Author author);
 
     @Query("SELECT * FROM Author WHERE authorId=:id")
     Author getAuthorById(int id);
