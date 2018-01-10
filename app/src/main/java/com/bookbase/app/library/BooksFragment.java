@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -61,6 +62,8 @@ public class BooksFragment extends Fragment implements Runnable{
     @Override
     public void onResume() {
         super.onResume();
+        queryBookData qry = new queryBookData();
+        qry.execute();
     }
 
     @Override
@@ -70,7 +73,10 @@ public class BooksFragment extends Fragment implements Runnable{
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_books, container, false);
         bookList = view.findViewById(R.id.books_list);
-        bookList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(bookList.getContext(), layoutManager.getOrientation());
+        bookList.setLayoutManager(layoutManager);
+        bookList.addItemDecoration(dividerItemDecoration);
         FloatingActionButton fab = view.findViewById(R.id.add_book_fab);
 
         fab.setOnClickListener(new View.OnClickListener(){
@@ -118,4 +124,5 @@ public class BooksFragment extends Fragment implements Runnable{
             adapter.notifyItemRangeInserted(currSize, books.size());
         }
     }
+
 }
