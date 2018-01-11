@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.bookbase.app.R;
 import com.bookbase.app.database.AppDatabase;
-import com.bookbase.app.model.dao.AuthorDao;
 import com.bookbase.app.model.entity.Author;
 import com.bookbase.app.model.entity.Book;
 import com.squareup.picasso.Picasso;
@@ -61,12 +60,10 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
 
     public void onBindViewHolder(BooksAdapter.ViewHolder viewHolder, int position){
 
-        // Get reference to item at current position.
         Book book = books.get(position);
         File file = null;
 
         final AppDatabase db = AppDatabase.getDatabase(context);
-        final AuthorDao authorDao = db.authorDao();
         Author authorEntity = db.authorDao().getAuthorById(book.getAuthor());
 
         ImageView coverImage = viewHolder.coverImage;
@@ -76,20 +73,12 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
             file = new File(book.getCoverImage());
         }
 
-        // Set view content from model.
-//        Picasso.with(this.getContext())
-//                .load(book.getCoverImage())
-//                .placeholder(R.drawable.book_default)
-//                .error(R.drawable.book_default)
-//                .into(coverImage);
-
         Picasso.with(this.getContext())
                 .load(file)
                 .placeholder(R.drawable.book_default)
                 .error(R.drawable.book_default)
                 .into(coverImage);
         title.setText(book.getTitle());
-        //author.setText(book.getAuthor().toString());
         author.setText(authorEntity.getName());
 
     }
@@ -98,7 +87,5 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
     public int getItemCount(){
         return books.size();
     }
-
-
 
 }
