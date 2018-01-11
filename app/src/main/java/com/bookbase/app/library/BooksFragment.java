@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,18 +14,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.bookbase.app.R;
-import com.bookbase.app.library.addBook.AddBookActivity;
 import com.bookbase.app.database.AppDatabase;
-import com.bookbase.app.library.editBook.EditBookActivity;
+import com.bookbase.app.library.addBook.AddBookActivity;
 import com.bookbase.app.model.entity.Book;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BooksFragment extends Fragment implements Runnable{
+
+    // TODO: Need to maintain list of Books in this fragment rather than in QueryBookData inner class so can easily get reference from click listeners.
+    // TODO: Should move QueryBookData login into a Repository class.
 
     private OnFragmentInteractionListener mListener;
     private ArrayList<Book> books;
@@ -57,14 +59,14 @@ public class BooksFragment extends Fragment implements Runnable{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        queryBookData qry = new queryBookData();
+        QueryBookData qry = new QueryBookData();
         qry.execute();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        queryBookData qry = new queryBookData();
+        QueryBookData qry = new QueryBookData();
         qry.execute();
     }
 
@@ -92,14 +94,12 @@ public class BooksFragment extends Fragment implements Runnable{
         bookList.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), bookList, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(getActivity(), "Touched Item", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getActivity(), EditBookActivity.class);
-                startActivity(intent);
+                Snackbar.make(view, "Short touch", Snackbar.LENGTH_SHORT).show();
             }
 
             @Override
             public void onItemLongClick(View view, int position) {
-                Toast.makeText(getActivity(), "Long press Item", Toast.LENGTH_SHORT).show();
+                Snackbar.make(view, "Long touch", Snackbar.LENGTH_SHORT).show();
             }
         }));
 
@@ -123,7 +123,7 @@ public class BooksFragment extends Fragment implements Runnable{
 
 
     // Query books on background thread and post results back to main thread.
-    private class queryBookData extends AsyncTask<Void, Void, List<Book>>{
+    private class QueryBookData extends AsyncTask<Void, Void, List<Book>>{
 
         @Override
         protected List<Book> doInBackground(Void... v) {
@@ -140,6 +140,11 @@ public class BooksFragment extends Fragment implements Runnable{
             int currSize = adapter.getItemCount();
             adapter.notifyItemRangeInserted(currSize, books.size());
         }
+    }
+
+    private Bundle bundleBook(Book book){
+        Bundle bundle = new Bundle();
+        return bundle;
     }
 
 }

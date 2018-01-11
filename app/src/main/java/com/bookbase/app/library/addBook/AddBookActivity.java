@@ -71,8 +71,6 @@ public class AddBookActivity extends AppCompatActivity implements AsyncInsertRes
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Fragment basicFragment = AddBookPagerAdapter.BASIC_DETAILS_PAGE;
-//        final Book book = new Book();
-//        final Author _author = new Author();
         boolean mandatoryDetailsComplete = true;
 
         // Basic details
@@ -116,37 +114,9 @@ public class AddBookActivity extends AppCompatActivity implements AsyncInsertRes
         }
 
         if(mandatoryDetailsComplete){
-
             _author.setName(author.getText().toString());
             addAuthor(_author);
-            //long authorId = -1;
-
-            // Set basic details.
-            //book.setTitle(title.getText().toString());
-            //book.setAuthor(((int) authorId));
-//            book.setDescription(description.getText().toString());
-//            book.setGenre(new Genre(genre.getText().toString()));
-//            book.setCoverImage(SaveImageHelper.saveImageToInternalStorage(imageToStore, book));
-//
-//            // Set advanced details.
-//            book.setReview(review.getText().toString());
-//            book.setPurchaseDate(parseDate(purchaseDate.getText().toString()));
-//            book.setPurchasePrice(parseDouble(purchasePrice.getText().toString()));
-//            book.setRating(rating.getNumStars());
-//            book.setIsRead(read.isChecked());
-//            book.setIsOwned(owned.isChecked());
-
-            // Insert book to db on new thread.
-//            new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    addBook(book);
-//                }
-//            }).start();
-//
-//            finish();
             return true;
-
         } else{
             Toast.makeText(this, "Missing mandatory fields!", Toast.LENGTH_SHORT).show();
             return false;
