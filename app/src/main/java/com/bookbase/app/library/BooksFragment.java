@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.bookbase.app.R;
 import com.bookbase.app.book.addBook.AddBookActivity;
@@ -86,6 +87,19 @@ public class BooksFragment extends Fragment implements Runnable{
                 startActivity(intent);
             }
         });
+
+        bookList.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), bookList, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Toast.makeText(getActivity(), "Touched Item", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+                Toast.makeText(getActivity(), "Long press Item", Toast.LENGTH_SHORT).show();
+            }
+        }));
+
         return view;
     }
 
