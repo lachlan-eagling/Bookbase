@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.bookbase.app.R;
 import com.bookbase.app.library.addBook.AddBookActivity;
 import com.bookbase.app.database.AppDatabase;
+import com.bookbase.app.library.editBook.EditBookActivity;
 import com.bookbase.app.model.entity.Book;
 
 import java.util.ArrayList;
@@ -92,6 +93,8 @@ public class BooksFragment extends Fragment implements Runnable{
             @Override
             public void onItemClick(View view, int position) {
                 Toast.makeText(getActivity(), "Touched Item", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), EditBookActivity.class);
+                startActivity(intent);
             }
 
             @Override

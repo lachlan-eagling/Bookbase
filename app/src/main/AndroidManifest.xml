@@ -26,6 +26,15 @@
                 android:value="com.bookbase.app.mainscreen.HomeScreen"
                 />
         </activity>
+        <activity
+            android:name="com.bookbase.app.library.editBook.EditBookActivity"
+            android:label="@string/title_activity_edit_book"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.bookbase.app.mainscreen.HomeScreen"
+                />
+        </activity>
 
         <meta-data
             android:name="preloaded_fonts"
