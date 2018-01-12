@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import com.bookbase.app.R;
 import com.bookbase.app.database.AppDatabase;
 import com.bookbase.app.library.addBook.AddBookActivity;
+import com.bookbase.app.library.editBook.EditBookActivity;
 import com.bookbase.app.model.entity.Book;
 import com.bookbase.app.model.repository.BookRepository;
 
@@ -54,6 +55,7 @@ public class BooksFragment extends Fragment implements Runnable{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         repository = BookRepository.getRepository();
+        books = repository.getAll();
     }
 
     @Override
@@ -73,7 +75,7 @@ public class BooksFragment extends Fragment implements Runnable{
         bookList.setLayoutManager(layoutManager);
         bookList.addItemDecoration(dividerItemDecoration);
         FloatingActionButton fab = view.findViewById(R.id.add_book_fab);
-        setupAdapter(repository.getAll());
+        setupAdapter(books);
 
         fab.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -87,6 +89,9 @@ public class BooksFragment extends Fragment implements Runnable{
             @Override
             public void onItemClick(View view, int position) {
                 Snackbar.make(view, "Short touch", Snackbar.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), EditBookActivity.class);
+                intent.putExtras(books.get(position).bundleBook());
+                startActivity(intent);
             }
 
             @Override
