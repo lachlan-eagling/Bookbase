@@ -26,7 +26,7 @@ public class Converters {
     }
 
     @TypeConverter
-    public static String calendarToLong(Calendar calendar){
+    public static String calendarToString(Calendar calendar){
         // TODO: Finish implementation.
         return "";
     }
