@@ -3,6 +3,9 @@ package com.bookbase.app.model.entity;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.os.Bundle;
+
+import com.bookbase.app.utils.Converters;
 
 import java.util.Calendar;
 
@@ -105,5 +108,22 @@ public class Book {
     public void setPurchasePrice(double price){ this.purchasePrice = price; }
     public void setCoverImage(String imageDirectory) { this.coverImage = imageDirectory; }
     public void setIsOwned(boolean isOwned) { this.isOwned = isOwned; }
+
+    public Bundle bundleBook(){
+        Bundle bundle = new Bundle();
+        bundle.putInt("bookId", bookId);
+        bundle.putString("title", title);
+        bundle.putInt("author", author);
+        //bundle.putInt("genre", genre) //TODO: Need to fix so can bundle Genre val.
+        bundle.putString("coverImage", coverImage);
+        bundle.putString("isbn", isbn);
+        bundle.putInt("rating", rating);
+        bundle.putString("review", review);
+        bundle.putBoolean("isRead", isRead);
+        bundle.putString("purchaseDate", Converters.calendarToString(purchaseDate));
+        bundle.putDouble("price", purchasePrice);
+        bundle.putBoolean("owned", isOwned);
+        return bundle;
+    }
 
 }
