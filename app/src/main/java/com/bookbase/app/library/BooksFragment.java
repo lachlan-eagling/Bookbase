@@ -3,7 +3,6 @@ package com.bookbase.app.library;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,29 +18,24 @@ import com.bookbase.app.R;
 import com.bookbase.app.database.AppDatabase;
 import com.bookbase.app.library.addBook.AddBookActivity;
 import com.bookbase.app.model.entity.Book;
+import com.bookbase.app.model.repository.BookRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BooksFragment extends Fragment implements Runnable{
 
-    // TODO: Need to maintain list of Books in this fragment rather than in QueryBookData inner class so can easily get reference from click listeners.
-    // TODO: Should move QueryBookData login into a Repository class.
-
     private OnFragmentInteractionListener mListener;
-    private ArrayList<Book> books;
+    private List<Book> books;
     private AppDatabase database;
     private RecyclerView bookList;
+    private BookRepository repository;
 
-    public BooksFragment() {
-        // Required empty public constructor
-    }
+    public interface OnFragmentInteractionListener { void onFragmentInteraction(Uri uri); }
+
+    public BooksFragment() {}
 
     public static BooksFragment newInstance(String param1, String param2) {
-        BooksFragment fragment = new BooksFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+        return new BooksFragment();
     }
 
     @Override
@@ -59,22 +53,19 @@ public class BooksFragment extends Fragment implements Runnable{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        QueryBookData qry = new QueryBookData();
-        qry.execute();
+        repository = BookRepository.getRepository();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        QueryBookData qry = new QueryBookData();
-        qry.execute();
+        setupAdapter(repository.getAll());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_books, container, false);
         bookList = view.findViewById(R.id.books_list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -82,6 +73,7 @@ public class BooksFragment extends Fragment implements Runnable{
         bookList.setLayoutManager(layoutManager);
         bookList.addItemDecoration(dividerItemDecoration);
         FloatingActionButton fab = view.findViewById(R.id.add_book_fab);
+        setupAdapter(repository.getAll());
 
         fab.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -112,39 +104,16 @@ public class BooksFragment extends Fragment implements Runnable{
         mListener = null;
     }
 
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
-    }
-
     @Override
-    public void run(){
-        database = AppDatabase.getDatabase(this.getContext());
-    }
+    public void run(){ database = AppDatabase.getDatabase(this.getContext()); }
 
 
-    // Query books on background thread and post results back to main thread.
-    private class QueryBookData extends AsyncTask<Void, Void, List<Book>>{
-
-        @Override
-        protected List<Book> doInBackground(Void... v) {
-            return database.bookDao().getBooks();
-        }
-
-        @Override
-        protected void onPostExecute(List<Book> books){
-            BooksAdapter adapter;
-
-            super.onPostExecute(books);
-            adapter = new BooksAdapter(getActivity(), books);
-            bookList.setAdapter(adapter);
-            int currSize = adapter.getItemCount();
-            adapter.notifyItemRangeInserted(currSize, books.size());
-        }
-    }
-
-    private Bundle bundleBook(Book book){
-        Bundle bundle = new Bundle();
-        return bundle;
+    private void setupAdapter(List<Book> books){
+        BooksAdapter adapter;
+        adapter = new BooksAdapter(getActivity(), books);
+        bookList.setAdapter(adapter);
+        int currSize = adapter.getItemCount();
+        adapter.notifyItemRangeInserted(currSize, books.size());
     }
 
 }
