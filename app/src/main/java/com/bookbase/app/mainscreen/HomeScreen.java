@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.bookbase.app.R;
 import com.bookbase.app.aboutScreen.AboutFragment;
 import com.bookbase.app.library.BooksFragment;
+import com.bookbase.app.library.viewBook.ViewBookFragment;
 import com.bookbase.app.reports.ReportFragment;
 import com.bookbase.app.settings.SettingsFragment;
 import com.bookbase.app.wishlist.WishlistFragment;
@@ -30,7 +31,8 @@ public class HomeScreen extends AppCompatActivity implements
         ReportFragment.OnFragmentInteractionListener,
         WishlistFragment.OnFragmentInteractionListener,
         SettingsFragment.OnFragmentInteractionListener,
-        AboutFragment.OnFragmentInteractionListener {
+        AboutFragment.OnFragmentInteractionListener,
+        ViewBookFragment.OnFragmentInteractionListener {
 
     private static Context context;
 

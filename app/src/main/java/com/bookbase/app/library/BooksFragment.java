@@ -17,9 +17,10 @@ import android.view.ViewGroup;
 import com.bookbase.app.R;
 import com.bookbase.app.database.AppDatabase;
 import com.bookbase.app.library.addBook.AddBookActivity;
-import com.bookbase.app.library.editBook.EditBookActivity;
+import com.bookbase.app.library.viewBook.ViewBookFragment;
 import com.bookbase.app.model.entity.Book;
 import com.bookbase.app.model.repository.BookRepository;
+import com.bookbase.app.utils.BundleBookHelper;
 
 import java.util.List;
 
@@ -88,10 +89,19 @@ public class BooksFragment extends Fragment implements Runnable{
         bookList.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), bookList, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Snackbar.make(view, "Short touch", Snackbar.LENGTH_SHORT).show();
-                Intent intent = new Intent(getActivity(), EditBookActivity.class);
-                intent.putExtras(books.get(position).bundleBook());
-                startActivity(intent);
+                try {
+                    Fragment fragment = (Fragment) (ViewBookFragment.class).newInstance();
+                    fragment.setArguments(BundleBookHelper.bundleBook(books.get(position)));
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.content_frame, fragment)
+                            .addToBackStack(null)
+                            .commit();
+                } catch(IllegalAccessException e){
+                    e.printStackTrace();
+                } catch(java.lang.InstantiationException e) {
+                    e.printStackTrace();
+                }
+
             }
 
             @Override
