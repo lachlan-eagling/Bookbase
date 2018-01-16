@@ -4,13 +4,15 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.bookbase.app.utils.Converters;
 
 import java.util.Calendar;
 
 @Entity(tableName = "Book")
-public class Book {
+public class Book implements Parcelable{
 
     //, foreignKeys = @ForeignKey(entity = Author.class, parentColumns = "authorId", childColumns = "author", onDelete = CASCADE)
 
@@ -28,6 +30,18 @@ public class Book {
     private Calendar purchaseDate;
     private double purchasePrice;
     private boolean isOwned;
+
+    public static final Parcelable.Creator<Book> CREATOR = new Parcelable.Creator<Book>() {
+        @Override
+        public Book createFromParcel(Parcel source) {
+            return null;
+        }
+
+        @Override
+        public Book[] newArray(int size) {
+            return new Book[0];
+        }
+    };
 
     // Default constructor for Room database.
     public Book(){
@@ -126,4 +140,13 @@ public class Book {
         return bundle;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+    }
 }

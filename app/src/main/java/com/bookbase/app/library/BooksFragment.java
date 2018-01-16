@@ -19,8 +19,7 @@ import com.bookbase.app.database.AppDatabase;
 import com.bookbase.app.library.addBook.AddBookActivity;
 import com.bookbase.app.library.viewBook.ViewBookFragment;
 import com.bookbase.app.model.entity.Book;
-import com.bookbase.app.model.repository.BookRepository;
-import com.bookbase.app.utils.BundleBookHelper;
+import com.bookbase.app.model.repository.Repository;
 
 import java.util.List;
 
@@ -30,7 +29,7 @@ public class BooksFragment extends Fragment implements Runnable{
     private List<Book> books;
     private AppDatabase database;
     private RecyclerView bookList;
-    private BookRepository repository;
+    private Repository repository;
 
     public interface OnFragmentInteractionListener { void onFragmentInteraction(Uri uri); }
 
@@ -55,14 +54,14 @@ public class BooksFragment extends Fragment implements Runnable{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        repository = BookRepository.getRepository();
-        books = repository.getAll();
+        repository = Repository.getRepository();
+        books = repository.getBookList();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        setupAdapter(repository.getAll());
+        setupAdapter(repository.getBookList());
     }
 
     @Override
@@ -91,7 +90,10 @@ public class BooksFragment extends Fragment implements Runnable{
             public void onItemClick(View view, int position) {
                 try {
                     Fragment fragment = (Fragment) (ViewBookFragment.class).newInstance();
-                    fragment.setArguments(BundleBookHelper.bundleBook(books.get(position)));
+                    //fragment.setArguments(BundleBookHelper.bundleBook(books.get(position)));
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("book", books.get(position));
+                    fragment.setArguments(bundle);
                     getActivity().getSupportFragmentManager().beginTransaction()
                             .replace(R.id.content_frame, fragment)
                             .addToBackStack(null)

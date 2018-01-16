@@ -1,9 +1,8 @@
 package com.bookbase.app.library.addBook;
 
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -17,14 +16,12 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bookbase.app.R;
-import com.bookbase.app.database.AppDatabase;
 import com.bookbase.app.model.entity.Author;
 import com.bookbase.app.model.entity.Book;
 import com.bookbase.app.model.entity.Genre;
-import com.bookbase.app.utils.AsyncInsertResponse;
+import com.bookbase.app.model.repository.Repository;
 import com.bookbase.app.utils.SaveImageHelper;
 
 import java.text.ParseException;
@@ -32,17 +29,26 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class AddBookActivity extends AppCompatActivity implements AsyncInsertResponse {
+public class AddBookActivity extends AppCompatActivity {
 
     FragmentPagerAdapter viewPagerAdapter;
     private Bitmap imageToStore;
     final Book book = new Book();
     final Author _author = new Author();
     private long authorId;
+    private Repository repository;
+
+    public interface AddBookCallback{
+        void inProgress();
+        void onSuccess();
+        void onFailure();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        repository = Repository.getRepository();
+
         setContentView(R.layout.activity_add_book);
         final ViewPager addBooksPager = (ViewPager) findViewById(R.id.addBookPager);
         viewPagerAdapter = new AddBookPagerAdapter(getSupportFragmentManager());
@@ -114,11 +120,43 @@ public class AddBookActivity extends AppCompatActivity implements AsyncInsertRes
         }
 
         if(mandatoryDetailsComplete){
-            _author.setName(author.getText().toString());
-            addAuthor(_author);
+            // Set basic details.
+
+            Author _author = new Author(author.getText().toString());
+            Genre _genre = new Genre(genre.getText().toString());
+            book.setTitle(title.getText().toString());
+            book.setDescription(description.getText().toString());
+            book.setGenre(new Genre(genre.getText().toString()));
+            book.setCoverImage(SaveImageHelper.saveImageToInternalStorage(imageToStore, book));
+
+            // Set advanced details.
+            book.setReview(review.getText().toString());
+            book.setPurchaseDate(parseDate(purchaseDate.getText().toString()));
+            book.setPurchasePrice(parseDouble(purchasePrice.getText().toString()));
+            book.setRating(rating.getNumStars());
+            book.setIsRead(read.isChecked());
+            book.setIsOwned(owned.isChecked());
+
+            repository.addNewBook(book, _author, _genre, new AddBookCallback() {
+                @Override
+                public void inProgress() {
+                    // TODO: Display loading spinner.
+                }
+
+                @Override
+                public void onSuccess() {
+                    finish();
+                }
+
+                @Override
+                public void onFailure() {
+                    // TODO: Display error and log to crash reporting.
+                }
+            });
             return true;
         } else{
-            Toast.makeText(this, "Missing mandatory fields!", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Missing mandatory fields!", Toast.LENGTH_SHORT).show();
+            Snackbar.make(this.getCurrentFocus(), "Missing mandatory fields!", Snackbar.LENGTH_SHORT).show();
             return false;
         }
 
@@ -144,68 +182,14 @@ public class AddBookActivity extends AppCompatActivity implements AsyncInsertRes
         } catch(NumberFormatException e){
             return 0.0;
         }
-        //return Double.parseDouble(in);
     }
 
-    private synchronized void addBook(){
-        // Basic details
-        EditText title = findViewById(R.id.add_book_title_data);
-        EditText description = findViewById(R.id.add_book_description_data);
-        EditText genre = findViewById(R.id.add_book_genre_data);
-        ImageView coverImage = findViewById(R.id.cover_image);
-
-        // Advanced details
-        EditText review = findViewById(R.id.add_book_review_data);
-        EditText purchaseDate = findViewById(R.id.add_book_purchase_date_data);
-        EditText purchasePrice = findViewById(R.id.add_book_purchase_price_data);
-        RatingBar rating = findViewById(R.id.add_book_rating_data);
-        Switch read = findViewById(R.id.add_book_isread_data);
-        Switch owned = findViewById(R.id.add_book_owned_data);
-
-        // Set basic details.
-        book.setTitle(title.getText().toString());
-        book.setAuthor(((int) authorId));
-        book.setDescription(description.getText().toString());
-        book.setGenre(new Genre(genre.getText().toString()));
-        book.setCoverImage(SaveImageHelper.saveImageToInternalStorage(imageToStore, book));
-
-        // Set advanced details.
-        book.setReview(review.getText().toString());
-        book.setPurchaseDate(parseDate(purchaseDate.getText().toString()));
-        book.setPurchasePrice(parseDouble(purchasePrice.getText().toString()));
-        book.setRating(rating.getNumStars());
-        book.setIsRead(read.isChecked());
-        book.setIsOwned(owned.isChecked());
-
-        AppDatabase db = AppDatabase.getDatabase(this);
-        db.bookDao().insert(book);
-    }
-
-    private synchronized void addAuthor(Author author){
-        InsertAuthorAsyncTask insertAuthorTask = new InsertAuthorAsyncTask();
-        insertAuthorTask.delegate = this;
-        insertAuthorTask.context = this;
-        insertAuthorTask.author = author;
-        insertAuthorTask.execute(author);
-    }
 
     public void setImageToStore(Bitmap image){
         imageToStore = image;
     }
 
-    @Override
-    public void postResult(long Out) {
-        authorId = Out;
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                addBook();
-            }
-        }).start();
-
-        finish();
-    }
 
     public static class AddBookPagerAdapter extends FragmentPagerAdapter{
 
@@ -245,31 +229,6 @@ public class AddBookActivity extends AppCompatActivity implements AsyncInsertRes
 
     }
 
-    // Async task to insert new author.
-    public class InsertAuthorAsyncTask extends AsyncTask {
 
-        public AsyncInsertResponse delegate = null;
-        public Author author;
-        public Context context;
-
-        @Override
-        protected Object doInBackground(Object[] objects) {
-            if(context != null && author != null) {
-                AppDatabase db = AppDatabase.getDatabase(context);
-                return db.authorDao().insert((Author) objects[0]);
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Object o) {
-            // Post result back to activity.
-            try{
-                delegate.postResult((long) o);
-            } catch(ClassCastException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
 }

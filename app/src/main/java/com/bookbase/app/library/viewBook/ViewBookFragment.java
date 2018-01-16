@@ -59,9 +59,10 @@ public class ViewBookFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_view_book, container, false);
         ButterKnife.bind(this, view);
+
         title.setText(book.getTitle());
         author.setText(AppDatabase.getDatabase(HomeScreen.getContext()).authorDao().getAuthorById(book.getAuthor()).getName());
         rating.setRating((float) book.getRating());
