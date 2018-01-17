@@ -64,7 +64,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
         File file = null;
 
         final AppDatabase db = AppDatabase.getDatabase(context);
-        Author authorEntity = db.authorDao().getAuthorById(book.getAuthor());
+        Author authorEntity = db.authorDao().getAuthorById(book.getAuthor().getAuthorId());
 
         ImageView coverImage = viewHolder.coverImage;
         TextView title = viewHolder.title;

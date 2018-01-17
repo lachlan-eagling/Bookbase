@@ -19,7 +19,7 @@ public class Book implements Parcelable{
     @PrimaryKey(autoGenerate = true)
     private int bookId;
     private String title;
-    private int author;
+    private Author author;
     private String description;
     private Genre genre;
     private String coverImage;
@@ -49,7 +49,7 @@ public class Book implements Parcelable{
     }
 
     @Ignore
-    public Book(String title, int author){
+    public Book(String title, Author author){
         this.title = title;
         this.author = author;
         this.isRead = false;
@@ -63,7 +63,7 @@ public class Book implements Parcelable{
     }
 
     @Ignore
-    public Book(String title, int author, String description, Genre genre){
+    public Book(String title, Author author, String description, Genre genre){
         this.title = title;
         this.author = author;
         this.isRead = false;
@@ -77,7 +77,7 @@ public class Book implements Parcelable{
     }
 
 
-    public Book(int bookId, boolean isRead, int rating, int author, String description,
+    public Book(int bookId, boolean isRead, int rating, Author author, String description,
                 Genre genre, String isbn, String title, String review, String coverImage,
                 Calendar purchaseDate, double purchasePrice, boolean isOwned) {
         this.bookId = bookId;
@@ -98,7 +98,7 @@ public class Book implements Parcelable{
     public int getBookId(){ return bookId; }
     public boolean getIsRead(){ return isRead; }
     public int getRating(){ return rating; }
-    public int getAuthor(){ return author; }
+    public Author getAuthor(){ return author; }
     public String getDescription(){ return description; }
     public Genre getGenre() { return genre; }
     public String getIsbn(){ return isbn; }
@@ -112,7 +112,7 @@ public class Book implements Parcelable{
     public void setBookId(int bookId){ this.bookId = bookId; }
     public void setIsRead(boolean isRead){ this.isRead = isRead; }
     public void setRating(int rating){ this.rating = rating; }
-    public void setAuthor(int author){ this.author = author; }
+    public void setAuthor(Author author){ this.author = author; }
     public void setDescription(String description){ this.description = description; }
     public void setGenre(Genre genre) { this.genre = genre; }
     public void setIsbn(String isbn){ this.isbn = isbn; }
@@ -127,7 +127,7 @@ public class Book implements Parcelable{
         Bundle bundle = new Bundle();
         bundle.putInt("bookId", bookId);
         bundle.putString("title", title);
-        bundle.putInt("author", author);
+        //bundle.putInt("author", author);
         //bundle.putInt("genre", genre) //TODO: Need to fix so can bundle Genre val.
         bundle.putString("coverImage", coverImage);
         bundle.putString("isbn", isbn);

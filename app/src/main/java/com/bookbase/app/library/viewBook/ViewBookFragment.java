@@ -64,7 +64,7 @@ public class ViewBookFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         title.setText(book.getTitle());
-        author.setText(AppDatabase.getDatabase(HomeScreen.getContext()).authorDao().getAuthorById(book.getAuthor()).getName());
+        author.setText(AppDatabase.getDatabase(HomeScreen.getContext()).authorDao().getAuthorById(book.getAuthor().getAuthorId()).getName());
         rating.setRating((float) book.getRating());
         descr.setText(book.getDescription());
 
