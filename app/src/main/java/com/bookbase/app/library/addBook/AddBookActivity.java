@@ -34,8 +34,6 @@ public class AddBookActivity extends AppCompatActivity {
     FragmentPagerAdapter viewPagerAdapter;
     private Bitmap imageToStore;
     final Book book = new Book();
-    final Author _author = new Author();
-    private long authorId;
     private Repository repository;
 
     public interface AddBookCallback{
@@ -120,16 +118,13 @@ public class AddBookActivity extends AppCompatActivity {
         }
 
         if(mandatoryDetailsComplete){
-            // Set basic details.
 
-            Author _author = new Author(author.getText().toString());
-            Genre _genre = new Genre(genre.getText().toString());
             book.setTitle(title.getText().toString());
+            book.setAuthor(new Author(author.getText().toString()));
+            book.setGenre(new Genre(genre.getText().toString()));
             book.setDescription(description.getText().toString());
             book.setGenre(new Genre(genre.getText().toString()));
             book.setCoverImage(SaveImageHelper.saveImageToInternalStorage(imageToStore, book));
-
-            // Set advanced details.
             book.setReview(review.getText().toString());
             book.setPurchaseDate(parseDate(purchaseDate.getText().toString()));
             book.setPurchasePrice(parseDouble(purchasePrice.getText().toString()));
@@ -137,20 +132,23 @@ public class AddBookActivity extends AppCompatActivity {
             book.setIsRead(read.isChecked());
             book.setIsOwned(owned.isChecked());
 
-            repository.addNewBook(book, _author, _genre, new AddBookCallback() {
+            repository.addNewBook(book, new AddBookCallback() {
                 @Override
                 public void inProgress() {
                     // TODO: Display loading spinner.
+                    showSnackBar("Inserting book...");
                 }
 
                 @Override
                 public void onSuccess() {
+                    showSnackBar("Book inserted successfully...");
                     finish();
                 }
 
                 @Override
                 public void onFailure() {
                     // TODO: Display error and log to crash reporting.
+                    showSnackBar("Book insert failed...");
                 }
             });
             return true;
@@ -160,6 +158,11 @@ public class AddBookActivity extends AppCompatActivity {
             return false;
         }
 
+    }
+
+    // TODO: Helper method for testing, remove this.
+    private void showSnackBar(String message){
+        Snackbar.make(this.getCurrentFocus(), message, Snackbar.LENGTH_SHORT).show();
     }
 
     private Calendar parseDate(String date){
