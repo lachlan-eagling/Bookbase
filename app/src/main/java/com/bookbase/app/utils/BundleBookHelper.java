@@ -23,7 +23,7 @@ public class BundleBookHelper {
         Bundle bundle = new Bundle();
         bundle.putInt(ID_KEY, book.getBookId());
         bundle.putString(TITLE_KEY, book.getTitle());
-        bundle.putInt(AUTHOR_KEY, book.getAuthor());
+        //bundle.putInt(AUTHOR_KEY, book.getAuthor());
         //bundle.putInt(GENRE_KEY, book.getGenre()) //TODO: Need to fix so can bundle Genre val.
         bundle.putString(COVER_IMAGE_KEY, book.getCoverImage());
         bundle.putString(ISBN_KEY, book.getIsbn());
@@ -40,7 +40,7 @@ public class BundleBookHelper {
         Book book = new Book();
         book.setBookId(bundle.getInt(ID_KEY));
         book.setTitle(bundle.getString(TITLE_KEY));
-        book.setAuthor(bundle.getInt(AUTHOR_KEY));
+        //book.setAuthor(bundle.getInt(AUTHOR_KEY));
         //book.setGenre(bundle.getInt(GENRE_KEY)); //TODO: Need to fix so can bundle Genre val.
         book.setCoverImage(bundle.getString(COVER_IMAGE_KEY));
         book.setIsbn(bundle.getString(ISBN_KEY));
