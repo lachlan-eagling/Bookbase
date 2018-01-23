@@ -24,7 +24,6 @@ public class Repository {
     private static int NUM_CORES = Runtime.getRuntime().availableProcessors();
     private static final int KEEP_ALIVE_TIME = 1;
     private static final TimeUnit KEEP_ALIVE_TIME_UNIT = TimeUnit.SECONDS;
-    private final BlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<>();
     private ThreadPoolExecutor pool;
 
     private static Repository repository;
@@ -37,16 +36,8 @@ public class Repository {
     private List<Genre> genres;
     private Map<Integer, String> authorMap;
     private Map<Integer, String> genreMap;
-
-    private static final int IDLE = 0;
-    private static final int AUTHOR_INSERTED = 1;
-    private static final int GENRE_INSERTED = 2;
-    private static final int BOOK_INSERTED = 3;
-    private static int insertState = IDLE;
-    private static Author insertedAuthor;
-    private static Genre insertedGenre;
-
     private Repository(){
+        final BlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<>();
         pool = new ThreadPoolExecutor(
                 NUM_CORES,
                 NUM_CORES,
@@ -76,63 +67,26 @@ public class Repository {
         return  repository;
     }
 
-    public void addNewBook(Book book, AddBookActivity.AddBookCallback callback){
-
-        callback.inProgress();
-        while(insertState != BOOK_INSERTED){
-            switch(insertState){
-                case IDLE:
-                    insertAuthor(book.getAuthor());
-                    break;
-                case AUTHOR_INSERTED:
-                    insertGenre(book.getGenre());
-                    book.setAuthor(insertedAuthor);
-                    break;
-                case GENRE_INSERTED:
-                    book.setGenre(insertedGenre);
-                    insertBook(book);
-                    break;
-                case BOOK_INSERTED:
-                    callback.onSuccess();
-                default:
-                    callback.onFailure();
-                    throw new IllegalStateException("Invalid insertState: " + insertState);
-            }
-
-        }
-        if(insertState == BOOK_INSERTED){
-            callback.onSuccess();
-        }
-    }
-
-    // Book methods.
-    public Book getBook(int bookId) {
-        // TODO: Off load to background thread.
-        return bookDao.getSingleBook(bookId);
-    }
-
     public List<Book> getBookList() {
         // TODO: Off load to background thread.
-        if(books.isEmpty() || books == null){
-            books = bookDao.getBooks();
-        }
-        return books;
+        return bookDao.getBooks();
     }
 
-    private void insertBook(final Book book){
+    public void insertBook(final Book book, final AddBookActivity.AddBookCallback callback){
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                bookDao.insert(book);
-                insertState = BOOK_INSERTED;
+                long success;
+                callback.inProgress();
+                success = bookDao.insert(book);
+                if(success > 0){
+                    callback.onSuccess();
+                } else {
+                    callback.onFailure();
+                }
             }
         };
         pool.execute(runnable);
-    }
-
-    public int updateBook(Book book) {
-        // TODO: Off load to background thread.
-        return bookDao.update(book);
     }
 
     public int deleteBook(Book book) {
@@ -140,28 +94,14 @@ public class Repository {
         return bookDao.deleteBook(book);
     }
 
-    // Author Methods.
-    public String getAuthorName(int authorId){
-        String name = authorMap.get(authorId);
-        return name != null ? name : "No Author Name";
-    }
-
     public void insertAuthor(final Author author){
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 authorDao.insert(author);
-                insertState = AUTHOR_INSERTED;
-                insertedAuthor = author;
             }
         };
         pool.execute(runnable);
-    }
-
-    // Genre Methods.
-    public String getGenreName(int genreId){
-        String name = genreMap.get(genreId);
-        return name != null ? name : "No Genre Name";
     }
 
     public void insertGenre(final Genre genre){
@@ -169,14 +109,11 @@ public class Repository {
             @Override
             public void run() {
                 genreDao.insert(genre);
-                insertState = GENRE_INSERTED;
-                insertedGenre = genre;
             }
         };
         pool.execute(runnable);
     }
 
-    // Refresh methods.
     private void refreshBooks(){
         // TODO: Off load to background thread.
         if(books != null){

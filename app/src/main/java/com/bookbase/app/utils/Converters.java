@@ -33,7 +33,7 @@ public class Converters {
 
     @TypeConverter
     public static int authorAsId(Author author){
-        return author.getAuthorId();
+        return (int) db.authorDao().insert(author);
     }
 
     @TypeConverter
@@ -43,7 +43,7 @@ public class Converters {
 
     @TypeConverter
     public static int genreAsId(Genre genre){
-        return genre.getGenreId();
+        return (int) db.genreDao().insert(genre);
     }
 
     @TypeConverter

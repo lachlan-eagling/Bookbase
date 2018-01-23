@@ -17,7 +17,7 @@ public interface BookDao {
     void insertAll(Book... books);
 
     @Insert
-    void insert(Book book);
+    long insert(Book book);
 
     @Query("SELECT * FROM Book")
     List<Book> getBooks();

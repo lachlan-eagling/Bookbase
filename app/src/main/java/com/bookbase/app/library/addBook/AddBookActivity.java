@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -132,16 +133,18 @@ public class AddBookActivity extends AppCompatActivity {
             book.setIsRead(read.isChecked());
             book.setIsOwned(owned.isChecked());
 
-            repository.addNewBook(book, new AddBookCallback() {
+            repository.insertBook(book, new AddBookCallback() {
                 @Override
                 public void inProgress() {
                     // TODO: Display loading spinner.
                     showSnackBar("Inserting book...");
+                    Log.d(this.getClass().getSimpleName(), "Inserting book");
                 }
 
                 @Override
                 public void onSuccess() {
                     showSnackBar("Book inserted successfully...");
+                    Log.d(this.getClass().getSimpleName(), "Book inserted");
                     finish();
                 }
 
@@ -149,6 +152,7 @@ public class AddBookActivity extends AppCompatActivity {
                 public void onFailure() {
                     // TODO: Display error and log to crash reporting.
                     showSnackBar("Book insert failed...");
+                    Log.d(this.getClass().getSimpleName(), "Error inserting book");
                 }
             });
             return true;
