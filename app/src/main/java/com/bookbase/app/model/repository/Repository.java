@@ -29,9 +29,6 @@ public class Repository {
     private AuthorDao authorDao;
     private GenreDao genreDao;
 
-    private List<Book> books;
-    private List<Author> authors;
-    private List<Genre> genres;
     private Repository(){
         final BlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<>();
         pool = new ThreadPoolExecutor(
@@ -45,10 +42,6 @@ public class Repository {
         bookDao = db.bookDao();
         authorDao = db.authorDao();
         genreDao = db.genreDao();
-
-        books = bookDao.getBooks();
-        authors = authorDao.getAuthors();
-        genres = genreDao.getGenres();
     }
 
     public static Repository getRepository(){
@@ -104,33 +97,5 @@ public class Repository {
         };
         pool.execute(runnable);
     }
-
-    private void refreshBooks(){
-        // TODO: Off load to background thread.
-        if(books != null){
-            bookDao.getBooks();
-        }
-    }
-
-    private void refreshAuthors(){
-        // TODO: Off load to background thread.
-        if(authors != null){
-            authors = authorDao.getAuthors();
-        }
-    }
-
-    private void refreshGenres(){
-        // TODO: Off load to background thread.
-        if(genres != null){
-            genres = genreDao.getGenres();
-        }
-    }
-
-    private void refreshAll(){
-        refreshBooks();
-        refreshAuthors();
-        refreshGenres();
-    }
-
 
 }
