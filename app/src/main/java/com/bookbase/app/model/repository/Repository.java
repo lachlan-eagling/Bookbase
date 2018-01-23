@@ -10,9 +10,7 @@ import com.bookbase.app.model.entity.Author;
 import com.bookbase.app.model.entity.Book;
 import com.bookbase.app.model.entity.Genre;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -34,8 +32,6 @@ public class Repository {
     private List<Book> books;
     private List<Author> authors;
     private List<Genre> genres;
-    private Map<Integer, String> authorMap;
-    private Map<Integer, String> genreMap;
     private Repository(){
         final BlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<>();
         pool = new ThreadPoolExecutor(
@@ -53,11 +49,6 @@ public class Repository {
         books = bookDao.getBooks();
         authors = authorDao.getAuthors();
         genres = genreDao.getGenres();
-        authorMap = new HashMap<>();
-        genreMap = new HashMap<>();
-
-        refreshGenreMap();
-        refreshAuthorMap();
     }
 
     public static Repository getRepository(){
@@ -125,7 +116,6 @@ public class Repository {
         // TODO: Off load to background thread.
         if(authors != null){
             authors = authorDao.getAuthors();
-            refreshAuthorMap();
         }
     }
 
@@ -133,7 +123,6 @@ public class Repository {
         // TODO: Off load to background thread.
         if(genres != null){
             genres = genreDao.getGenres();
-            refreshGenreMap();
         }
     }
 
@@ -143,20 +132,5 @@ public class Repository {
         refreshGenres();
     }
 
-    private void refreshAuthorMap(){
-        if(authorMap != null){
-            for(Author a : authors){
-                authorMap.put(a.getAuthorId(), a.getName());
-            }
-        }
-    }
-
-    private void refreshGenreMap(){
-        if(genreMap != null){
-            for(Genre g : genres){
-                genreMap.put(g.getGenreId(), g.getGenreName());
-            }
-        }
-    }
 
 }
