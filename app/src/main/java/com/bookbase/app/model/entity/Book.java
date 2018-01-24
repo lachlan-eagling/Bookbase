@@ -3,7 +3,6 @@ package com.bookbase.app.model.entity;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
-import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -33,14 +32,35 @@ public class Book implements Parcelable{
     public static final Parcelable.Creator<Book> CREATOR = new Parcelable.Creator<Book>() {
         @Override
         public Book createFromParcel(Parcel source) {
-            return null;
+            return new Book(source);
         }
 
         @Override
         public Book[] newArray(int size) {
-            return new Book[0];
+            return new Book[size];
         }
     };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(bookId);
+        dest.writeString(title);
+        dest.writeParcelable(author, flags);
+        dest.writeString(description);
+        dest.writeParcelable(genre, flags);
+        dest.writeString(coverImage);
+        dest.writeString(isbn);
+        dest.writeInt(rating);
+        dest.writeString(review);
+        dest.writeByte((byte) (isRead ? 1 : 0));
+        dest.writeString(Converters.calendarToString(purchaseDate));
+        dest.writeDouble(purchasePrice);
+    }
 
     // Default constructor for Room database.
     public Book(){
@@ -75,6 +95,22 @@ public class Book implements Parcelable{
 
     }
 
+    @Ignore
+    private Book(Parcel in){
+        bookId = in.readInt();
+        title = in.readString();
+        author = in.readParcelable(Author.class.getClassLoader());
+        description = in.readString();
+        genre = in.readParcelable(Genre.class.getClassLoader());
+        coverImage = in.readString();
+        isbn = in.readString();
+        rating = in.readInt();
+        review = in.readString();
+        isRead = in.readByte() == 1;
+        purchaseDate = Converters.toCalendar(in.readString());
+        purchasePrice = in.readDouble();
+
+    }
 
     public Book(int bookId, boolean isRead, int rating, Author author, String description,
                 Genre genre, String isbn, String title, String review, String coverImage,
@@ -119,29 +155,4 @@ public class Book implements Parcelable{
     public void setPurchasePrice(double price){ this.purchasePrice = price; }
     public void setCoverImage(String imageDirectory) { this.coverImage = imageDirectory; }
 
-    public Bundle bundleBook(){
-        Bundle bundle = new Bundle();
-        bundle.putInt("bookId", bookId);
-        bundle.putString("title", title);
-        //bundle.putInt("author", author);
-        //bundle.putInt("genre", genre) //TODO: Need to fix so can bundle Genre val.
-        bundle.putString("coverImage", coverImage);
-        bundle.putString("isbn", isbn);
-        bundle.putInt("rating", rating);
-        bundle.putString("review", review);
-        bundle.putBoolean("isRead", isRead);
-        bundle.putString("purchaseDate", Converters.calendarToString(purchaseDate));
-        bundle.putDouble("price", purchasePrice);
-        return bundle;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-
-    }
 }

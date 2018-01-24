@@ -16,7 +16,6 @@ import com.bookbase.app.R;
 import com.bookbase.app.database.AppDatabase;
 import com.bookbase.app.mainscreen.HomeScreen;
 import com.bookbase.app.model.entity.Book;
-import com.bookbase.app.utils.BundleBookHelper;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -48,7 +47,8 @@ public class ViewBookFragment extends Fragment {
     @Override
     public void setArguments(@Nullable Bundle args) {
         super.setArguments(args);
-        this.book = BundleBookHelper.unbundleBook(args);
+        Bundle bundle = this.getArguments();
+        this.book = bundle.getParcelable("book");
     }
 
     @Override

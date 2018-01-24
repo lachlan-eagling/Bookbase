@@ -20,7 +20,6 @@ import com.bookbase.app.library.addBook.AddBookActivity;
 import com.bookbase.app.library.viewBook.ViewBookFragment;
 import com.bookbase.app.model.entity.Book;
 import com.bookbase.app.model.repository.Repository;
-import com.bookbase.app.utils.BundleBookHelper;
 
 import java.util.List;
 
@@ -90,11 +89,10 @@ public class BooksFragment extends Fragment implements Runnable{
             @Override
             public void onItemClick(View view, int position) {
                 try {
-                    Fragment fragment = (Fragment) (ViewBookFragment.class).newInstance();
-                    fragment.setArguments(BundleBookHelper.bundleBook(books.get(position)));
-//                    Bundle bundle = new Bundle();
-//                    bundle.putParcelable("book", books.get(position));
-//                    fragment.setArguments(bundle);
+                    Fragment fragment = (ViewBookFragment.class).newInstance();
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("book", books.get(position));
+                    fragment.setArguments(bundle);
                     getActivity().getSupportFragmentManager().beginTransaction()
                             .replace(R.id.content_frame, fragment)
                             .addToBackStack(null)
