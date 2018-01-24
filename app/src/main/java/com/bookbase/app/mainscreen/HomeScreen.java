@@ -21,7 +21,6 @@ import com.bookbase.app.library.BooksFragment;
 import com.bookbase.app.library.viewBook.ViewBookFragment;
 import com.bookbase.app.reports.ReportFragment;
 import com.bookbase.app.settings.SettingsFragment;
-import com.bookbase.app.wishlist.WishlistFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,7 +28,6 @@ import butterknife.ButterKnife;
 public class HomeScreen extends AppCompatActivity implements
         BooksFragment.OnFragmentInteractionListener,
         ReportFragment.OnFragmentInteractionListener,
-        WishlistFragment.OnFragmentInteractionListener,
         SettingsFragment.OnFragmentInteractionListener,
         AboutFragment.OnFragmentInteractionListener,
         ViewBookFragment.OnFragmentInteractionListener {
@@ -98,9 +96,6 @@ public class HomeScreen extends AppCompatActivity implements
         switch(item.getItemId()){
             case R.id.nav_books:
                 fragmentClass = BooksFragment.class;
-                break;
-            case R.id.nav_wishlist:
-                fragmentClass = WishlistFragment.class;
                 break;
             case R.id.nav_settings:
                 fragmentClass = SettingsFragment.class;

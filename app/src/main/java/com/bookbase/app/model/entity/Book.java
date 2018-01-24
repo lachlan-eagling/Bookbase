@@ -29,7 +29,6 @@ public class Book implements Parcelable{
     private boolean isRead;
     private Calendar purchaseDate;
     private double purchasePrice;
-    private boolean isOwned;
 
     public static final Parcelable.Creator<Book> CREATOR = new Parcelable.Creator<Book>() {
         @Override
@@ -81,18 +80,17 @@ public class Book implements Parcelable{
                 Genre genre, String isbn, String title, String review, String coverImage,
                 Calendar purchaseDate, double purchasePrice, boolean isOwned) {
         this.bookId = bookId;
-        this.isRead = isRead;
-        this.rating = rating;
+        this.title = title;
         this.author = author;
         this.description = description;
         this.genre = genre;
-        this.isbn = isbn;
-        this.title = title;
-        this.review = review;
         this.coverImage = coverImage;
+        this.isbn = isbn;
+        this.rating = rating;
+        this.review = review;
+        this.isRead = isRead;
         this.purchaseDate = purchaseDate;
         this.purchasePrice = purchasePrice;
-        this.isOwned = isOwned;
     }
 
     public int getBookId(){ return bookId; }
@@ -107,7 +105,6 @@ public class Book implements Parcelable{
     public Calendar getPurchaseDate() { return purchaseDate; }
     public double getPurchasePrice() { return purchasePrice; }
     public String getCoverImage() { return coverImage; }
-    public boolean getIsOwned() { return isOwned; }
 
     public void setBookId(int bookId){ this.bookId = bookId; }
     public void setIsRead(boolean isRead){ this.isRead = isRead; }
@@ -121,7 +118,6 @@ public class Book implements Parcelable{
     public void setPurchaseDate(Calendar date){ this.purchaseDate = date; }
     public void setPurchasePrice(double price){ this.purchasePrice = price; }
     public void setCoverImage(String imageDirectory) { this.coverImage = imageDirectory; }
-    public void setIsOwned(boolean isOwned) { this.isOwned = isOwned; }
 
     public Bundle bundleBook(){
         Bundle bundle = new Bundle();
@@ -136,7 +132,6 @@ public class Book implements Parcelable{
         bundle.putBoolean("isRead", isRead);
         bundle.putString("purchaseDate", Converters.calendarToString(purchaseDate));
         bundle.putDouble("price", purchasePrice);
-        bundle.putBoolean("owned", isOwned);
         return bundle;
     }
 

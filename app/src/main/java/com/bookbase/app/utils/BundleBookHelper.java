@@ -32,7 +32,6 @@ public class BundleBookHelper {
         bundle.putBoolean(IS_READ_KEY, book.getIsRead());
         bundle.putString(PURCHASE_DATE_KEY, Converters.calendarToString(book.getPurchaseDate()));
         bundle.putDouble(PRICE_KEY, book.getPurchasePrice());
-        bundle.putBoolean(OWNED_KEY, book.getIsOwned());
         return bundle;
     }
 
@@ -49,7 +48,6 @@ public class BundleBookHelper {
         book.setIsRead(bundle.getBoolean(IS_READ_KEY));
         book.setPurchaseDate(Converters.toCalendar(bundle.getString(PURCHASE_DATE_KEY)));
         book.setPurchasePrice(bundle.getDouble(PRICE_KEY));
-        book.setIsOwned(bundle.getBoolean(OWNED_KEY));
         return book;
     }
 

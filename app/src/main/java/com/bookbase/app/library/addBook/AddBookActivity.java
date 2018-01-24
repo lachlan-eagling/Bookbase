@@ -131,7 +131,6 @@ public class AddBookActivity extends AppCompatActivity {
             book.setPurchasePrice(parseDouble(purchasePrice.getText().toString()));
             book.setRating(rating.getNumStars());
             book.setIsRead(read.isChecked());
-            book.setIsOwned(owned.isChecked());
 
             repository.insertBook(book, new AddBookCallback() {
                 @Override

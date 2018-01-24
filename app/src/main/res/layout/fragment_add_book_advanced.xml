@@ -84,6 +84,7 @@
             android:id="@+id/add_book_isread_lbl"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/dancing_script"
@@ -92,8 +93,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textColor="@android:color/black"
             android:textSize="24sp"
-            app:layout_constraintEnd_toStartOf="@+id/add_book_owned_lbl"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/add_book_rating_data" />
@@ -102,42 +102,14 @@
             android:id="@+id/add_book_isread_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/add_book_isread_lbl"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/add_book_isread_lbl" />
-
-        <TextView
-            android:id="@+id/add_book_owned_lbl"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/dancing_script"
-            android:text="@string/lbl_owned"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            android:textColor="@android:color/black"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/add_book_isread_lbl"
-            app:layout_constraintTop_toBottomOf="@+id/add_book_rating_data" />
-
-        <Switch
-            android:id="@+id/add_book_owned_data"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:checked="true"
-            app:layout_constraintEnd_toEndOf="@+id/add_book_owned_lbl"
-            app:layout_constraintStart_toStartOf="@+id/add_book_owned_lbl"
-            app:layout_constraintTop_toBottomOf="@+id/add_book_owned_lbl" />
 
         <TextView
             android:id="@+id/add_book_purchase_date_lbl"
