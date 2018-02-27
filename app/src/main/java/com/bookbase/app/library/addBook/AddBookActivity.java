@@ -129,7 +129,7 @@ public class AddBookActivity extends AppCompatActivity {
             book.setReview(review.getText().toString());
             book.setPurchaseDate(parseDate(purchaseDate.getText().toString()));
             book.setPurchasePrice(parseDouble(purchasePrice.getText().toString()));
-            book.setRating(rating.getNumStars());
+            book.setRating(((int)rating.getRating()));
             book.setIsRead(read.isChecked());
 
             repository.insertBook(book, new AddBookCallback() {

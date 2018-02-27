@@ -33,6 +33,10 @@ public class ViewBookFragment extends Fragment {
     @BindView(R.id.view_book_rating) RatingBar rating;
     @BindView(R.id.view_book_cover) ImageView cover;
     @BindView(R.id.view_book_descr) TextView descr;
+    @BindView(R.id.view_book_genre) TextView genre;
+    @BindView(R.id.view_book_review) TextView review;
+    @BindView(R.id.view_book_purchasedate) TextView purchaseDate;
+    @BindView(R.id.view_book_purchaseprice) TextView purchasePrice;
 
     public ViewBookFragment() {
         // Required empty public constructor
@@ -67,6 +71,10 @@ public class ViewBookFragment extends Fragment {
         author.setText(AppDatabase.getDatabase(HomeScreen.getContext()).authorDao().getAuthorById(book.getAuthor().getAuthorId()).getName());
         rating.setRating((float) book.getRating());
         descr.setText(book.getDescription());
+        genre.setText(book.getGenre().getGenreName());
+        review.setText(book.getReview());
+        purchaseDate.setText(book.getPurchaseDateString());
+        purchasePrice.setText(String.valueOf(book.getPurchasePrice()));
 
         File file = null;
         if(book.getCoverImage() != null){

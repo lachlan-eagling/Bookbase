@@ -8,7 +8,11 @@ import android.os.Parcelable;
 
 import com.bookbase.app.utils.Converters;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 @Entity(tableName = "Book")
 public class Book implements Parcelable{
@@ -141,6 +145,12 @@ public class Book implements Parcelable{
     public Calendar getPurchaseDate() { return purchaseDate; }
     public double getPurchasePrice() { return purchasePrice; }
     public String getCoverImage() { return coverImage; }
+    public String getPurchaseDateString(){
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        String date = df.format(purchaseDate.getTime());
+
+        return date;
+    }
 
     public void setBookId(int bookId){ this.bookId = bookId; }
     public void setIsRead(boolean isRead){ this.isRead = isRead; }
