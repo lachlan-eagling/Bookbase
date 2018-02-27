@@ -117,7 +117,7 @@ public class HomeScreen extends AppCompatActivity implements
 
         // Insert fragment.
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack(null).commit();
 
         // Update UI to indicate currently selected item.
         item.setChecked(true);
