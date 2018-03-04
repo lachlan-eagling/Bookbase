@@ -12,18 +12,31 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bookbase.app.R;
 import com.bookbase.app.aboutScreen.AboutFragment;
 import com.bookbase.app.library.BooksFragment;
 import com.bookbase.app.library.viewBook.ViewBookFragment;
+import com.bookbase.app.model.api.BooksApiCallback;
+import com.bookbase.app.model.api.GoogleBooksApi;
+import com.bookbase.app.model.entity.Book;
 import com.bookbase.app.reports.ReportFragment;
 import com.bookbase.app.settings.SettingsFragment;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.UUID;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Response;
 
 public class HomeScreen extends AppCompatActivity implements
         BooksFragment.OnFragmentInteractionListener,
@@ -61,6 +74,28 @@ public class HomeScreen extends AppCompatActivity implements
         drawer.addDrawerListener(drawerToggle);
         selectDrawerItem(navDrawer.getMenu().getItem(0));
 
+        String request = "https://www.googleapis.com/books/v1/volumes?q=isbn:9780544003415&key=AIzaSyAnICTuswbK9rYl2s6VaB0bMMYJhkn8zwc&fields=totalItems,items(id,volumeInfo/title,volumeInfo/authors,volumeInfo/description,volumeInfo/averageRating,volumeInfo/imageLinks)";
+        //Testing books API
+        String isbn = "9780544003415";
+        UUID uid = UUID.randomUUID();
+        BooksApiCallback callback = new BooksApiCallback() {
+            @Override
+            public void onError() {
+                Log.d("API Call Failed", "Something went wrong!!!");
+            }
+
+            @Override
+            public void onComplete(List<Book> books) {
+                Log.d("Books API Response: ", String.valueOf(books.size()));
+            }
+
+            @Override
+            public void inProgress() {
+                Toast.makeText(HomeScreen.this, "API Call in Progress.", Toast.LENGTH_SHORT).show();
+            }
+        };
+        GoogleBooksApi.queryByIsbn(isbn, uid, callback);
+
     }
 
     @Override
@@ -89,7 +124,7 @@ public class HomeScreen extends AppCompatActivity implements
 
     public void selectDrawerItem(MenuItem item){
 
-        // Create fragment class and specify which fragment is instantiated based on menu option.
+        // Create fragment class and specify which fragment is instantiated based on edit_book_menu_options option.
         Fragment fragment = null;
         Class fragmentClass;
 
