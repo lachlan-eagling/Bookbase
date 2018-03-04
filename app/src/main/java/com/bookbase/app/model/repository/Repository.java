@@ -73,9 +73,31 @@ public class Repository {
         pool.execute(runnable);
     }
 
-    public int deleteBook(Book book) {
-        // TODO: Off load to background thread.
-        return bookDao.deleteBook(book);
+    public void updateBook(final Book book, final AddBookActivity.AddBookCallback callback){
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                long success;
+                callback.inProgress();
+                success = bookDao.update(book);
+                if(success > 0){
+                    callback.onSuccess();
+                } else {
+                    callback.onFailure();
+                }
+            }
+        };
+        pool.execute(runnable);
+    }
+
+    public void deleteBook(final Book book) {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                bookDao.deleteBook(book);
+            }
+        };
+        pool.execute(runnable);
     }
 
     public void insertAuthor(final Author author){

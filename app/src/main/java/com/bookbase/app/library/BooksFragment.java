@@ -61,7 +61,8 @@ public class BooksFragment extends Fragment implements Runnable{
     @Override
     public void onResume() {
         super.onResume();
-        setupAdapter(repository.getBookList());
+        books = repository.getBookList();
+        setupAdapter(books);
     }
 
     @Override
@@ -130,6 +131,7 @@ public class BooksFragment extends Fragment implements Runnable{
         bookList.setAdapter(adapter);
         int currSize = adapter.getItemCount();
         adapter.notifyItemRangeInserted(currSize, books.size());
+        adapter.notifyDataSetChanged();
     }
 
 }

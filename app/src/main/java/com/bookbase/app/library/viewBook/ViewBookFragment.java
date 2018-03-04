@@ -1,21 +1,32 @@
 package com.bookbase.app.library.viewBook;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bookbase.app.R;
 import com.bookbase.app.database.AppDatabase;
+import com.bookbase.app.library.addBook.AddBookActivity;
 import com.bookbase.app.mainscreen.HomeScreen;
 import com.bookbase.app.model.entity.Book;
+import com.bookbase.app.model.repository.Repository;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -37,6 +48,7 @@ public class ViewBookFragment extends Fragment {
     @BindView(R.id.view_book_review) TextView review;
     @BindView(R.id.view_book_purchasedate) TextView purchaseDate;
     @BindView(R.id.view_book_purchaseprice) TextView purchasePrice;
+    Toolbar toolbar;
 
     public ViewBookFragment() {
         // Required empty public constructor
@@ -61,11 +73,55 @@ public class ViewBookFragment extends Fragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.view_book_menu, menu);
+        super.onCreateOptionsMenu(menu,inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        View menuActionItem = (getActivity()).findViewById(R.id.view_book_options);
+        PopupMenu popupMenu = new PopupMenu(getActivity(), menuActionItem);
+        popupMenu.getMenuInflater().inflate(R.menu.view_book_action_items, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Toast.makeText(getActivity(), item.getTitle(), Toast.LENGTH_SHORT).show();
+                Repository repository = Repository.getRepository();
+                switch((String) item.getTitle()){
+                    case "Edit":
+                        Intent intent = new Intent(getActivity(), AddBookActivity.class);
+                        intent.putExtra("Book", book);
+                        startActivity(intent);
+                        break;
+                    case "Delete":
+                        repository.deleteBook(book);
+                        getFragmentManager().popBackStack();
+                        break;
+                    default:
+                        break;
+                }
+                return false;
+            }
+        });
+        popupMenu.show();
+        return false;
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_view_book, container, false);
         ButterKnife.bind(this, view);
+
+        AppCompatActivity activity = ((AppCompatActivity)getActivity());
+        toolbar = activity.findViewById(R.id.toolbar); // Outside scope of fragments view so cannot bind with Butterknife.
+        activity.setSupportActionBar(toolbar);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
+        setHasOptionsMenu(true);
+
 
         title.setText(book.getTitle());
         author.setText(AppDatabase.getDatabase(HomeScreen.getContext()).authorDao().getAuthorById(book.getAuthor().getAuthorId()).getName());
@@ -99,6 +155,12 @@ public class ViewBookFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // TODO: Need to update book in this view when returning to fragment from edit screen.
     }
 
     @Override

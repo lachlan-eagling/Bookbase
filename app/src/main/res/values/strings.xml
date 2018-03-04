@@ -37,5 +37,9 @@
     <string name="title_activity_add_book">AddBookActivity</string>
     <string name="title_activity_edit_book">EditBookActivity</string>
     <string name="cover_content_descr">book cover image</string>
+    <string name="lbl_options">Options</string>
+    <string name="lbl_edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="lbl_editBook">Edit Book</string>
 
 </resources>

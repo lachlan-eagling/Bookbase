@@ -1,7 +1,11 @@
 package com.bookbase.app.library.addBook;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -9,14 +13,21 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bookbase.app.R;
 import com.bookbase.app.model.entity.Author;
@@ -24,18 +35,35 @@ import com.bookbase.app.model.entity.Book;
 import com.bookbase.app.model.entity.Genre;
 import com.bookbase.app.model.repository.Repository;
 import com.bookbase.app.utils.SaveImageHelper;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class AddBookActivity extends AppCompatActivity {
 
-    FragmentPagerAdapter viewPagerAdapter;
     private Bitmap imageToStore;
     final Book book = new Book();
+    Book bookToEdit = null;
     private Repository repository;
+    public static final int IMAGE_CAPTURE_REQUEST = 1;
+
+    @BindView(R.id.add_book_title_data) EditText title;
+    @BindView(R.id.add_book_author_data) AutoCompleteTextView author;
+    @BindView(R.id.add_book_description_data) EditText description;
+    @BindView(R.id.add_book_genre_data) AutoCompleteTextView genre;
+    @BindView(R.id.cover_image) ImageView coverImage;
+    @BindView(R.id.add_book_review_data) EditText review;
+    @BindView(R.id.add_book_purchase_date_data) EditText purchaseDate;
+    @BindView(R.id.add_book_purchase_price_data) EditText purchasePrice;
+    @BindView(R.id.add_book_rating_data) RatingBar rating;
+    @BindView(R.id.add_book_isread_data) Switch read;
 
     public interface AddBookCallback{
         void inProgress();
@@ -47,51 +75,63 @@ public class AddBookActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         repository = Repository.getRepository();
+        Intent intent = getIntent();
+        bookToEdit = intent.getParcelableExtra("Book");
 
-        setContentView(R.layout.activity_add_book);
-        final ViewPager addBooksPager = (ViewPager) findViewById(R.id.addBookPager);
-        viewPagerAdapter = new AddBookPagerAdapter(getSupportFragmentManager());
-        addBooksPager.setAdapter(viewPagerAdapter);
+        setContentView(R.layout.fragment_edit_book);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         TextView toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
         toolbarTitle.setText("Add New Book");
-        //toolbar.setTitle("Add Book")
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        ButterKnife.bind(this);
+        if(bookToEdit != null){
+            populateDetails();
+        }
 
-        TabLayout tabs = (TabLayout) findViewById(R.id.tab_slider);
-        tabs.setupWithViewPager(addBooksPager);
+        setupAuthorAutocomplete();
+        setupGenreAutoComplete();
+
+    }
+
+
+
+    private void populateDetails(){
+        title.setText(bookToEdit.getTitle());
+        author.setText(bookToEdit.getAuthor().getName());
+        description.setText(bookToEdit.getDescription());
+        genre.setText(bookToEdit.getGenre().getGenreName());
+        File file = null;
+        if(bookToEdit.getCoverImage() != null){
+            file = new File(bookToEdit.getCoverImage());
+        }
+
+        Picasso.with(this)
+                .load(file)
+                .placeholder(R.drawable.book_default)
+                .error(R.drawable.book_default)
+                .into(coverImage);
+
+        review.setText(bookToEdit.getReview());
+        purchaseDate.setText(bookToEdit.getPurchaseDateString());
+        purchasePrice.setText(String.valueOf(bookToEdit.getPurchasePrice()));
+        rating.setRating(bookToEdit.getRating());
+        read.setChecked(bookToEdit.getIsRead());
 
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.edit_book_menu_options, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Fragment basicFragment = AddBookPagerAdapter.BASIC_DETAILS_PAGE;
         boolean mandatoryDetailsComplete = true;
-
-        // Basic details
-        EditText title = findViewById(R.id.add_book_title_data);
-        EditText author = findViewById(R.id.add_book_author_data);
-        EditText description = findViewById(R.id.add_book_description_data);
-        EditText genre = findViewById(R.id.add_book_genre_data);
-        ImageView coverImage = findViewById(R.id.cover_image);
-
-        // Advanced details
-        EditText review = findViewById(R.id.add_book_review_data);
-        EditText purchaseDate = findViewById(R.id.add_book_purchase_date_data);
-        EditText purchasePrice = findViewById(R.id.add_book_purchase_price_data);
-        RatingBar rating = findViewById(R.id.add_book_rating_data);
-        Switch read = findViewById(R.id.add_book_isread_data);
-        Switch owned = findViewById(R.id.add_book_owned_data);
 
         if(title.getText().toString().trim().isEmpty()){
             title.setError("Title is required!");
@@ -120,43 +160,81 @@ public class AddBookActivity extends AppCompatActivity {
 
         if(mandatoryDetailsComplete){
 
-            book.setTitle(title.getText().toString());
-            book.setAuthor(new Author(author.getText().toString()));
-            book.setGenre(new Genre(genre.getText().toString()));
-            book.setDescription(description.getText().toString());
-            book.setGenre(new Genre(genre.getText().toString()));
-            book.setCoverImage(SaveImageHelper.saveImageToInternalStorage(imageToStore, book));
-            book.setReview(review.getText().toString());
-            book.setPurchaseDate(parseDate(purchaseDate.getText().toString()));
-            book.setPurchasePrice(parseDouble(purchasePrice.getText().toString()));
-            book.setRating(((int)rating.getRating()));
-            book.setIsRead(read.isChecked());
+            if(bookToEdit == null){
+                book.setTitle(title.getText().toString());
+                book.setAuthor(new Author(author.getText().toString()));
+                book.setGenre(new Genre(genre.getText().toString()));
+                book.setDescription(description.getText().toString());
+                book.setGenre(new Genre(genre.getText().toString()));
+                book.setCoverImage(SaveImageHelper.saveImageToInternalStorage(imageToStore, book));
+                book.setReview(review.getText().toString());
+                book.setPurchaseDate(parseDate(purchaseDate.getText().toString()));
+                book.setPurchasePrice(parseDouble(purchasePrice.getText().toString()));
+                book.setRating(((int)rating.getRating()));
+                book.setIsRead(read.isChecked());
 
-            repository.insertBook(book, new AddBookCallback() {
-                @Override
-                public void inProgress() {
-                    // TODO: Display loading spinner.
-                    showSnackBar("Inserting book...");
-                    Log.d(this.getClass().getSimpleName(), "Inserting book");
-                }
+                repository.insertBook(book, new AddBookCallback() {
+                    @Override
+                    public void inProgress() {
+                        // TODO: Display loading spinner.
+                        showSnackBar("Inserting book...");
+                        Log.d(this.getClass().getSimpleName(), "Inserting book");
+                    }
 
-                @Override
-                public void onSuccess() {
-                    showSnackBar("Book inserted successfully...");
-                    Log.d(this.getClass().getSimpleName(), "Book inserted");
-                    finish();
-                }
+                    @Override
+                    public void onSuccess() {
+                        showSnackBar("Book inserted successfully...");
+                        Log.d(this.getClass().getSimpleName(), "Book inserted");
+                        finish();
+                    }
 
-                @Override
-                public void onFailure() {
-                    // TODO: Display error and log to crash reporting.
-                    showSnackBar("Book insert failed...");
-                    Log.d(this.getClass().getSimpleName(), "Error inserting book");
-                }
-            });
-            return true;
+                    @Override
+                    public void onFailure() {
+                        // TODO: Display error and log to crash reporting.
+                        showSnackBar("Book insert failed...");
+                        Log.d(this.getClass().getSimpleName(), "Error inserting book");
+                    }
+                });
+                return true;
+            } else{
+                bookToEdit.setTitle(title.getText().toString());
+                bookToEdit.setAuthor(new Author(author.getText().toString()));
+                bookToEdit.setGenre(new Genre(genre.getText().toString()));
+                bookToEdit.setDescription(description.getText().toString());
+                bookToEdit.setGenre(new Genre(genre.getText().toString()));
+                bookToEdit.setCoverImage(SaveImageHelper.saveImageToInternalStorage(imageToStore, book));
+                bookToEdit.setReview(review.getText().toString());
+                bookToEdit.setPurchaseDate(parseDate(purchaseDate.getText().toString()));
+                bookToEdit.setPurchasePrice(parseDouble(purchasePrice.getText().toString()));
+                bookToEdit.setRating(((int)rating.getRating()));
+                bookToEdit.setIsRead(read.isChecked());
+
+                repository.updateBook(bookToEdit, new AddBookCallback() {
+                    @Override
+                    public void inProgress() {
+                        // TODO: Display loading spinner.
+                        showSnackBar("Updating book...");
+                        Log.d(this.getClass().getSimpleName(), "Updating book");
+                    }
+
+                    @Override
+                    public void onSuccess() {
+                        showSnackBar("Book Updating successfully...");
+                        Log.d(this.getClass().getSimpleName(), "Book Updating");
+                        finish();
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        // TODO: Display error and log to crash reporting.
+                        showSnackBar("Book Updating failed...");
+                        Log.d(this.getClass().getSimpleName(), "Error Updating book");
+                    }
+                });
+                return true;
+            }
+
         } else{
-            //Toast.makeText(this, "Missing mandatory fields!", Toast.LENGTH_SHORT).show();
             Snackbar.make(this.getCurrentFocus(), "Missing mandatory fields!", Snackbar.LENGTH_SHORT).show();
             return false;
         }
@@ -190,51 +268,52 @@ public class AddBookActivity extends AppCompatActivity {
         }
     }
 
-
     public void setImageToStore(Bitmap image){
         imageToStore = image;
     }
 
+    private void setupAuthorAutocomplete(){
+        // Temp implementation to test auto complete.
+        final String[] AUTHORS = new String[] {
+                "George R.R Martin", "George Lucas", "Beatrix Potter", "Neil Gaimen", "J.K. Rowling", "J.R.R Tolkein"
+        };
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, AUTHORS);
 
 
-    public static class AddBookPagerAdapter extends FragmentPagerAdapter{
-
-        private static int NUM_ITEMS = 2;
-        private static Fragment BASIC_DETAILS_PAGE;
-        private static Fragment ADVANCED_DETAILS_PAGE;
-
-        public AddBookPagerAdapter(android.support.v4.app.FragmentManager fragmentManager){
-            super(fragmentManager);
-        }
-
-        @Override
-        public int getCount(){
-            return NUM_ITEMS;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-
-            switch(position){
-                case 0:
-                    BASIC_DETAILS_PAGE = AddBooksFragmentBasic.newInstance(1, "Basic");
-                    return BASIC_DETAILS_PAGE;
-                case 1:
-                    ADVANCED_DETAILS_PAGE = AddBooksFragmentAdvanced.newInstance(2, "Advanced");
-                    return ADVANCED_DETAILS_PAGE;
-                default:
-                    return null;
-            }
-        }
-
-
-        @Override
-        public CharSequence getPageTitle(int position){
-            return getItem(position).getArguments().getString("title");
-        }
+        author.setAdapter(adapter);
 
     }
 
+    private void setupGenreAutoComplete(){
+        // Temp implementation to test auto complete.
+        final String[] GENRE = new String[] {
+                "Fantasy", "Sci-fi", "Romance", "Biography", "Drama", "Horror"
+        };
 
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, GENRE);
+
+        genre.setAdapter(adapter);
+
+    }
+
+    private void takeBookImage(){
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if(intent.resolveActivity(getPackageManager()) != null){
+            startActivityForResult(intent, IMAGE_CAPTURE_REQUEST);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == IMAGE_CAPTURE_REQUEST && resultCode == Activity.RESULT_OK){
+            Bundle extras = data.getExtras();
+            Bitmap image = (Bitmap) extras.get("data");
+            coverImage.setImageBitmap(image);
+            setImageToStore(image);
+        }
+    }
 
 }
