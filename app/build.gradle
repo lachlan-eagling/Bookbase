@@ -16,6 +16,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+        buildTypes.each {
+            it.buildConfigField('String', 'GOOGLE_BOOKS_API_KEY', 'googleBooksApiKey')
+        }
     }
 //    compileOptions {
 //        sourceCompatibility JavaVersion.VERSION_1_8
