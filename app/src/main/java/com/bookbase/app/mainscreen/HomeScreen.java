@@ -75,8 +75,10 @@ public class HomeScreen extends AppCompatActivity implements
         selectDrawerItem(navDrawer.getMenu().getItem(0));
 
         String request = "https://www.googleapis.com/books/v1/volumes?q=isbn:9780544003415&key=AIzaSyAnICTuswbK9rYl2s6VaB0bMMYJhkn8zwc&fields=totalItems,items(id,volumeInfo/title,volumeInfo/authors,volumeInfo/description,volumeInfo/averageRating,volumeInfo/imageLinks)";
+
         //Testing books API
         String isbn = "9780544003415";
+        String title = "Harry Potter";
         UUID uid = UUID.randomUUID();
         BooksApiCallback callback = new BooksApiCallback() {
             @Override
@@ -94,7 +96,8 @@ public class HomeScreen extends AppCompatActivity implements
                 Toast.makeText(HomeScreen.this, "API Call in Progress.", Toast.LENGTH_SHORT).show();
             }
         };
-        GoogleBooksApi.queryByIsbn(isbn, uid, callback);
+        //GoogleBooksApi.queryByIsbn(isbn, uid, callback);
+        GoogleBooksApi.queryByTitle(title, uid, callback);
 
     }
 

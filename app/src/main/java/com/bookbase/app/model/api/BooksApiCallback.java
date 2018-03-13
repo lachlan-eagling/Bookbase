@@ -7,6 +7,5 @@ import java.util.List;
 public interface BooksApiCallback{
     void onError();
     void onComplete(List<Book> books);
-    //void onComplete(String response);
     void inProgress();
 }
