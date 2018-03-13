@@ -1,11 +1,18 @@
 package com.bookbase.app.model.api;
 
+import android.support.transition.Transition;
+
 import com.bookbase.app.model.entity.Author;
 import com.bookbase.app.model.entity.Book;
 import com.bookbase.app.utils.SaveImageHelper;
 import com.squareup.moshi.FromJson;
+import com.squareup.moshi.ToJson;
 
 public class BookJsonAdapter {
+
+    @ToJson BookJson toJson(Book book){
+        return new BookJson();
+    }
 
     @FromJson Book fromJson(BookJson in){
         Book book = new Book();

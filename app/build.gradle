@@ -18,7 +18,7 @@ android {
         }
 
         buildTypes.each {
-            it.buildConfigField('String', 'GOOGLE_BOOKS_API_KEY', 'googleBooksApiKey')
+            it.buildConfigField('String', 'GOOGLE_BOOKS_API_KEY', googleBooksApiKey)
         }
     }
 //    compileOptions {

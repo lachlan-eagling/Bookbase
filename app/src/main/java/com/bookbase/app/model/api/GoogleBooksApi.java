@@ -59,7 +59,6 @@ public final class GoogleBooksApi {
         booksApiCallback.inProgress();
         String url = buildEndpointUrl(SearchType.ISBN, isbn);
 
-        Log.d("Request URL: ", url);
         Callback callback = new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -78,7 +77,6 @@ public final class GoogleBooksApi {
     public static void queryByTitle(String title, UUID requestId, final BooksApiCallback booksApiCallback){
         booksApiCallback.inProgress();
         String url = buildEndpointUrl(SearchType.TITLE, title);
-        Log.d("Request URL: ", url);
         Callback callback = new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -118,7 +116,7 @@ public final class GoogleBooksApi {
         JSONArray jsonArray = null;
 
         Moshi moshi = new Moshi.Builder().add(new BookJsonAdapter()).build();
-        Type type = Types.newParameterizedType(List.class, BookJson.class);
+        Type type = Types.newParameterizedType(List.class, Book.class);
         JsonAdapter<List<Book>> jsonAdapter = moshi.adapter(type);
         List<Book> books = null;
 
@@ -141,16 +139,6 @@ public final class GoogleBooksApi {
             // Something went wrong...
         } catch(JSONException e){
             // Something went wrong...
-        }
-
-        // Logging for testing.
-        Log.d("JSON Response", jsonArray.toString());
-        if(books != null){
-            for(Book book : books) {
-                Log.d("JSON Books", String.valueOf(book.toString()));
-            }
-        } else{
-            Log.d("JSON Books", "Books list is null");
         }
 
         return books;

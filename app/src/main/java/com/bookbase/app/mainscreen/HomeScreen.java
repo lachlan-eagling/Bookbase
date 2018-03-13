@@ -74,31 +74,6 @@ public class HomeScreen extends AppCompatActivity implements
         drawer.addDrawerListener(drawerToggle);
         selectDrawerItem(navDrawer.getMenu().getItem(0));
 
-        String request = "https://www.googleapis.com/books/v1/volumes?q=isbn:9780544003415&key=AIzaSyAnICTuswbK9rYl2s6VaB0bMMYJhkn8zwc&fields=totalItems,items(id,volumeInfo/title,volumeInfo/authors,volumeInfo/description,volumeInfo/averageRating,volumeInfo/imageLinks)";
-
-        //Testing books API
-        String isbn = "9780544003415";
-        String title = "Harry Potter";
-        UUID uid = UUID.randomUUID();
-        BooksApiCallback callback = new BooksApiCallback() {
-            @Override
-            public void onError() {
-                Log.d("API Call Failed", "Something went wrong!!!");
-            }
-
-            @Override
-            public void onComplete(List<Book> books) {
-                Log.d("Books API Response: ", String.valueOf(books.size()));
-            }
-
-            @Override
-            public void inProgress() {
-                Toast.makeText(HomeScreen.this, "API Call in Progress.", Toast.LENGTH_SHORT).show();
-            }
-        };
-        //GoogleBooksApi.queryByIsbn(isbn, uid, callback);
-        GoogleBooksApi.queryByTitle(title, uid, callback);
-
     }
 
     @Override
