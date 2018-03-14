@@ -17,7 +17,7 @@ public class Review implements Parcelable{
     private Calendar reviewDate;
     private String reviewContent;
 
-    private static final Parcelable.Creator<Review> CREATOR = new Parcelable.Creator<Review>(){
+    public static final Parcelable.Creator<Review> CREATOR = new Parcelable.Creator<Review>(){
         @Override
         public Review createFromParcel(Parcel source) {
             return new Review(source);
@@ -49,7 +49,7 @@ public class Review implements Parcelable{
         return 0;
     }
 
-    @Override
+
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(reviewId);
         dest.writeString(Converters.calendarToString(reviewDate));
