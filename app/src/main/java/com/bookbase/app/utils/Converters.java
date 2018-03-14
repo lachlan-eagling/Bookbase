@@ -6,6 +6,7 @@ import com.bookbase.app.mainscreen.HomeScreen;
 import com.bookbase.app.database.AppDatabase;
 import com.bookbase.app.model.entity.Author;
 import com.bookbase.app.model.entity.Genre;
+import com.bookbase.app.model.entity.Review;
 
 import java.sql.Date;
 import java.util.Calendar;
@@ -50,5 +51,11 @@ public class Converters {
     public static Genre intToGenre(int id){
         return db.genreDao().getGenreById(id);
     }
+
+    @TypeConverter
+    public static int reviewAsId(Review review){ return (int) db.reviewDao().insert(review); }
+
+    @TypeConverter
+    public static Review intToReview(int id) {return db.reviewDao().getReviewById(id);}
 
 }

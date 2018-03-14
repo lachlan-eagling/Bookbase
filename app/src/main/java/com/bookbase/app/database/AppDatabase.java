@@ -9,12 +9,14 @@ import android.content.Context;
 import com.bookbase.app.model.dao.AuthorDao;
 import com.bookbase.app.model.dao.BookDao;
 import com.bookbase.app.model.dao.GenreDao;
+import com.bookbase.app.model.dao.ReviewDao;
 import com.bookbase.app.model.entity.Author;
 import com.bookbase.app.model.entity.Book;
 import com.bookbase.app.model.entity.Genre;
+import com.bookbase.app.model.entity.Review;
 import com.bookbase.app.utils.Converters;
 
-@Database(entities = {Book.class, Author.class, Genre.class}, version = 1, exportSchema = false)
+@Database(entities = {Book.class, Author.class, Genre.class, Review.class}, version = 1, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase{
 
@@ -33,5 +35,6 @@ public abstract class AppDatabase extends RoomDatabase{
     public abstract BookDao bookDao();
     public abstract AuthorDao authorDao();
     public abstract GenreDao genreDao();
+    public abstract ReviewDao reviewDao();
 
 }

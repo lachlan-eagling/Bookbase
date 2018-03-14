@@ -33,6 +33,7 @@ import com.bookbase.app.R;
 import com.bookbase.app.model.entity.Author;
 import com.bookbase.app.model.entity.Book;
 import com.bookbase.app.model.entity.Genre;
+import com.bookbase.app.model.entity.Review;
 import com.bookbase.app.model.repository.Repository;
 import com.bookbase.app.utils.SaveImageHelper;
 import com.squareup.picasso.Picasso;
@@ -115,7 +116,7 @@ public class AddBookActivity extends AppCompatActivity {
                 .error(R.drawable.book_default)
                 .into(coverImage);
 
-        review.setText(bookToEdit.getReview());
+        review.setText(book.getReview().getReviewContent());
         purchaseDate.setText(bookToEdit.getPurchaseDateString());
         purchasePrice.setText(String.valueOf(bookToEdit.getPurchasePrice()));
         rating.setRating(bookToEdit.getRating());
@@ -167,7 +168,7 @@ public class AddBookActivity extends AppCompatActivity {
                 book.setDescription(description.getText().toString());
                 book.setGenre(new Genre(genre.getText().toString()));
                 book.setCoverImage(SaveImageHelper.saveImageToInternalStorage(imageToStore, book));
-                book.setReview(review.getText().toString());
+                book.setReview(new Review(Calendar.getInstance(), review.getText().toString()));
                 book.setPurchaseDate(parseDate(purchaseDate.getText().toString()));
                 book.setPurchasePrice(parseDouble(purchasePrice.getText().toString()));
                 book.setRating(((int)rating.getRating()));
@@ -203,7 +204,7 @@ public class AddBookActivity extends AppCompatActivity {
                 bookToEdit.setDescription(description.getText().toString());
                 bookToEdit.setGenre(new Genre(genre.getText().toString()));
                 bookToEdit.setCoverImage(SaveImageHelper.saveImageToInternalStorage(imageToStore, book));
-                bookToEdit.setReview(review.getText().toString());
+                bookToEdit.setReview(new Review(Calendar.getInstance(), review.getText().toString()));
                 bookToEdit.setPurchaseDate(parseDate(purchaseDate.getText().toString()));
                 bookToEdit.setPurchasePrice(parseDouble(purchasePrice.getText().toString()));
                 bookToEdit.setRating(((int)rating.getRating()));

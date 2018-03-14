@@ -128,7 +128,7 @@ public class ViewBookFragment extends Fragment {
         rating.setRating((float) book.getRating());
         descr.setText(book.getDescription());
         genre.setText(book.getGenre().getGenreName());
-        review.setText(book.getReview());
+        review.setText(book.getReview().getReviewContent());
         purchaseDate.setText(book.getPurchaseDateString());
         purchasePrice.setText(String.valueOf(book.getPurchasePrice()));
 

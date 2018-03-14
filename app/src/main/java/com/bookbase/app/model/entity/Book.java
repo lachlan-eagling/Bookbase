@@ -1,5 +1,6 @@
 package com.bookbase.app.model.entity;
 
+import android.animation.RectEvaluator;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
@@ -28,7 +29,7 @@ public class Book implements Parcelable{
     private String coverImage;
     private String isbn;
     private int rating;
-    private String review;
+    private Review review;
     private boolean isRead;
     private Calendar purchaseDate;
     private double purchasePrice;
@@ -60,7 +61,7 @@ public class Book implements Parcelable{
         dest.writeString(coverImage);
         dest.writeString(isbn);
         dest.writeInt(rating);
-        dest.writeString(review);
+        dest.writeParcelable(review, flags);
         dest.writeByte((byte) (isRead ? 1 : 0));
         dest.writeString(Converters.calendarToString(purchaseDate));
         dest.writeDouble(purchasePrice);
@@ -81,7 +82,7 @@ public class Book implements Parcelable{
         this.description = "";
         this.isbn = "";
         this.genre = new Genre("");
-        this.review = "";
+        this.review = new Review();
 
     }
 
@@ -95,7 +96,7 @@ public class Book implements Parcelable{
         this.description = "";
         this.isbn = "";
         this.genre = new Genre("");
-        this.review = "";
+        this.review = new Review();
 
     }
 
@@ -109,7 +110,7 @@ public class Book implements Parcelable{
         coverImage = in.readString();
         isbn = in.readString();
         rating = in.readInt();
-        review = in.readString();
+        review = in.readParcelable(Review.class.getClassLoader());
         isRead = in.readByte() == 1;
         purchaseDate = Converters.toCalendar(in.readString());
         purchasePrice = in.readDouble();
@@ -117,7 +118,7 @@ public class Book implements Parcelable{
     }
 
     public Book(int bookId, boolean isRead, int rating, Author author, String description,
-                Genre genre, String isbn, String title, String review, String coverImage,
+                Genre genre, String isbn, String title, Review review, String coverImage,
                 Calendar purchaseDate, double purchasePrice, boolean isOwned) {
         this.bookId = bookId;
         this.title = title;
@@ -141,7 +142,7 @@ public class Book implements Parcelable{
     public Genre getGenre() { return genre; }
     public String getIsbn(){ return isbn; }
     public String getTitle(){ return title; }
-    public String getReview() { return review; }
+    public Review getReview() { return review; }
     public Calendar getPurchaseDate() { return purchaseDate; }
     public double getPurchasePrice() { return purchasePrice; }
     public String getCoverImage() { return coverImage; }
@@ -160,7 +161,7 @@ public class Book implements Parcelable{
     public void setGenre(Genre genre) { this.genre = genre; }
     public void setIsbn(String isbn){ this.isbn = isbn; }
     public void setTitle(String title){ this.title = title; }
-    public void setReview(String review){ this.review = review; }
+    public void setReview(Review review){ this.review = review; }
     public void setPurchaseDate(Calendar date){ this.purchaseDate = date; }
     public void setPurchasePrice(double price){ this.purchasePrice = price; }
     public void setCoverImage(String imageDirectory) { this.coverImage = imageDirectory; }
