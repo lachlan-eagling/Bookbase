@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -65,6 +66,7 @@ public class AddBookActivity extends AppCompatActivity {
     @BindView(R.id.add_book_purchase_price_data) EditText purchasePrice;
     @BindView(R.id.add_book_rating_data) RatingBar rating;
     @BindView(R.id.add_book_isread_data) Switch read;
+    @BindView(R.id.camera_fab) FloatingActionButton cameraFab;
 
     public interface AddBookCallback{
         void inProgress();
@@ -95,6 +97,13 @@ public class AddBookActivity extends AppCompatActivity {
 
         setupAuthorAutocomplete();
         setupGenreAutoComplete();
+
+        cameraFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takeBookImage();
+            }
+        });
 
     }
 
