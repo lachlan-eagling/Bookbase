@@ -125,7 +125,10 @@ public class AddBookActivity extends AppCompatActivity {
                 .error(R.drawable.book_default)
                 .into(coverImage);
 
-        review.setText(book.getReview().getReviewContent());
+        Review reviewContent = book.getReview();
+        if(reviewContent != null) {
+            review.setText(reviewContent.getReviewContent());
+        }
         purchaseDate.setText(bookToEdit.getPurchaseDateString());
         purchasePrice.setText(String.valueOf(bookToEdit.getPurchasePrice()));
         rating.setRating(bookToEdit.getRating());
