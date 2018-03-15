@@ -72,9 +72,9 @@ public class BooksFragment extends Fragment implements Runnable{
         View view = inflater.inflate(R.layout.fragment_books, container, false);
         bookList = view.findViewById(R.id.books_list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(bookList.getContext(), layoutManager.getOrientation());
+        //DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(bookList.getContext(), layoutManager.getOrientation());
         bookList.setLayoutManager(layoutManager);
-        bookList.addItemDecoration(dividerItemDecoration);
+        //bookList.addItemDecoration(dividerItemDecoration);
         FloatingActionButton fab = view.findViewById(R.id.add_book_fab);
         setupAdapter(books);
 

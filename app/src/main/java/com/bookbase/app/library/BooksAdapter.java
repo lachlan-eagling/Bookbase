@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bookbase.app.R;
@@ -14,9 +15,12 @@ import com.bookbase.app.model.entity.Author;
 import com.bookbase.app.model.entity.Book;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.util.List;
 
+import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -27,6 +31,8 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
         @BindView(R.id.book_list_image) ImageView coverImage;
         @BindView(R.id.book_list_title) TextView title;
         @BindView(R.id.book_list_author) TextView author;
+        @BindView(R.id.book_list_descr) TextView descr;
+        @BindView(R.id.book_list_rating) RatingBar rating;
 
         ViewHolder(View view){
             super(view);
@@ -69,6 +75,8 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
         ImageView coverImage = viewHolder.coverImage;
         TextView title = viewHolder.title;
         TextView author = viewHolder.author;
+        TextView descr = viewHolder.descr;
+        RatingBar rating = viewHolder.rating;
         if(book.getCoverImage() != null){
             file = new File(book.getCoverImage());
         }
@@ -80,6 +88,8 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
                 .into(coverImage);
         title.setText(book.getTitle());
         author.setText(authorEntity.getName());
+        descr.setText(book.getDescription());
+        rating.setRating(book.getRating());
 
     }
 
