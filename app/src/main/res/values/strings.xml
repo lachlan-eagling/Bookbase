@@ -41,5 +41,6 @@
     <string name="lbl_edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="lbl_editBook">Edit Book</string>
+    <string name="msg_empty_library">Oops&#8230;Looks like you don\'t have any books yet!</string>
 
 </resources>

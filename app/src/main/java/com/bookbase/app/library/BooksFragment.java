@@ -2,6 +2,7 @@ package com.bookbase.app.library;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.bookbase.app.R;
 import com.bookbase.app.database.AppDatabase;
@@ -30,6 +32,7 @@ public class BooksFragment extends Fragment implements Runnable{
     private AppDatabase database;
     private RecyclerView bookList;
     private Repository repository;
+    private TextView emptyView;
 
     public interface OnFragmentInteractionListener { void onFragmentInteraction(Uri uri); }
 
@@ -71,6 +74,7 @@ public class BooksFragment extends Fragment implements Runnable{
 
         View view = inflater.inflate(R.layout.fragment_books, container, false);
         bookList = view.findViewById(R.id.books_list);
+        emptyView = view.findViewById(R.id.empty_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         //DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(bookList.getContext(), layoutManager.getOrientation());
         bookList.setLayoutManager(layoutManager);
@@ -128,10 +132,16 @@ public class BooksFragment extends Fragment implements Runnable{
     private void setupAdapter(List<Book> books){
         BooksAdapter adapter;
         adapter = new BooksAdapter(getActivity(), books);
-        bookList.setAdapter(adapter);
-        int currSize = adapter.getItemCount();
-        adapter.notifyItemRangeInserted(currSize, books.size());
-        adapter.notifyDataSetChanged();
+        if(books.isEmpty()) {
+            bookList.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+            emptyView.getRootView().setBackgroundColor(Color.WHITE);
+        } else{
+            bookList.setAdapter(adapter);
+            int currSize = adapter.getItemCount();
+            adapter.notifyItemRangeInserted(currSize, books.size());
+            adapter.notifyDataSetChanged();
+        }
     }
 
 }
