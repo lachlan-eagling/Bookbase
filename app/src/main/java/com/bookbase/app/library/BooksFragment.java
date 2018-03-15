@@ -136,7 +136,8 @@ public class BooksFragment extends Fragment implements Runnable{
             bookList.setVisibility(View.GONE);
             emptyView.setVisibility(View.VISIBLE);
             emptyView.getRootView().setBackgroundColor(Color.WHITE);
-        } else{
+        } else {
+            bookList.setVisibility(View.VISIBLE);
             bookList.setAdapter(adapter);
             int currSize = adapter.getItemCount();
             adapter.notifyItemRangeInserted(currSize, books.size());
