@@ -17,6 +17,9 @@ public interface GenreDao {
     @Query("SELECT * FROM Genre where genreId=:id")
     Genre getGenreById(int id);
 
+    @Query("SELECT genreName from Genre")
+    List<String> getGenreNames();
+
     @Insert
     long insert(Genre genre);
 }

@@ -1,22 +1,15 @@
 package com.bookbase.app.library.addBook;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.AttributeSet;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,11 +17,9 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bookbase.app.R;
 import com.bookbase.app.model.entity.Author;
@@ -43,6 +34,7 @@ import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -286,25 +278,18 @@ public class AddBookActivity extends AppCompatActivity {
     }
 
     private void setupAuthorAutocomplete(){
-        // Temp implementation to test auto complete.
-        final String[] AUTHORS = new String[] {
-                "George R.R Martin", "George Lucas", "Beatrix Potter", "Neil Gaimen", "J.K. Rowling", "J.R.R Tolkein"
-        };
 
+        final List<String> AUTHORS = repository.getAuthorNames();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line, AUTHORS);
 
 
         author.setAdapter(adapter);
-
     }
 
     private void setupGenreAutoComplete(){
-        // Temp implementation to test auto complete.
-        final String[] GENRE = new String[] {
-                "Fantasy", "Sci-fi", "Romance", "Biography", "Drama", "Horror"
-        };
 
+        final List<String> GENRE = repository.getGenreNames();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line, GENRE);
 

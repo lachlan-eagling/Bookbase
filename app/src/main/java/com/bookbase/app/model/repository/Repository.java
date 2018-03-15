@@ -10,6 +10,8 @@ import com.bookbase.app.model.entity.Author;
 import com.bookbase.app.model.entity.Book;
 import com.bookbase.app.model.entity.Genre;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -120,4 +122,27 @@ public class Repository {
         pool.execute(runnable);
     }
 
+    public List<String> getAuthorNames(){
+        final List<String> authorNames = new ArrayList<>();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                authorNames.addAll(authorDao.getAuthorNames());
+            }
+        };
+        pool.execute(runnable);
+        return authorNames;
+    }
+
+   public List<String> getGenreNames() {
+        final List<String> genres = new ArrayList<>();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                genres.addAll(genreDao.getGenreNames());
+            }
+        };
+        pool.execute(runnable);
+        return genres;
+   }
 }
