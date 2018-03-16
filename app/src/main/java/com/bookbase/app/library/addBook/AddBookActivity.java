@@ -72,6 +72,7 @@ public class AddBookActivity extends AppCompatActivity {
         repository = Repository.getRepository();
         Intent intent = getIntent();
         bookToEdit = intent.getParcelableExtra("Book");
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
         setContentView(R.layout.fragment_edit_book);
 

@@ -99,6 +99,7 @@ public class BooksFragment extends Fragment implements Runnable{
                     bundle.putParcelable("book", books.get(position));
                     fragment.setArguments(bundle);
                     getActivity().getSupportFragmentManager().beginTransaction()
+                            .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
                             .replace(R.id.content_frame, fragment)
                             .addToBackStack(null)
                             .commit();
