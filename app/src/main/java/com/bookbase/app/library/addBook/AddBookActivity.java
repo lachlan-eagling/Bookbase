@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -51,6 +52,13 @@ public class AddBookActivity extends AppCompatActivity {
     private List<Author> authors;
     private List<Genre> genres;
 
+    @BindView(R.id.add_book_title_field) TextInputLayout titleField;
+    @BindView(R.id.add_book_author_field) TextInputLayout authorField;
+    @BindView(R.id.add_book_descr_field) TextInputLayout descrField;
+    @BindView(R.id.add_book_genre_field) TextInputLayout genreField;
+    @BindView(R.id.add_book_review_field) TextInputLayout reviewField;
+    @BindView(R.id.add_book_purchase_dt_field) TextInputLayout purchaseDateField;
+    @BindView(R.id.add_book_purchase_price_field) TextInputLayout purchasPriceField;
     @BindView(R.id.add_book_title_data) EditText title;
     @BindView(R.id.add_book_author_data) AutoCompleteTextView author;
     @BindView(R.id.add_book_description_data) EditText description;
@@ -60,7 +68,6 @@ public class AddBookActivity extends AppCompatActivity {
     @BindView(R.id.add_book_purchase_date_data) EditText purchaseDate;
     @BindView(R.id.add_book_purchase_price_data) EditText purchasePrice;
     @BindView(R.id.add_book_rating_data) RatingBar rating;
-    @BindView(R.id.add_book_isread_data) Switch read;
     @BindView(R.id.camera_fab) FloatingActionButton cameraFab;
 
     public interface AddBookCallback{
@@ -131,7 +138,6 @@ public class AddBookActivity extends AppCompatActivity {
         purchaseDate.setText(bookToEdit.getPurchaseDateString());
         purchasePrice.setText(String.valueOf(bookToEdit.getPurchasePrice()));
         rating.setRating(bookToEdit.getRating());
-        read.setChecked(bookToEdit.getIsRead());
 
     }
 
@@ -146,27 +152,22 @@ public class AddBookActivity extends AppCompatActivity {
         boolean mandatoryDetailsComplete = true;
 
         if(title.getText().toString().trim().isEmpty()){
-            title.setError("Title is required!");
+            titleField.setError("Title is required!");
             mandatoryDetailsComplete = false;
         }
 
         if(author.getText().toString().trim().isEmpty()){
-            author.setError("Author is required!");
+            authorField.setError("Author is required!");
             mandatoryDetailsComplete = false;
         }
 
         if(description.getText().toString().trim().isEmpty()){
-            description.setError("Description is required!");
+            descrField.setError("Description is required!");
             mandatoryDetailsComplete = false;
         }
 
         if(genre.getText().toString().trim().isEmpty()){
-            genre.setError("Genre is required!");
-            mandatoryDetailsComplete = false;
-        }
-
-        if(parseDate(purchaseDate.getText().toString()) == null){
-            purchaseDate.setError("Incorrect date format!");
+            genreField.setError("Genre is required!");
             mandatoryDetailsComplete = false;
         }
 
@@ -209,7 +210,6 @@ public class AddBookActivity extends AppCompatActivity {
                 book.setPurchaseDate(parseDate(purchaseDate.getText().toString()));
                 book.setPurchasePrice(parseDouble(purchasePrice.getText().toString()));
                 book.setRating(((int)rating.getRating()));
-                book.setIsRead(read.isChecked());
 
                 repository.insertBook(book, new AddBookCallback() {
                     @Override
@@ -242,7 +242,6 @@ public class AddBookActivity extends AppCompatActivity {
                 bookToEdit.setPurchaseDate(parseDate(purchaseDate.getText().toString()));
                 bookToEdit.setPurchasePrice(parseDouble(purchasePrice.getText().toString()));
                 bookToEdit.setRating(((int)rating.getRating()));
-                bookToEdit.setIsRead(read.isChecked());
 
                 repository.updateBook(bookToEdit, new AddBookCallback() {
                     @Override
