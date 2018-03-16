@@ -1,5 +1,7 @@
 package com.bookbase.app.model.repository;
 
+import android.util.Log;
+
 import com.bookbase.app.database.AppDatabase;
 import com.bookbase.app.library.addBook.AddBookActivity;
 import com.bookbase.app.mainscreen.HomeScreen;
@@ -140,6 +142,60 @@ public class Repository {
             @Override
             public void run() {
                 genres.addAll(genreDao.getGenreNames());
+            }
+        };
+        pool.execute(runnable);
+        return genres;
+   }
+
+   public Author getAuthorByName(final String name) {
+        final List<Author> author = new ArrayList<>();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                author.add(authorDao.getAuthorByName(name));
+            }
+        };
+        pool.execute(runnable);
+        if(author.isEmpty()){
+            return null;
+        }
+        return author.get(0);
+   }
+
+   public Genre getGenreByName(final String name) {
+        final List<Genre> genre = new ArrayList<>();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                genre.add(genreDao.getGenreByName(name));
+            }
+        };
+        pool.execute(runnable);
+        if(genre.isEmpty()) {
+            return null;
+        }
+        return genre.get(0);
+   }
+
+   public List<Author> getAuthors() {
+        final List<Author> authors = new ArrayList<>();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                authors.addAll(authorDao.getAuthors());
+            }
+        };
+        pool.execute(runnable);
+        return authors;
+   }
+
+   public List<Genre> getGenres() {
+        final List<Genre> genres = new ArrayList<>();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                genres.addAll(genreDao.getGenres());
             }
         };
         pool.execute(runnable);

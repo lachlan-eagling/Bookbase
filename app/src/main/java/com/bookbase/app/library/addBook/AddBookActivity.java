@@ -48,6 +48,9 @@ public class AddBookActivity extends AppCompatActivity {
     private Repository repository;
     public static final int IMAGE_CAPTURE_REQUEST = 1;
 
+    private List<Author> authors;
+    private List<Genre> genres;
+
     @BindView(R.id.add_book_title_data) EditText title;
     @BindView(R.id.add_book_author_data) AutoCompleteTextView author;
     @BindView(R.id.add_book_description_data) EditText description;
@@ -70,6 +73,9 @@ public class AddBookActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         repository = Repository.getRepository();
+        authors = repository.getAuthors();
+        genres = repository.getGenres();
+
         Intent intent = getIntent();
         bookToEdit = intent.getParcelableExtra("Book");
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -168,10 +174,36 @@ public class AddBookActivity extends AppCompatActivity {
 
             if(bookToEdit == null){
                 book.setTitle(title.getText().toString());
-                book.setAuthor(new Author(author.getText().toString()));
-                book.setGenre(new Genre(genre.getText().toString()));
+
+                // Check if Author exists first.
+                String inputAuthor = author.getText().toString();
+                Author authorEntity =  null;
+                for(Author author : authors) {
+                    if(author.getName().equalsIgnoreCase(inputAuthor)) {
+                        authorEntity = author;
+                    }
+                }
+                if(authorEntity != null) {
+                    book.setAuthor(authorEntity);
+                } else {
+                    book.setAuthor(new Author(inputAuthor));
+                }
+
+                // Check if Genre exists first.
+                String inputGenre = genre.getText().toString();
+                Genre genreEntity = null;
+                for(Genre genre : genres) {
+                    if(genre.getGenreName().equalsIgnoreCase(inputGenre)) {
+                        genreEntity = genre;
+                    }
+                }
+                if(genreEntity != null){
+                    book.setGenre(genreEntity);
+                } else {
+                    book.setGenre(new Genre(inputGenre));
+                }
+
                 book.setDescription(description.getText().toString());
-                book.setGenre(new Genre(genre.getText().toString()));
                 book.setCoverImage(SaveImageHelper.saveImageToInternalStorage(imageToStore, book));
                 book.setReview(new Review(Calendar.getInstance(), review.getText().toString()));
                 book.setPurchaseDate(parseDate(purchaseDate.getText().toString()));
@@ -184,13 +216,11 @@ public class AddBookActivity extends AppCompatActivity {
                     public void inProgress() {
                         // TODO: Display loading spinner.
                         showSnackBar("Inserting book...");
-                        Log.d(this.getClass().getSimpleName(), "Inserting book");
                     }
 
                     @Override
                     public void onSuccess() {
                         showSnackBar("Book inserted successfully...");
-                        Log.d(this.getClass().getSimpleName(), "Book inserted");
                         finish();
                     }
 
@@ -198,7 +228,6 @@ public class AddBookActivity extends AppCompatActivity {
                     public void onFailure() {
                         // TODO: Display error and log to crash reporting.
                         showSnackBar("Book insert failed...");
-                        Log.d(this.getClass().getSimpleName(), "Error inserting book");
                     }
                 });
                 return true;
@@ -220,13 +249,11 @@ public class AddBookActivity extends AppCompatActivity {
                     public void inProgress() {
                         // TODO: Display loading spinner.
                         showSnackBar("Updating book...");
-                        Log.d(this.getClass().getSimpleName(), "Updating book");
                     }
 
                     @Override
                     public void onSuccess() {
                         showSnackBar("Book Updating successfully...");
-                        Log.d(this.getClass().getSimpleName(), "Book Updating");
                         finish();
                     }
 
@@ -234,7 +261,6 @@ public class AddBookActivity extends AppCompatActivity {
                     public void onFailure() {
                         // TODO: Display error and log to crash reporting.
                         showSnackBar("Book Updating failed...");
-                        Log.d(this.getClass().getSimpleName(), "Error Updating book");
                     }
                 });
                 return true;

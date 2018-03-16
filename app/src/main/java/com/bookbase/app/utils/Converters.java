@@ -34,6 +34,9 @@ public class Converters {
 
     @TypeConverter
     public static int authorAsId(Author author){
+        if(db.authorDao().getAuthorById(author.getAuthorId()) != null) {
+            return author.getAuthorId();
+        }
         return (int) db.authorDao().insert(author);
     }
 
@@ -44,6 +47,9 @@ public class Converters {
 
     @TypeConverter
     public static int genreAsId(Genre genre){
+        if(db.genreDao().getGenreById(genre.getGenreId()) != null) {
+            return genre.getGenreId();
+        }
         return (int) db.genreDao().insert(genre);
     }
 
