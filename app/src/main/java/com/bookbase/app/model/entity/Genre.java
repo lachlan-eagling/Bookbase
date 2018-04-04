@@ -35,6 +35,10 @@ public class Genre implements Parcelable {
         dest.writeString(genreName);
     }
 
+    public Genre() {
+
+    }
+
     public Genre(String genreName){
         this.genreName = genreName;
     }

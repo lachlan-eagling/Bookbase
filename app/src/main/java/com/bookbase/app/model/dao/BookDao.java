@@ -14,7 +14,7 @@ import java.util.List;
 public interface BookDao {
 
     @Insert
-    void insertAll(Book... books);
+    void insertAll(List<Book> books);
 
     @Insert
     long insert(Book book);

@@ -77,6 +77,16 @@ public class Repository {
         pool.execute(runnable);
     }
 
+    public void insertBookList(final List<Book> books) {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                bookDao.insertAll(books);
+            }
+        };
+        pool.execute(runnable);
+    }
+
     public void updateBook(final Book book, final AddBookActivity.AddBookCallback callback){
         Runnable runnable = new Runnable() {
             @Override

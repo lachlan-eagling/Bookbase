@@ -35,6 +35,16 @@
                 android:value="com.bookbase.app.mainscreen.HomeScreen"
                 />
         </activity>
+        
+        <provider
+            android:authorities="${applicationId}.app.utils"
+            android:name=".utils.GenericFileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
 
         <meta-data
             android:name="preloaded_fonts"
