@@ -146,10 +146,13 @@ public class Book implements Parcelable{
     public Calendar getPurchaseDate() { return purchaseDate; }
     public double getPurchasePrice() { return purchasePrice; }
     public String getCoverImage() { return coverImage; }
+
     public String getPurchaseDateString(){
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        String date = df.format(purchaseDate.getTime());
-
+        String date = df.format(Calendar.getInstance().getTime());
+        if (purchaseDate != null) {
+            date = df.format(purchaseDate.getTime());
+        }
         return date;
     }
 

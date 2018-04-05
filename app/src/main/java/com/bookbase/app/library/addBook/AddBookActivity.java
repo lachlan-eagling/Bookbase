@@ -1,16 +1,24 @@
 package com.bookbase.app.library.addBook;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,60 +27,93 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.bookbase.app.R;
+import com.bookbase.app.model.api.BooksApiCallback;
+import com.bookbase.app.model.api.GoogleBooksApi;
 import com.bookbase.app.model.entity.Author;
 import com.bookbase.app.model.entity.Book;
 import com.bookbase.app.model.entity.Genre;
 import com.bookbase.app.model.entity.Review;
 import com.bookbase.app.model.repository.Repository;
 import com.bookbase.app.utils.SaveImageHelper;
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
+import com.google.android.gms.vision.Frame;
+import com.google.android.gms.vision.barcode.Barcode;
+import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.fabric.sdk.android.services.common.Crash;
 
 public class AddBookActivity extends AppCompatActivity {
 
     private Bitmap imageToStore;
+    private File barcodeTemp;
+    private String barcodeImagePath;
     final Book book = new Book();
-    Book bookToEdit = null;
+    private Book bookToEdit = null;
+    private boolean bookFromApiCall = false;
     private Repository repository;
-    public static final int IMAGE_CAPTURE_REQUEST = 1;
+    public static final int COVER_IMAGE_REQUEST = 1;
+    public static final int BARCODE_IMAGE_REQUEST = 2;
 
     private List<Author> authors;
     private List<Genre> genres;
 
-    @BindView(R.id.add_book_title_field) TextInputLayout titleField;
-    @BindView(R.id.add_book_author_field) TextInputLayout authorField;
-    @BindView(R.id.add_book_descr_field) TextInputLayout descrField;
-    @BindView(R.id.add_book_genre_field) TextInputLayout genreField;
-    @BindView(R.id.add_book_review_field) TextInputLayout reviewField;
-    @BindView(R.id.add_book_purchase_dt_field) TextInputLayout purchaseDateField;
-    @BindView(R.id.add_book_purchase_price_field) TextInputLayout purchasPriceField;
-    @BindView(R.id.add_book_title_data) EditText title;
-    @BindView(R.id.add_book_author_data) AutoCompleteTextView author;
-    @BindView(R.id.add_book_description_data) EditText description;
-    @BindView(R.id.add_book_genre_data) AutoCompleteTextView genre;
-    @BindView(R.id.cover_image) ImageView coverImage;
-    @BindView(R.id.add_book_review_data) EditText review;
-    @BindView(R.id.add_book_purchase_date_data) EditText purchaseDate;
-    @BindView(R.id.add_book_purchase_price_data) EditText purchasePrice;
-    @BindView(R.id.add_book_rating_data) RatingBar rating;
-    @BindView(R.id.camera_fab) FloatingActionButton cameraFab;
+    @BindView(R.id.add_book_title_field)
+    TextInputLayout titleField;
+    @BindView(R.id.add_book_author_field)
+    TextInputLayout authorField;
+    @BindView(R.id.add_book_descr_field)
+    TextInputLayout descrField;
+    @BindView(R.id.add_book_genre_field)
+    TextInputLayout genreField;
+    @BindView(R.id.add_book_review_field)
+    TextInputLayout reviewField;
+    @BindView(R.id.add_book_purchase_dt_field)
+    TextInputLayout purchaseDateField;
+    @BindView(R.id.add_book_purchase_price_field)
+    TextInputLayout purchasPriceField;
+    @BindView(R.id.add_book_title_data)
+    EditText title;
+    @BindView(R.id.add_book_author_data)
+    AutoCompleteTextView author;
+    @BindView(R.id.add_book_description_data)
+    EditText description;
+    @BindView(R.id.add_book_genre_data)
+    AutoCompleteTextView genre;
+    @BindView(R.id.cover_image)
+    ImageView coverImage;
+    @BindView(R.id.add_book_review_data)
+    EditText review;
+    @BindView(R.id.add_book_purchase_date_data)
+    EditText purchaseDate;
+    @BindView(R.id.add_book_purchase_price_data)
+    EditText purchasePrice;
+    @BindView(R.id.add_book_rating_data)
+    RatingBar rating;
+    @BindView(R.id.camera_fab)
+    FloatingActionButton cameraFab;
 
-    public interface AddBookCallback{
+    public interface AddBookCallback {
         void inProgress();
+
         void onSuccess();
+
         void onFailure();
     }
 
@@ -97,8 +138,8 @@ public class AddBookActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         ButterKnife.bind(this);
-        if(bookToEdit != null){
-            populateDetails();
+        if (bookToEdit != null) {
+            populateDetails(this);
         }
 
         setupAuthorAutocomplete();
@@ -114,30 +155,41 @@ public class AddBookActivity extends AppCompatActivity {
     }
 
 
+    private void populateDetails(final Context context) {
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                title.setText(bookToEdit.getTitle());
+                author.setText(bookToEdit.getAuthor().getName());
+                description.setText(bookToEdit.getDescription());
+                Genre genreEntity = bookToEdit.getGenre();
+                if (genreEntity != null) {
+                    genre.setText(genreEntity.getGenreName());
+                } else {
+                    genre.setText("Unknown Genre");
+                }
 
-    private void populateDetails(){
-        title.setText(bookToEdit.getTitle());
-        author.setText(bookToEdit.getAuthor().getName());
-        description.setText(bookToEdit.getDescription());
-        genre.setText(bookToEdit.getGenre().getGenreName());
-        File file = null;
-        if(bookToEdit.getCoverImage() != null){
-            file = new File(bookToEdit.getCoverImage());
-        }
+                File file = null;
+                if (bookToEdit.getCoverImage() != null) {
+                    file = new File(bookToEdit.getCoverImage());
+                }
 
-        Picasso.with(this)
-                .load(file)
-                .placeholder(R.drawable.book_default)
-                .error(R.drawable.book_default)
-                .into(coverImage);
+                Picasso.with(context)
+                        .load(file)
+                        .placeholder(R.drawable.book_default)
+                        .error(R.drawable.book_default)
+                        .into(coverImage);
 
-        Review reviewContent = book.getReview();
-        if(reviewContent != null) {
-            review.setText(reviewContent.getReviewContent());
-        }
-        purchaseDate.setText(bookToEdit.getPurchaseDateString());
-        purchasePrice.setText(String.valueOf(bookToEdit.getPurchasePrice()));
-        rating.setRating(bookToEdit.getRating());
+                Review reviewContent = book.getReview();
+                if (reviewContent != null) {
+                    review.setText(reviewContent.getReviewContent());
+                }
+                purchaseDate.setText(bookToEdit.getPurchaseDateString());
+                purchasePrice.setText(String.valueOf(bookToEdit.getPurchasePrice()));
+                rating.setRating(bookToEdit.getRating());
+                Looper.loop();
+            }
+        });
 
     }
 
@@ -147,44 +199,152 @@ public class AddBookActivity extends AppCompatActivity {
         return true;
     }
 
+    private Context getContext() {
+        return this;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_barcode:
+                scanBarcode();
+                return true;
+            case R.id.action_done:
+                return saveBook();
+            default:
+                return false;
+        }
+
+    }
+
+    private void scanBarcode() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            barcodeTemp = saveBarCodeImage();
+            if (barcodeTemp != null) {
+                Uri photoURI = FileProvider.getUriForFile(this,
+                        this.getApplicationContext().getPackageName() + ".app.utils",
+                        barcodeTemp);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(intent, BARCODE_IMAGE_REQUEST);
+            }
+        }
+
+
+    }
+
+    private File saveBarCodeImage() {
+        // Create an image file name
+        String imageFileName = "BarcodeTemp";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = null;
+        try {
+            image = File.createTempFile(
+                    imageFileName,  /* prefix */
+                    ".bmp",         /* suffix */
+                    storageDir      /* directory */
+            );
+        } catch (IOException e) {
+            Crashlytics.logException(e);
+        }
+
+        // Save a file: path for use with ACTION_VIEW intents
+        barcodeImagePath = image.getAbsolutePath();
+        return image;
+    }
+
+    private void processBarcode(final Context context) {
+        BarcodeDetector detector = new BarcodeDetector.Builder(getApplicationContext())
+                .setBarcodeFormats(Barcode.ALL_FORMATS)
+                .build();
+        Bitmap barcodeImage = BitmapFactory.decodeFile(barcodeImagePath);
+        if (detector.isOperational() && barcodeImage != null) {
+            Log.d("Barcode Processing", "Detector operational, processing barcode.");
+            Frame frame = new Frame.Builder().setBitmap(barcodeImage).build();
+            SparseArray<Barcode> barcodes = detector.detect(frame);
+            Barcode code = null;
+            if (barcodes.size() > 0) {
+                code = barcodes.valueAt(0);
+                showSnackBar("Barcode: " + code.rawValue);
+                Log.d("Barcode Processing", "Returned Barcode: " + code.rawValue);
+
+                UUID requestId = UUID.randomUUID();
+                BooksApiCallback callback = new BooksApiCallback() {
+                    @Override
+                    public void onError() {
+                        Log.d("Barcode Processing", "Something went wrong with API search.");
+                    }
+
+                    @Override
+                    public void onComplete(List<Book> books) {
+                        if (!books.isEmpty()) {
+                            Log.d("Barcode Processing", "Book Returned from API");
+                            bookToEdit = books.get(0);
+                            bookFromApiCall = true;
+                            populateDetails(context);
+                        } else {
+                            Log.d("Barcode Processing", "No book Returned from API");
+                        }
+                    }
+
+                    @Override
+                    public void inProgress() {
+                        Log.d("Barcode Processing", "API search in progress");
+                    }
+                };
+
+                GoogleBooksApi.queryByIsbn(code.rawValue, requestId, callback);
+            } else {
+                showSnackBar("No barcode detected.");
+                Log.d("Barcode Processing", "No barcode returned.");
+            }
+        } else {
+            Log.d("Barcode Processing", "Detector not operational.");
+        }
+        if (barcodeTemp != null) {
+            barcodeTemp.delete();
+        }
+
+    }
+
+    private boolean saveBook() {
         boolean mandatoryDetailsComplete = true;
 
-        if(title.getText().toString().trim().isEmpty()){
+        if (title.getText().toString().trim().isEmpty()) {
             titleField.setError("Title is required!");
             mandatoryDetailsComplete = false;
         }
 
-        if(author.getText().toString().trim().isEmpty()){
+        if (author.getText().toString().trim().isEmpty()) {
             authorField.setError("Author is required!");
             mandatoryDetailsComplete = false;
         }
 
-        if(description.getText().toString().trim().isEmpty()){
+        if (description.getText().toString().trim().isEmpty()) {
             descrField.setError("Description is required!");
             mandatoryDetailsComplete = false;
         }
 
-        if(genre.getText().toString().trim().isEmpty()){
+        if (genre.getText().toString().trim().isEmpty()) {
             genreField.setError("Genre is required!");
             mandatoryDetailsComplete = false;
         }
 
-        if(mandatoryDetailsComplete){
+        if (mandatoryDetailsComplete) {
 
-            if(bookToEdit == null){
+            if (bookToEdit == null) {
                 book.setTitle(title.getText().toString());
 
                 // Check if Author exists first.
                 String inputAuthor = author.getText().toString();
-                Author authorEntity =  null;
-                for(Author author : authors) {
-                    if(author.getName().equalsIgnoreCase(inputAuthor)) {
+                Author authorEntity = null;
+                for (Author author : authors) {
+                    if (author.getName().equalsIgnoreCase(inputAuthor)) {
                         authorEntity = author;
                     }
                 }
-                if(authorEntity != null) {
+                if (authorEntity != null) {
                     book.setAuthor(authorEntity);
                 } else {
                     book.setAuthor(new Author(inputAuthor));
@@ -193,12 +353,12 @@ public class AddBookActivity extends AppCompatActivity {
                 // Check if Genre exists first.
                 String inputGenre = genre.getText().toString();
                 Genre genreEntity = null;
-                for(Genre genre : genres) {
-                    if(genre.getGenreName().equalsIgnoreCase(inputGenre)) {
+                for (Genre genre : genres) {
+                    if (genre.getGenreName().equalsIgnoreCase(inputGenre)) {
                         genreEntity = genre;
                     }
                 }
-                if(genreEntity != null){
+                if (genreEntity != null) {
                     book.setGenre(genreEntity);
                 } else {
                     book.setGenre(new Genre(inputGenre));
@@ -209,7 +369,7 @@ public class AddBookActivity extends AppCompatActivity {
                 book.setReview(new Review(Calendar.getInstance(), review.getText().toString()));
                 book.setPurchaseDate(parseDate(purchaseDate.getText().toString()));
                 book.setPurchasePrice(parseDouble(purchasePrice.getText().toString()));
-                book.setRating(((int)rating.getRating()));
+                book.setRating(((int) rating.getRating()));
 
                 repository.insertBook(book, new AddBookCallback() {
                     @Override
@@ -231,7 +391,7 @@ public class AddBookActivity extends AppCompatActivity {
                     }
                 });
                 return true;
-            } else{
+            } else {
                 bookToEdit.setTitle(title.getText().toString());
                 bookToEdit.setAuthor(new Author(author.getText().toString()));
                 bookToEdit.setGenre(new Genre(genre.getText().toString()));
@@ -241,9 +401,9 @@ public class AddBookActivity extends AppCompatActivity {
                 bookToEdit.setReview(new Review(Calendar.getInstance(), review.getText().toString()));
                 bookToEdit.setPurchaseDate(parseDate(purchaseDate.getText().toString()));
                 bookToEdit.setPurchasePrice(parseDouble(purchasePrice.getText().toString()));
-                bookToEdit.setRating(((int)rating.getRating()));
+                bookToEdit.setRating(((int) rating.getRating()));
 
-                repository.updateBook(bookToEdit, new AddBookCallback() {
+                AddBookCallback callback = new AddBookCallback() {
                     @Override
                     public void inProgress() {
                         // TODO: Display loading spinner.
@@ -261,29 +421,35 @@ public class AddBookActivity extends AppCompatActivity {
                         // TODO: Display error and log to crash reporting.
                         showSnackBar("Book Updating failed...");
                     }
-                });
+                };
+
+                if(bookFromApiCall) {
+                    repository.insertBook(bookToEdit, callback);
+                } else {
+                    repository.updateBook(bookToEdit, callback);
+                }
+
                 return true;
             }
 
-        } else{
+        } else {
             Snackbar.make(this.getCurrentFocus(), "Missing mandatory fields!", Snackbar.LENGTH_SHORT).show();
             return false;
         }
-
     }
 
     // TODO: Helper method for testing, remove this.
-    private void showSnackBar(String message){
+    private void showSnackBar(String message) {
         Snackbar.make(this.getCurrentFocus(), message, Snackbar.LENGTH_SHORT).show();
     }
 
-    private Calendar parseDate(String date){
+    private Calendar parseDate(String date) {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("DD/MM/YYY", Locale.ENGLISH);
 
-        try{
+        try {
             calendar.setTime(dateFormat.parse(date));
-        } catch (ParseException e){
+        } catch (ParseException e) {
             e.printStackTrace();
         }
 
@@ -291,19 +457,19 @@ public class AddBookActivity extends AppCompatActivity {
 
     }
 
-    private double parseDouble(String in){
+    private double parseDouble(String in) {
         try {
             return Double.parseDouble(in);
-        } catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             return 0.0;
         }
     }
 
-    public void setImageToStore(Bitmap image){
+    public void setImageToStore(Bitmap image) {
         imageToStore = image;
     }
 
-    private void setupAuthorAutocomplete(){
+    private void setupAuthorAutocomplete() {
 
         final List<String> AUTHORS = repository.getAuthorNames();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
@@ -313,7 +479,7 @@ public class AddBookActivity extends AppCompatActivity {
         author.setAdapter(adapter);
     }
 
-    private void setupGenreAutoComplete(){
+    private void setupGenreAutoComplete() {
 
         final List<String> GENRE = repository.getGenreNames();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
@@ -323,20 +489,23 @@ public class AddBookActivity extends AppCompatActivity {
 
     }
 
-    private void takeBookImage(){
+    private void takeBookImage() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if(intent.resolveActivity(getPackageManager()) != null){
-            startActivityForResult(intent, IMAGE_CAPTURE_REQUEST);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(intent, COVER_IMAGE_REQUEST);
         }
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == IMAGE_CAPTURE_REQUEST && resultCode == Activity.RESULT_OK){
+        if (requestCode == COVER_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap image = (Bitmap) extras.get("data");
             coverImage.setImageBitmap(image);
             setImageToStore(image);
+        } else if (requestCode == BARCODE_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
+            processBarcode(this);
         }
     }
 

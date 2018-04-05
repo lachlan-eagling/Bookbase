@@ -44,6 +44,7 @@ dependencies {
     compile 'com.android.support:support-core-utils:27.0.2'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'android.arch.persistence.room:runtime:1.0.0'
+    compile 'com.google.android.gms:play-services:11.8.0'
     annotationProcessor 'android.arch.persistence.room:compiler:1.0.0'
 
     compile 'com.google.firebase:firebase-core:11.8.0'
