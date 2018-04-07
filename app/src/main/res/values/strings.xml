@@ -67,5 +67,6 @@
         SOFTWARE.</string>
     <string name="github_link">https://github.com/lachlan-eagling/Bookbase</string>
     <string name="app_version">Version\t</string>
+    <string name="lbl_search">Search</string>
 
 </resources>

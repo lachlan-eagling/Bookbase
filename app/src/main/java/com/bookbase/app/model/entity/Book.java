@@ -169,4 +169,20 @@ public class Book implements Parcelable{
     public void setPurchasePrice(double price){ this.purchasePrice = price; }
     public void setCoverImage(String imageDirectory) { this.coverImage = imageDirectory; }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) { return true; }
+        if (obj == null || getClass() != obj.getClass()) { return false; }
+        Book book = (Book) obj;
+        if (bookId != book.getBookId()) { return false; }
+        return title != null ? title.equals(book.getTitle()) : book.getTitle() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (bookId ^ (bookId >>> 32));
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        return result;
+    }
+
 }

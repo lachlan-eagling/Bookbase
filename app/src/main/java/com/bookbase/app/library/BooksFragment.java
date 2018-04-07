@@ -8,12 +8,19 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuCompat;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.util.SortedList;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.bookbase.app.R;
@@ -23,9 +30,11 @@ import com.bookbase.app.library.viewBook.ViewBookFragment;
 import com.bookbase.app.model.entity.Book;
 import com.bookbase.app.model.repository.Repository;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
-public class BooksFragment extends Fragment implements Runnable{
+public class BooksFragment extends Fragment implements Runnable, android.support.v7.widget.SearchView.OnQueryTextListener {
 
     private OnFragmentInteractionListener mListener;
     private List<Book> books;
@@ -33,6 +42,14 @@ public class BooksFragment extends Fragment implements Runnable{
     private RecyclerView bookList;
     private Repository repository;
     private TextView emptyView;
+    BooksAdapter adapter;
+
+    private final Comparator<Book> comparator = new Comparator<Book>() {
+        @Override
+        public int compare(Book o1, Book o2) {
+            return o1.getTitle().compareTo(o2.getTitle());
+        }
+    };
 
     public interface OnFragmentInteractionListener { void onFragmentInteraction(Uri uri); }
 
@@ -61,6 +78,8 @@ public class BooksFragment extends Fragment implements Runnable{
         books = repository.getBookList();
     }
 
+
+
     @Override
     public void onResume() {
         super.onResume();
@@ -69,16 +88,50 @@ public class BooksFragment extends Fragment implements Runnable{
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.library_menu, menu);
+
+        final MenuItem searchMenuItem = menu.findItem(R.id.searchButton);
+        final android.support.v7.widget.SearchView searchView = (android.support.v7.widget.SearchView) MenuItemCompat.getActionView(searchMenuItem);
+        searchView.setOnQueryTextListener(this);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        final List<Book> filteredModelList = filter(books, newText);
+        adapter.replaceAll(filteredModelList);
+        bookList.scrollToPosition(0);
+        return true;
+    }
+
+    private static List<Book> filter(List<Book> books, String query) {
+        final String lowerCaseQuery = query.toLowerCase();
+
+        final List<Book> filteredBookList = new ArrayList<>();
+        for (Book book : books) {
+            final String text = book.getTitle().toLowerCase();
+            if (text.contains(lowerCaseQuery)) {
+                filteredBookList.add(book);
+            }
+        }
+        return filteredBookList;
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_books, container, false);
         bookList = view.findViewById(R.id.books_list);
         emptyView = view.findViewById(R.id.empty_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        //DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(bookList.getContext(), layoutManager.getOrientation());
         bookList.setLayoutManager(layoutManager);
-        //bookList.addItemDecoration(dividerItemDecoration);
         FloatingActionButton fab = view.findViewById(R.id.add_book_fab);
         setupAdapter(books);
 
@@ -131,8 +184,10 @@ public class BooksFragment extends Fragment implements Runnable{
 
 
     private void setupAdapter(List<Book> books){
-        BooksAdapter adapter;
-        adapter = new BooksAdapter(getActivity(), books);
+        if (adapter == null) {
+            adapter = new BooksAdapter(getActivity(), books, comparator);
+        }
+        adapter.add(books);
         if(books.isEmpty()) {
             bookList.setVisibility(View.GONE);
             emptyView.setVisibility(View.VISIBLE);
