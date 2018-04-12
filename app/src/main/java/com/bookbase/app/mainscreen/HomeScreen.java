@@ -137,6 +137,7 @@ public class HomeScreen extends AppCompatActivity implements
                 .commit();
 
         // Update UI to indicate currently selected item.
+        setTitle(item.getTitle());
         item.setChecked(true);
         drawer.closeDrawers();
     }

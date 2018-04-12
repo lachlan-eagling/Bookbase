@@ -7,7 +7,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.transition.TransitionManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.util.SortedList;
@@ -91,9 +93,35 @@ public class BooksFragment extends Fragment implements Runnable, android.support
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.library_menu, menu);
 
+        final TextView toolbarTitle = getActivity().findViewById(R.id.toolbar_title);
         final MenuItem searchMenuItem = menu.findItem(R.id.searchButton);
         final android.support.v7.widget.SearchView searchView = (android.support.v7.widget.SearchView) MenuItemCompat.getActionView(searchMenuItem);
         searchView.setOnQueryTextListener(this);
+
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toolbarTitle.setVisibility(View.GONE);
+            }
+        });
+
+        searchView.setOnCloseListener(new android.support.v7.widget.SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                toolbarTitle.setVisibility(View.VISIBLE  );
+                return false;
+            }
+        });
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.searchButton:
+                TransitionManager.beginDelayedTransition((ViewGroup) getActivity().findViewById(R.id.toolbar));
+                MenuItemCompat.expandActionView(item);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
