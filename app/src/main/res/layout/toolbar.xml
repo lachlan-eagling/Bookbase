@@ -16,5 +16,6 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/dancing_script"
         android:textColor="@android:color/background_light"
+        android:text="@string/lbl_appname"
         android:textSize="24sp" />
 </android.support.v7.widget.Toolbar>

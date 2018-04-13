@@ -37,7 +37,6 @@ import butterknife.ButterKnife;
 public class ViewBookFragment extends Fragment {
 
     private Book book;
-    private OnFragmentInteractionListener mListener;
 
     @BindView(R.id.view_book_title) TextView title;
     @BindView(R.id.view_book_author) TextView author;
@@ -147,29 +146,8 @@ public class ViewBookFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         // TODO: Need to update book in this view when returning to fragment from edit screen.
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
     }
 }

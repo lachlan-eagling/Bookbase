@@ -38,7 +38,6 @@ import java.util.List;
 
 public class BooksFragment extends Fragment implements Runnable, android.support.v7.widget.SearchView.OnQueryTextListener {
 
-    private OnFragmentInteractionListener mListener;
     private List<Book> books;
     private AppDatabase database;
     private RecyclerView bookList;
@@ -53,24 +52,10 @@ public class BooksFragment extends Fragment implements Runnable, android.support
         }
     };
 
-    public interface OnFragmentInteractionListener { void onFragmentInteraction(Uri uri); }
-
     public BooksFragment() {}
 
-    public static BooksFragment newInstance(String param1, String param2) {
+    public static BooksFragment newInstance() {
         return new BooksFragment();
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-            run();
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
     }
 
     @Override
@@ -199,12 +184,6 @@ public class BooksFragment extends Fragment implements Runnable, android.support
         }));
 
         return view;
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
     }
 
     @Override
