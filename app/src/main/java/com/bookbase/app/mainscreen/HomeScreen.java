@@ -2,10 +2,8 @@ package com.bookbase.app.mainscreen;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
@@ -23,7 +21,6 @@ public class HomeScreen extends AppCompatActivity {
     @BindView(R.id.navigation_drawer) DrawerLayout drawer;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.toolbar_title) TextView toolbarTitle;
-    @BindView(R.id.nav_view) NavigationView navDrawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
