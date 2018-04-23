@@ -187,7 +187,6 @@ public class AddBookActivity extends AppCompatActivity {
                 purchaseDate.setText(bookToEdit.getPurchaseDateString());
                 purchasePrice.setText(String.valueOf(bookToEdit.getPurchasePrice()));
                 rating.setRating(bookToEdit.getRating());
-                Looper.loop();
             }
         });
 
