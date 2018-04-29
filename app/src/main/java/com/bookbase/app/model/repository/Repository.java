@@ -20,6 +20,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import javax.security.auth.callback.Callback;
+
 public class Repository {
 
     // Thread pool parameters.
@@ -58,6 +60,10 @@ public class Repository {
     public List<Book> getBookList() {
         // TODO: Off load to background thread.
         return bookDao.getBooks();
+    }
+
+    public Book getBook(final int bookId) {
+        return bookDao.getSingleBook(bookId);
     }
 
     public void insertBook(final Book book, final AddBookActivity.AddBookCallback callback){

@@ -162,7 +162,8 @@ public class BooksFragment extends Fragment implements Runnable, android.support
                 try {
                     Fragment fragment = (ViewBookFragment.class).newInstance();
                     Bundle bundle = new Bundle();
-                    bundle.putParcelable("book", books.get(position));
+                    //bundle.putParcelable("book", books.get(position));
+                    bundle.putInt("bookId", books.get(position).getBookId());
                     fragment.setArguments(bundle);
                     getActivity().getSupportFragmentManager().beginTransaction()
                             .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)

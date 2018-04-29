@@ -12,29 +12,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <EditText
+        <TextView
             android:id="@+id/view-book-title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:background="@android:color/transparent"
             android:text="Book Title"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:background="@android:color/transparent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline3"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/view-book-cover" />
 
         <TextView
             android:id="@+id/view_book_author"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginRight="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
             android:text="Author"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -43,165 +43,105 @@
 
         <RatingBar
             android:id="@+id/view-book-rating"
-            style="@style/Widget.AppCompat.RatingBar.Indicator"
+            style="@style/Widget.AppCompat.RatingBar.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:numStars="5"
             android:rating="3"
             app:layout_constraintStart_toStartOf="@+id/guideline3"
-            app:layout_constraintTop_toBottomOf="@+id/view_book_author" />
+            app:layout_constraintTop_toBottomOf="@+id/view_book_genre" />
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="133dp" />
+            app:layout_constraintGuide_begin="168dp" />
 
         <ImageView
             android:id="@+id/view-book-cover"
-            android:layout_width="108dp"
-            android:layout_height="173dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
-            android:cropToPadding="false"
+            android:layout_width="128dp"
+            android:layout_height="196dp"
+            android:layout_marginTop="8dp"
             android:maxHeight="@android:dimen/thumbnail_height"
             android:maxWidth="@android:dimen/thumbnail_height"
-            android:scaleType="centerCrop"
-            app:layout_constraintBottom_toTopOf="@+id/guideline4"
-            app:layout_constraintEnd_toStartOf="@+id/guideline3"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/view-book-lbl-descr"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <android.support.constraint.Guideline
-            android:id="@+id/guideline4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_begin="195dp" />
 
         <TextView
             android:id="@+id/view-book-lbl-descr"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:text="@string/lbl_description"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline4" />
+            app:layout_constraintTop_toBottomOf="@+id/view-book-cover" />
 
         <TextView
             android:id="@+id/view_book_descr"
             android:layout_width="0dp"
-            android:layout_height="22dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:text="book description"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginStart="16dp"
+            android:text=""
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view-book-lbl-descr" />
 
         <TextView
-            android:id="@+id/view-book-lbl-genre"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/lbl_genre"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view_book_descr" />
-
-        <TextView
             android:id="@+id/view_book_genre"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:text="genre"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view-book-lbl-genre" />
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintTop_toBottomOf="@+id/view_book_author" />
 
         <TextView
             android:id="@+id/view-book-lbl-review"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:text="@string/lbl_review"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view_book_genre" />
+            app:layout_constraintTop_toBottomOf="@+id/view_book_descr" />
 
         <TextView
             android:id="@+id/view_book_review"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginStart="16dp"
             android:text="review"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view-book-lbl-review" />
-
-        <TextView
-            android:id="@+id/view-book-lbl-purchasedate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/lbl_purchase_date"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/view-book-lbl-purchaseprice"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view_book_review" />
-
-        <TextView
-            android:id="@+id/view-book-lbl-purchaseprice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/lbl_purchase_price"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/view-book-lbl-purchasedate"
-            app:layout_constraintTop_toBottomOf="@+id/view_book_review" />
-
-        <TextView
-            android:id="@+id/view_book_purchasedate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="purchase-date"
-            app:layout_constraintEnd_toStartOf="@+id/view_book_purchaseprice"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view-book-lbl-purchasedate" />
-
-        <TextView
-            android:id="@+id/view_book_purchaseprice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="purchase-price"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/view_book_purchasedate"
-            app:layout_constraintTop_toBottomOf="@+id/view-book-lbl-purchaseprice" />
 
     </android.support.constraint.ConstraintLayout>
 

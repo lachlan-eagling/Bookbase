@@ -37,16 +37,16 @@ import butterknife.ButterKnife;
 public class ViewBookFragment extends Fragment {
 
     private Book book;
-
+    private int bookId;
     @BindView(R.id.view_book_title) TextView title;
     @BindView(R.id.view_book_author) TextView author;
     @BindView(R.id.view_book_rating) RatingBar rating;
     @BindView(R.id.view_book_cover) ImageView cover;
+    @BindView(R.id.view_book_lbl_descr) TextView descrLabel;
     @BindView(R.id.view_book_descr) TextView descr;
     @BindView(R.id.view_book_genre) TextView genre;
+    @BindView(R.id.view_book_lbl_review) TextView reviewLabel;
     @BindView(R.id.view_book_review) TextView review;
-    @BindView(R.id.view_book_purchasedate) TextView purchaseDate;
-    @BindView(R.id.view_book_purchaseprice) TextView purchasePrice;
     Toolbar toolbar;
 
     public ViewBookFragment() {
@@ -63,7 +63,9 @@ public class ViewBookFragment extends Fragment {
     public void setArguments(@Nullable Bundle args) {
         super.setArguments(args);
         Bundle bundle = this.getArguments();
-        this.book = bundle.getParcelable("book");
+        //this.book = bundle.getParcelable("book");
+        this.bookId = bundle.getInt("bookId");
+        this.book = Repository.getRepository().getBook(bookId);
     }
 
     @Override
@@ -120,6 +122,29 @@ public class ViewBookFragment extends Fragment {
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
         setHasOptionsMenu(true);
+        populateDetails();
+
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        this.book = Repository.getRepository().getBook(bookId);
+        populateDetails();
+    }
+
+    private void populateDetails() {
+
+        if (book.getDescription().isEmpty()) {
+            descrLabel.setVisibility(View.GONE);
+            descr.setVisibility(View.GONE);
+        }
+
+        if (book.getReview().getReviewContent().isEmpty()) {
+            reviewLabel.setVisibility(View.GONE);
+            review.setVisibility(View.GONE);
+        }
 
 
         title.setText(book.getTitle());
@@ -128,8 +153,6 @@ public class ViewBookFragment extends Fragment {
         descr.setText(book.getDescription());
         genre.setText(book.getGenre().getGenreName());
         review.setText(book.getReview().getReviewContent());
-        purchaseDate.setText(book.getPurchaseDateString());
-        purchasePrice.setText(String.valueOf(book.getPurchasePrice()));
 
         File file = null;
         if(book.getCoverImage() != null){
@@ -140,14 +163,8 @@ public class ViewBookFragment extends Fragment {
                 .load(file)
                 .placeholder(R.drawable.book_default)
                 .error(R.drawable.book_default)
+                .resize(cover.getMaxWidth(), cover.getMaxHeight())
+                .centerInside()
                 .into(cover);
-
-        return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        // TODO: Need to update book in this view when returning to fragment from edit screen.
     }
 }
