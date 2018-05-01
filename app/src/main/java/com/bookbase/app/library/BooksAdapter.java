@@ -40,7 +40,6 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
             super(view);
             ButterKnife.bind(this, view);
         }
-
     }
 
     private List<Book> books;
@@ -89,8 +88,6 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
         this.context = context;
         this.comparator = comparator;
     }
-
-
 
     public void add(Book book) {
         sortedList.add(book);
@@ -171,6 +168,10 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
     @Override
     public int getItemCount(){
         return sortedList.size();
+    }
+
+    public int getBookIdAt(int position) {
+        return sortedList.get(position).getBookId();
     }
 
 }

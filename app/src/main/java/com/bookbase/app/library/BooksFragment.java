@@ -1,19 +1,13 @@
 package com.bookbase.app.library;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.transition.TransitionManager;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.MenuCompat;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.util.SortedList;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,7 +16,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.bookbase.app.R;
@@ -162,8 +155,7 @@ public class BooksFragment extends Fragment implements Runnable, android.support
                 try {
                     Fragment fragment = (ViewBookFragment.class).newInstance();
                     Bundle bundle = new Bundle();
-                    //bundle.putParcelable("book", books.get(position));
-                    bundle.putInt("bookId", books.get(position).getBookId());
+                    bundle.putInt("bookId", ((BooksAdapter) bookList.getAdapter()).getBookIdAt(position));
                     fragment.setArguments(bundle);
                     getActivity().getSupportFragmentManager().beginTransaction()
                             .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
