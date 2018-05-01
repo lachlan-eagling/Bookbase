@@ -391,12 +391,16 @@ public class AddBookActivity extends AppCompatActivity {
                 });
                 return true;
             } else {
+                String newCoverImg = SaveImageHelper.saveImageToInternalStorage(imageToStore, book);
+                if(newCoverImg == null) {
+                    newCoverImg = bookToEdit.getCoverImage();
+                }
                 bookToEdit.setTitle(title.getText().toString());
                 bookToEdit.setAuthor(new Author(author.getText().toString()));
                 bookToEdit.setGenre(new Genre(genre.getText().toString()));
                 bookToEdit.setDescription(description.getText().toString());
                 bookToEdit.setGenre(new Genre(genre.getText().toString()));
-                bookToEdit.setCoverImage(SaveImageHelper.saveImageToInternalStorage(imageToStore, book));
+                bookToEdit.setCoverImage(newCoverImg);
                 bookToEdit.setReview(new Review(Calendar.getInstance(), review.getText().toString()));
                 bookToEdit.setPurchaseDate(parseDate(purchaseDate.getText().toString()));
                 bookToEdit.setPurchasePrice(parseDouble(purchasePrice.getText().toString()));
