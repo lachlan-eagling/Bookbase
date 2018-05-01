@@ -47,7 +47,8 @@ public class ViewBookFragment extends Fragment {
     @BindView(R.id.view_book_genre) TextView genre;
     @BindView(R.id.view_book_lbl_review) TextView reviewLabel;
     @BindView(R.id.view_book_review) TextView review;
-    Toolbar toolbar;
+    private Toolbar toolbar;
+    private AppCompatActivity activity;
 
     public ViewBookFragment() {
         // Required empty public constructor
@@ -71,6 +72,7 @@ public class ViewBookFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        activity = ((AppCompatActivity)getActivity());
     }
 
     @Override
@@ -116,7 +118,6 @@ public class ViewBookFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_view_book, container, false);
         ButterKnife.bind(this, view);
 
-        AppCompatActivity activity = ((AppCompatActivity)getActivity());
         toolbar = activity.findViewById(R.id.toolbar); // Outside scope of fragments view so cannot bind with Butterknife.
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -132,6 +133,12 @@ public class ViewBookFragment extends Fragment {
         super.onResume();
         this.book = Repository.getRepository().getBook(bookId);
         populateDetails();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
     private void populateDetails() {
