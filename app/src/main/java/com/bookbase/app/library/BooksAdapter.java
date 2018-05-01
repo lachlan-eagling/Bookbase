@@ -98,6 +98,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
     }
 
     public void add(List<Book> books) {
+        sortedList.clear();
         sortedList.addAll(books);
     }
 
