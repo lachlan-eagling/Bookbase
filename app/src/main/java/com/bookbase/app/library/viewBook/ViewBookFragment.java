@@ -162,16 +162,28 @@ public class ViewBookFragment extends Fragment {
         review.setText(book.getReview().getReviewContent());
 
         File file = null;
-        if(book.getCoverImage() != null){
-            file = new File(book.getCoverImage());
+        boolean fromWeb = false;
+        if (book.getCoverImage() != null
+                ) {
+            if (book.getCoverImage().contains("http://")) {
+                fromWeb = true;
+            } else {
+                file = new File(book.getCoverImage());
+            }
         }
 
-        Picasso.with(this.getContext())
-                .load(file)
-                .placeholder(R.drawable.book_default)
-                .error(R.drawable.book_default)
-                .resize(cover.getMaxWidth(), cover.getMaxHeight())
-                .centerInside()
-                .into(cover);
+        if (fromWeb) {
+            Picasso.with(getActivity())
+                    .load(book.getCoverImage())
+                    .placeholder(R.drawable.book_default)
+                    .error(R.drawable.book_default)
+                    .into(cover);
+        } else {
+            Picasso.with(getActivity())
+                    .load(file)
+                    .placeholder(R.drawable.book_default)
+                    .error(R.drawable.book_default)
+                    .into(cover);
+        }
     }
 }

@@ -22,8 +22,6 @@ import okhttp3.Response;
 
 public class SaveImageHelper {
 
-    // Temporarily store image when it results from a network call.
-    private static Bitmap temp = null;
 
     public static String saveImageToInternalStorage(Bitmap image, Book book){
         if(image != null){
@@ -50,39 +48,10 @@ public class SaveImageHelper {
                     e.printStackTrace();
                 }
             }
-            setTemp(null);
             return myPath.getAbsolutePath();
         }
 
         return null;
-    }
-
-    public static String saveImageToInternalStorage(String url, final Book book){
-
-        Callback callback = new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                byte[] imageBytes = response.body().bytes();
-                Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-                setTemp(bitmap);
-
-            }
-        };
-
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url(url).build();
-        client.newCall(request).enqueue(callback);
-
-        return saveImageToInternalStorage(temp, book);
-    }
-
-    private static void setTemp(Bitmap img){
-        temp = img;
     }
 
 }

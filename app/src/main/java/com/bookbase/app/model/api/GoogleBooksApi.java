@@ -1,9 +1,12 @@
 package com.bookbase.app.model.api;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import com.bookbase.app.BuildConfig;
 import com.bookbase.app.model.entity.Book;
+import com.crashlytics.android.Crashlytics;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
@@ -123,12 +126,9 @@ public final class GoogleBooksApi {
         try{
             // Convert response body to JSON Array.
             responseBody = response.body().string();
-
             if(isResponseValid(responseBody)){
                 json = new JSONObject(responseBody);
                 jsonArray = json.getJSONArray("items");
-
-                // Parse and convert JSON.
                 books = jsonAdapter.fromJson(jsonArray.toString());
             } else{
                 // TODO: Log to crash reporting.
@@ -136,9 +136,9 @@ public final class GoogleBooksApi {
             }
 
         } catch (IOException e){
-            // Something went wrong...
+            Crashlytics.logException(e);
         } catch(JSONException e){
-            // Something went wrong...
+            Crashlytics.logException(e);
         }
 
         return books;

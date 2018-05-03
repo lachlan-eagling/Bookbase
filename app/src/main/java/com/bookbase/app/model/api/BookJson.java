@@ -39,12 +39,18 @@ class VolumeInfo{
     @Override
     public String toString() {
         StringBuilder out = new StringBuilder();
-        out.append("Title: " + title + "\n");
+        out.append("Title: ");
+        out.append(title);
+        out.append("\n");
         for(String s : authors){
-            out.append(s.toString() + "\n");
+            out.append(s);
+            out.append("\n");
         }
-        out.append("Description: " + description + "\n");
-        out.append("Image Link: " + imageLinks.thumbnail);
+        out.append("Description: ");
+        out.append(description);
+        out.append("\n");
+        out.append("Image Link: ");
+        out.append(imageLinks.thumbnail);
         return out.toString();
     }
 
@@ -52,7 +58,8 @@ class VolumeInfo{
         StringBuilder sb = new StringBuilder();
         for(String s : authors){
             if(authors.size() > 1){
-                sb.append(s + ", ");
+                sb.append(s);
+                sb.append(", ");
             } else{
                 sb.append(s);
             }

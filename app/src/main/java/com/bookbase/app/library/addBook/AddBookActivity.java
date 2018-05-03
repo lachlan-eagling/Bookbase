@@ -170,15 +170,30 @@ public class AddBookActivity extends AppCompatActivity {
                 }
 
                 File file = null;
-                if (bookToEdit.getCoverImage() != null) {
-                    file = new File(bookToEdit.getCoverImage());
+                boolean fromWeb = false;
+                if (bookToEdit.getCoverImage() != null
+                        ) {
+                    if (bookToEdit.getCoverImage().contains("http://")) {
+                        fromWeb = true;
+                    } else {
+                        file = new File(bookToEdit.getCoverImage());
+                    }
                 }
 
-                Picasso.with(context)
-                        .load(file)
-                        .placeholder(R.drawable.book_default)
-                        .error(R.drawable.book_default)
-                        .into(coverImage);
+                if (fromWeb) {
+                    Picasso.with(context)
+                            .load(bookToEdit.getCoverImage())
+                            .placeholder(R.drawable.book_default)
+                            .error(R.drawable.book_default)
+                            .into(coverImage);
+                } else {
+                    Picasso.with(context)
+                            .load(file)
+                            .placeholder(R.drawable.book_default)
+                            .error(R.drawable.book_default)
+                            .into(coverImage);
+                }
+
 
                 Review reviewContent = book.getReview();
                 if (reviewContent != null) {
@@ -431,7 +446,7 @@ public class AddBookActivity extends AppCompatActivity {
                 } else {
                     repository.updateBook(bookToEdit, callback);
                 }
-
+                imageToStore = null;
                 return true;
             }
 

@@ -141,6 +141,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
 
         Book book = sortedList.get(position);
         File file = null;
+        boolean fromWeb = false;
 
         final AppDatabase db = AppDatabase.getDatabase(context);
         Author authorEntity = db.authorDao().getAuthorById(book.getAuthor().getAuthorId());
@@ -163,6 +164,28 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
         author.setText(authorEntity.getName());
         descr.setText(book.getDescription());
         rating.setRating(book.getRating());
+
+        if (book.getCoverImage() != null) {
+            if (book.getCoverImage().contains("http://")) {
+                fromWeb = true;
+            } else {
+                file = new File(book.getCoverImage());
+            }
+        }
+
+        if (fromWeb) {
+            Picasso.with(context)
+                    .load(book.getCoverImage())
+                    .placeholder(R.drawable.book_default)
+                    .error(R.drawable.book_default)
+                    .into(coverImage);
+        } else {
+            Picasso.with(context)
+                    .load(file)
+                    .placeholder(R.drawable.book_default)
+                    .error(R.drawable.book_default)
+                    .into(coverImage);
+        }
 
     }
 
