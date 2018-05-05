@@ -127,8 +127,8 @@ public class AddBookActivity extends AppCompatActivity {
 
         setContentView(R.layout.fragment_edit_book);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        TextView toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        TextView toolbarTitle = findViewById(R.id.toolbar_title);
         toolbarTitle.setText(R.string.lbl_add_new_book);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
