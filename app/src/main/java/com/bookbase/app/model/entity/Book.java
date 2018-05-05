@@ -169,11 +169,14 @@ public class Book implements Parcelable{
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) { return true; }
-        if (obj == null || getClass() != obj.getClass()) { return false; }
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
         Book book = (Book) obj;
-        if (bookId != book.getBookId()) { return false; }
-        return title != null ? title.equals(book.getTitle()) : book.getTitle() == null;
+        return bookId == book.getBookId() && (title != null ? title.equals(book.getTitle()) : book.getTitle() == null);
     }
 
     @Override
