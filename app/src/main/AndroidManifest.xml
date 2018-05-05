@@ -9,7 +9,8 @@
         android:label="@string/lbl_bookbase"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:fullBackupContent="@xml/backup_descriptor">
         <activity android:name="com.bookbase.app.mainscreen.HomeScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
