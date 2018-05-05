@@ -98,6 +98,8 @@ public class AddBookActivity extends AppCompatActivity {
     AutoCompleteTextView genre;
     @BindView(R.id.cover_image)
     ImageView coverImage;
+    @BindView(R.id.no_image)
+    TextView lblNoImage;
     @BindView(R.id.add_book_review_data)
     EditText review;
     @BindView(R.id.add_book_purchase_date_data)
@@ -169,10 +171,12 @@ public class AddBookActivity extends AppCompatActivity {
                     genre.setText("Unknown Genre");
                 }
 
+
                 File file = null;
                 boolean fromWeb = false;
-                if (bookToEdit.getCoverImage() != null
-                        ) {
+                if (bookToEdit.getCoverImage() != null) {
+                    lblNoImage.setVisibility(View.GONE);
+                    coverImage.setVisibility(View.VISIBLE);
                     if (bookToEdit.getCoverImage().contains("http://")) {
                         fromWeb = true;
                     } else {
@@ -183,14 +187,14 @@ public class AddBookActivity extends AppCompatActivity {
                 if (fromWeb) {
                     Picasso.with(context)
                             .load(bookToEdit.getCoverImage())
-                            .placeholder(R.drawable.book_default)
-                            .error(R.drawable.book_default)
+                            .placeholder(R.drawable.no_cover)
+                            .error(R.drawable.no_cover)
                             .into(coverImage);
                 } else {
                     Picasso.with(context)
                             .load(file)
-                            .placeholder(R.drawable.book_default)
-                            .error(R.drawable.book_default)
+                            .placeholder(R.drawable.no_cover)
+                            .error(R.drawable.no_cover)
                             .into(coverImage);
                 }
 
@@ -520,6 +524,8 @@ public class AddBookActivity extends AppCompatActivity {
         if (requestCode == COVER_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap image = (Bitmap) extras.get("data");
+            lblNoImage.setVisibility(View.GONE);
+            coverImage.setVisibility(View.VISIBLE);
             coverImage.setImageBitmap(image);
             setImageToStore(image);
         } else if (requestCode == BARCODE_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {

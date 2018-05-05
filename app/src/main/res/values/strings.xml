@@ -35,5 +35,6 @@
     <string name="msg_empty_library">Oops&#8230;Looks like you don\'t have any books yet!</string>
     <string name="lbl_search">Search</string>
     <string name="lbl_appname">Bookbase</string>
+    <string name="lbl_no_cover">No Cover Image</string>
 
 </resources>
