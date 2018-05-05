@@ -148,7 +148,7 @@ public class Book implements Parcelable{
     public String getCoverImage() { return coverImage; }
 
     public String getPurchaseDateString(){
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
         String date = df.format(Calendar.getInstance().getTime());
         if (purchaseDate != null) {
             date = df.format(purchaseDate.getTime());

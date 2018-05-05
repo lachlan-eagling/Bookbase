@@ -13,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -28,7 +29,7 @@ public class SaveImageHelper {
             ContextWrapper context = new ContextWrapper(HomeScreen.getContext());
 
             // Setup date format and get current datetime to append to filename.
-            SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmm");
+            SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmm", Locale.ENGLISH);
             Date now = new Date();
 
             // Setup directory, file and output stream.
