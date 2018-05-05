@@ -47,7 +47,6 @@ public class ViewBookFragment extends Fragment {
     @BindView(R.id.view_book_genre) TextView genre;
     @BindView(R.id.view_book_lbl_review) TextView reviewLabel;
     @BindView(R.id.view_book_review) TextView review;
-    private Toolbar toolbar;
     private AppCompatActivity activity;
 
     public ViewBookFragment() {
@@ -118,7 +117,7 @@ public class ViewBookFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_view_book, container, false);
         ButterKnife.bind(this, view);
 
-        toolbar = activity.findViewById(R.id.toolbar); // Outside scope of fragments view so cannot bind with Butterknife.
+        Toolbar toolbar = activity.findViewById(R.id.toolbar);
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         activity.getSupportActionBar().setDisplayShowTitleEnabled(false);

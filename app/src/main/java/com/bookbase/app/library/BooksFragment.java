@@ -32,7 +32,6 @@ import java.util.List;
 public class BooksFragment extends Fragment implements Runnable, android.support.v7.widget.SearchView.OnQueryTextListener {
 
     private List<Book> books;
-    private AppDatabase database;
     private RecyclerView bookList;
     private Repository repository;
     private TextView emptyView;
@@ -180,7 +179,9 @@ public class BooksFragment extends Fragment implements Runnable, android.support
     }
 
     @Override
-    public void run(){ database = AppDatabase.getDatabase(this.getContext()); }
+    public void run(){
+        AppDatabase database = AppDatabase.getDatabase(this.getContext());
+    }
 
 
     private void setupAdapter(List<Book> books){

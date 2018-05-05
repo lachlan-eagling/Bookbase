@@ -42,7 +42,6 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
         }
     }
 
-    private List<Book> books;
     private Context context;
     private Comparator<Book> comparator;
     private final SortedList<Book> sortedList = new SortedList<Book>(Book.class, new SortedList.Callback<Book>() {
@@ -84,7 +83,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
     });
 
     BooksAdapter(Context context, List<Book> books, Comparator<Book> comparator){
-        this.books = books;
+        List<Book> books1 = books;
         this.context = context;
         this.comparator = comparator;
     }
