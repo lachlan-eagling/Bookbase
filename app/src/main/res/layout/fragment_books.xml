@@ -25,6 +25,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="112dp"
                 android:src="@drawable/empty_shelf"
+                android:contentDescription="@string/msg_empty_library"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.504"
                 app:layout_constraintStart_toStartOf="parent"

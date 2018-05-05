@@ -36,5 +36,6 @@
     <string name="lbl_search">Search</string>
     <string name="lbl_appname">Bookbase</string>
     <string name="lbl_no_cover">No Cover Image</string>
+    <string name="cover_image">Book Cover Image</string>
 
 </resources>
