@@ -180,7 +180,7 @@ public class Book implements Parcelable{
 
     @Override
     public int hashCode() {
-        int result = (bookId ^ (bookId >>> 32));
+        int result = (bookId ^ (bookId >>> 8));
         result = 31 * result + (title != null ? title.hashCode() : 0);
         return result;
     }
