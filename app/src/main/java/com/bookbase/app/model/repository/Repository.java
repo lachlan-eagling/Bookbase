@@ -1,7 +1,5 @@
 package com.bookbase.app.model.repository;
 
-import android.util.Log;
-
 import com.bookbase.app.database.AppDatabase;
 import com.bookbase.app.library.addBook.AddBookActivity;
 import com.bookbase.app.mainscreen.HomeScreen;
@@ -13,14 +11,11 @@ import com.bookbase.app.model.entity.Book;
 import com.bookbase.app.model.entity.Genre;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-
-import javax.security.auth.callback.Callback;
 
 public class Repository {
 

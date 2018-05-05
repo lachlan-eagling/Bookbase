@@ -1,6 +1,5 @@
 package com.bookbase.app.model.entity;
 
-import android.animation.RectEvaluator;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
@@ -12,7 +11,6 @@ import com.bookbase.app.utils.Converters;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 @Entity(tableName = "Book")

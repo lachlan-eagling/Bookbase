@@ -1,7 +1,6 @@
 package com.bookbase.app.model.api;
 
 import java.util.List;
-import java.util.Map;
 
 public class BookJson {
 

@@ -16,13 +16,10 @@ import com.bookbase.app.model.entity.Author;
 import com.bookbase.app.model.entity.Book;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
 import java.io.File;
 import java.util.Comparator;
 import java.util.List;
 
-import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

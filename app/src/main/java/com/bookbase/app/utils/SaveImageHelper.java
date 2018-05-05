@@ -3,7 +3,6 @@ package com.bookbase.app.utils;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
 import com.bookbase.app.mainscreen.HomeScreen;
 import com.bookbase.app.model.entity.Book;
@@ -14,12 +13,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class SaveImageHelper {
 

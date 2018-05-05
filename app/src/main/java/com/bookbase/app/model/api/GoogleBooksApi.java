@@ -1,9 +1,5 @@
 package com.bookbase.app.model.api;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Log;
-
 import com.bookbase.app.BuildConfig;
 import com.bookbase.app.model.entity.Book;
 import com.crashlytics.android.Crashlytics;
