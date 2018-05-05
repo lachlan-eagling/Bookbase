@@ -41,7 +41,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
 
     private Context context;
     private Comparator<Book> comparator;
-    private final SortedList<Book> sortedList = new SortedList<Book>(Book.class, new SortedList.Callback<Book>() {
+    private final SortedList<Book> sortedList = new SortedList<>(Book.class, new SortedList.Callback<Book>() {
 
         @Override
         public int compare(Book o1, Book o2) {

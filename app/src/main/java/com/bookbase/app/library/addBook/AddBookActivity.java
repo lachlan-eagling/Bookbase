@@ -489,7 +489,7 @@ public class AddBookActivity extends AppCompatActivity {
     private void setupAuthorAutocomplete() {
 
         final List<String> AUTHORS = repository.getAuthorNames();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_dropdown_item_1line, AUTHORS);
 
 
@@ -499,7 +499,7 @@ public class AddBookActivity extends AppCompatActivity {
     private void setupGenreAutoComplete() {
 
         final List<String> GENRE = repository.getGenreNames();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_dropdown_item_1line, GENRE);
 
         genre.setAdapter(adapter);
