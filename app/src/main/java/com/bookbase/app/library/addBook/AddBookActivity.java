@@ -134,7 +134,7 @@ public class AddBookActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         TextView toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
-        toolbarTitle.setText("Add New Book");
+        toolbarTitle.setText(R.string.lbl_add_new_book);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -168,7 +168,7 @@ public class AddBookActivity extends AppCompatActivity {
                 if (genreEntity != null) {
                     genre.setText(genreEntity.getGenreName());
                 } else {
-                    genre.setText("Unknown Genre");
+                    genre.setText(R.string.lbl_unknown_genre);
                 }
 
 
