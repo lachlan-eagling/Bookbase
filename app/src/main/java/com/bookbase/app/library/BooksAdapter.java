@@ -80,7 +80,6 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
     });
 
     BooksAdapter(Context context, List<Book> books, Comparator<Book> comparator){
-        List<Book> books1 = books;
         this.context = context;
         this.comparator = comparator;
     }
