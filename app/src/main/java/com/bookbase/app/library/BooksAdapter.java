@@ -24,6 +24,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+@SuppressWarnings("unused")
 public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
 
     class ViewHolder extends RecyclerView.ViewHolder{
@@ -80,7 +81,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
         }
     });
 
-    BooksAdapter(Context context, List<Book> books, Comparator<Book> comparator){
+    BooksAdapter(Context context, Comparator<Book> comparator){
         this.context = context;
         this.comparator = comparator;
     }

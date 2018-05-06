@@ -191,7 +191,7 @@ public class BooksFragment extends Fragment implements Runnable, android.support
 
     private void setupAdapter(List<Book> books){
         if (adapter == null) {
-            adapter = new BooksAdapter(getActivity(), books, comparator);
+            adapter = new BooksAdapter(getActivity(), comparator);
         }
         adapter.add(books);
         if(books.isEmpty()) {
