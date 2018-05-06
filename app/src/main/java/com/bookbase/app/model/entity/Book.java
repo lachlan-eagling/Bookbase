@@ -91,9 +91,9 @@ public class Book implements Parcelable{
         this.isRead = false;
         this.rating = 0;
         this.author = author;
-        this.description = "";
+        this.description = description;
         this.isbn = "";
-        this.genre = new Genre("");
+        this.genre = genre;
         this.review = new Review();
 
     }
@@ -117,7 +117,7 @@ public class Book implements Parcelable{
 
     public Book(int bookId, boolean isRead, int rating, Author author, String description,
                 Genre genre, String isbn, String title, Review review, String coverImage,
-                Calendar purchaseDate, double purchasePrice, boolean isOwned) {
+                Calendar purchaseDate, double purchasePrice) {
         this.bookId = bookId;
         this.title = title;
         this.author = author;
