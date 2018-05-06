@@ -184,14 +184,14 @@ public class AddBookActivity extends AppCompatActivity {
                 if (fromWeb) {
                     Picasso.with(context)
                             .load(bookToEdit.getCoverImage())
-                            .placeholder(R.drawable.no_cover)
-                            .error(R.drawable.no_cover)
+                            .placeholder(R.mipmap.no_cover)
+                            .error(R.mipmap.no_cover)
                             .into(coverImage);
                 } else {
                     Picasso.with(context)
                             .load(file)
-                            .placeholder(R.drawable.no_cover)
-                            .error(R.drawable.no_cover)
+                            .placeholder(R.mipmap.no_cover)
+                            .error(R.mipmap.no_cover)
                             .into(coverImage);
                 }
 

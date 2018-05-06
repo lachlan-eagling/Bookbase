@@ -173,14 +173,14 @@ public class ViewBookFragment extends Fragment {
         if (fromWeb) {
             Picasso.with(getActivity())
                     .load(book.getCoverImage())
-                    .placeholder(R.drawable.no_cover)
-                    .error(R.drawable.no_cover)
+                    .placeholder(R.mipmap.no_cover)
+                    .error(R.mipmap.no_cover)
                     .into(cover);
         } else {
             Picasso.with(getActivity())
                     .load(file)
-                    .placeholder(R.drawable.no_cover)
-                    .error(R.drawable.no_cover)
+                    .placeholder(R.mipmap.no_cover)
+                    .error(R.mipmap.no_cover)
                     .into(cover);
         }
     }

@@ -152,8 +152,8 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
 
         Picasso.with(this.getContext())
                 .load(file)
-                .placeholder(R.drawable.no_cover)
-                .error(R.drawable.no_cover)
+                .placeholder(R.mipmap.no_cover)
+                .error(R.mipmap.no_cover)
                 .into(coverImage);
         title.setText(book.getTitle());
         author.setText(authorEntity.getName());
@@ -172,14 +172,14 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
             if (fromWeb) {
                 Picasso.with(context)
                         .load(book.getCoverImage())
-                        .placeholder(R.drawable.no_cover)
-                        .error(R.drawable.no_cover)
+                        .placeholder(R.mipmap.no_cover)
+                        .error(R.mipmap.no_cover)
                         .into(coverImage);
             } else {
                 Picasso.with(context)
                         .load(file)
-                        .placeholder(R.drawable.no_cover)
-                        .error(R.drawable.no_cover)
+                        .placeholder(R.mipmap.no_cover)
+                        .error(R.mipmap.no_cover)
                         .into(coverImage);
             }
         } else {
