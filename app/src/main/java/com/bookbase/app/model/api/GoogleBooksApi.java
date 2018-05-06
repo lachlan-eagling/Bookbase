@@ -36,12 +36,12 @@ public final class GoogleBooksApi {
     private GoogleBooksApi(){}
 
     private enum SearchType {
-        ISBN ("isbn:");
+        ISBN ();
 
         private final String queryParam;
 
-        SearchType(String type){
-            this.queryParam = type;
+        SearchType(){
+            this.queryParam = "isbn:";
         }
 
         String queryParam(){
@@ -57,7 +57,7 @@ public final class GoogleBooksApi {
     public static void queryByIsbn(String isbn, final UUID requestId, final BooksApiCallback booksApiCallback){
 
         booksApiCallback.inProgress();
-        String url = buildEndpointUrl(SearchType.ISBN, isbn);
+        String url = buildEndpointUrl(isbn);
 
         Callback callback = new Callback() {
             @Override
@@ -83,8 +83,8 @@ public final class GoogleBooksApi {
         }
     }
 
-    private static String buildEndpointUrl(SearchType searchType, String searchTerm){
-        return API_URL + searchType.queryParam() + searchTerm + GOOGLE_BOOKS_API_KEY + FILTERS;
+    private static String buildEndpointUrl(String searchTerm){
+        return API_URL + SearchType.ISBN.queryParam() + searchTerm + GOOGLE_BOOKS_API_KEY + FILTERS;
     }
 
     @SuppressWarnings("ConstantConditions")
