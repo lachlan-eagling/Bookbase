@@ -52,6 +52,7 @@ public class ViewBookFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @SuppressWarnings("unused")
     public static ViewBookFragment newInstance(Bundle bundle) {
         ViewBookFragment fragment = new ViewBookFragment();
         fragment.setArguments(bundle);
