@@ -216,10 +216,6 @@ public class AddBookActivity extends AppCompatActivity {
         return true;
     }
 
-    private Context getContext() {
-        return this;
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
