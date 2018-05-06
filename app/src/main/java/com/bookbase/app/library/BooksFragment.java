@@ -33,7 +33,7 @@ import java.util.List;
 public class BooksFragment extends Fragment implements Runnable, android.support.v7.widget.SearchView.OnQueryTextListener {
 
     private List<Book> books;
-    private RecyclerView bookList;
+    RecyclerView bookList;
     private Repository repository;
     private TextView emptyView;
     BooksAdapter adapter;

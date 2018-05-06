@@ -60,8 +60,8 @@ public class AddBookActivity extends AppCompatActivity {
     private File barcodeTemp;
     private String barcodeImagePath;
     final Book book = new Book();
-    private Book bookToEdit = null;
-    private boolean bookFromApiCall = false;
+    Book bookToEdit = null;
+    boolean bookFromApiCall = false;
     private Repository repository;
     public static final int COVER_IMAGE_REQUEST = 1;
     public static final int BARCODE_IMAGE_REQUEST = 2;
@@ -156,7 +156,7 @@ public class AddBookActivity extends AppCompatActivity {
     }
 
 
-    private void populateDetails(final Context context) {
+    void populateDetails(final Context context) {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -466,7 +466,7 @@ public class AddBookActivity extends AppCompatActivity {
     }
 
     // TODO: Helper method for testing, remove this.
-    private void showSnackBar(String message) {
+    void showSnackBar(String message) {
         if (this.getCurrentFocus() != null) {
             Snackbar.make(this.getCurrentFocus(), message, Snackbar.LENGTH_SHORT).show();
         }
@@ -519,7 +519,7 @@ public class AddBookActivity extends AppCompatActivity {
 
     }
 
-    private void takeBookImage() {
+    void takeBookImage() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(intent, COVER_IMAGE_REQUEST);

@@ -44,7 +44,7 @@ public class Genre implements Parcelable {
     }
 
     @Ignore
-    private Genre(Parcel in){
+    Genre(Parcel in){
         genreId = in.readInt();
         genreName = in.readString();
     }

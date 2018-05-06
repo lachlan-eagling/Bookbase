@@ -39,7 +39,7 @@ public class Review implements Parcelable{
         this.reviewContent = reviewContent;
     }
 
-    private Review(Parcel in){
+    Review(Parcel in){
         this.reviewId = in.readInt();
         this.reviewDate = Converters.toCalendar(in.readString());
         this.reviewContent = in.readString();

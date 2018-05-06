@@ -112,7 +112,7 @@ public final class GoogleBooksApi {
     }
 
     @SuppressWarnings("ConstantConditions")
-    private static List<Book> jsonToBookCollection(Response response){
+    static List<Book> jsonToBookCollection(Response response){
         String responseBody;
         JSONObject json;
         JSONArray jsonArray;

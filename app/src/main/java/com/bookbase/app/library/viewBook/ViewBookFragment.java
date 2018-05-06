@@ -34,7 +34,7 @@ import butterknife.ButterKnife;
 
 public class ViewBookFragment extends Fragment {
 
-    private Book book;
+    Book book;
     private int bookId;
     @BindView(R.id.view_book_title) TextView title;
     @BindView(R.id.view_book_author) TextView author;

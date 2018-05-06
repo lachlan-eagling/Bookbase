@@ -42,7 +42,7 @@ public class Author implements Parcelable{
     }
 
     @Ignore
-    private Author(Parcel in){
+    Author(Parcel in){
         authorId = in.readInt();
         name = in.readString();
     }

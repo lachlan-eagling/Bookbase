@@ -99,7 +99,7 @@ public class Book implements Parcelable{
     }
 
     @Ignore
-    private Book(Parcel in){
+    Book(Parcel in){
         bookId = in.readInt();
         title = in.readString();
         author = in.readParcelable(Author.class.getClassLoader());
