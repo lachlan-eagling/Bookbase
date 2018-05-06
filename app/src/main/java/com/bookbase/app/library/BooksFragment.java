@@ -8,9 +8,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.transition.TransitionManager;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -73,7 +73,7 @@ public class BooksFragment extends Fragment implements Runnable, android.support
         final TextView toolbarTitle = getActivity().findViewById(R.id.toolbar_title);
 
         final MenuItem searchMenuItem = menu.findItem(R.id.searchButton);
-        final android.support.v7.widget.SearchView searchView = (android.support.v7.widget.SearchView) MenuItemCompat.getActionView(searchMenuItem);
+        final android.support.v7.widget.SearchView searchView = (SearchView) searchMenuItem.getActionView();
         searchView.setOnQueryTextListener(this);
 
         searchView.setOnSearchClickListener(new View.OnClickListener() {
@@ -98,7 +98,7 @@ public class BooksFragment extends Fragment implements Runnable, android.support
                 if (getActivity() != null) {
                     TransitionManager.beginDelayedTransition((ViewGroup) getActivity().findViewById(R.id.toolbar));
                 }
-                MenuItemCompat.expandActionView(item);
+                item.expandActionView();
                 return true;
         }
         return super.onOptionsItemSelected(item);
