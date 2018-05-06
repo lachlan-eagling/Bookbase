@@ -2,8 +2,10 @@ package com.bookbase.app.model.api;
 
 import java.util.List;
 
+@SuppressWarnings("unused")
 class BookJson {
 
+    @SuppressWarnings("unused")
     private VolumeInfo volumeInfo;
 
     @Override
@@ -29,6 +31,7 @@ class BookJson {
 
 }
 
+@SuppressWarnings("unused")
 class VolumeInfo{
     String title;
     @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
@@ -73,6 +76,7 @@ class VolumeInfo{
     }
 }
 
+@SuppressWarnings("ALL")
 class Authors {
 
     private String name;
@@ -84,6 +88,7 @@ class Authors {
 
 }
 
+@SuppressWarnings("unused")
 class ImageLinks{
 
     String thumbnail;
