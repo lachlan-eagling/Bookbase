@@ -7,9 +7,14 @@ import com.bookbase.app.database.AppDatabase;
 import com.bookbase.app.model.entity.Author;
 import com.bookbase.app.model.entity.Genre;
 import com.bookbase.app.model.entity.Review;
+import com.crashlytics.android.Crashlytics;
 
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class Converters {
 
@@ -22,14 +27,20 @@ public class Converters {
 
     @TypeConverter
     public static Calendar toCalendar(String date){
-        // TODO: Complete implementation.
-        return Calendar.getInstance();
+        final Calendar calendar = Calendar.getInstance();
+        final DateFormat df = new SimpleDateFormat("ddMMyyyy", Locale.ENGLISH);
+        try {
+            calendar.setTime(df.parse(date));
+        } catch (ParseException e) {
+            Crashlytics.logException(e);
+        }
+        return calendar;
     }
 
     @TypeConverter
     public static String calendarToString(Calendar calendar){
-        // TODO: Finish implementation.
-        return "";
+        final DateFormat df = new SimpleDateFormat("ddMMyyyy", Locale.ENGLISH);
+        return df.format(calendar);
     }
 
     @TypeConverter
