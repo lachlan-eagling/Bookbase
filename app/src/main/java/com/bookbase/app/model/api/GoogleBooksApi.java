@@ -36,7 +36,6 @@ public final class GoogleBooksApi {
     private GoogleBooksApi(){}
 
     private enum SearchType {
-        TITLE ("intitle:"),
         ISBN ("isbn:");
 
         private final String queryParam;
