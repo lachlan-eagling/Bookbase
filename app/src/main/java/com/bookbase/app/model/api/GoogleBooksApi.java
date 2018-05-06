@@ -75,31 +75,8 @@ public final class GoogleBooksApi {
         query(url, requestId, callback);
     }
 
-    public static void queryByTitle(String title, UUID requestId, final BooksApiCallback booksApiCallback){
-        booksApiCallback.inProgress();
-        String url = buildEndpointUrl(SearchType.TITLE, title);
-        Callback callback = new Callback() {
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                booksApiCallback.onError();
-                // TODO: Log to crash reporting.
-            }
 
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) {
-                List<Book> books = jsonToBookCollection(response);
-                if(books.isEmpty()){
-                    booksApiCallback.onError();
-                } else{
-                    booksApiCallback.onComplete(books);
-                }
-            }
-        };
-        query(url, requestId, callback);
-
-    }
-
-
+    @SuppressWarnings("unused")
     public static void cancelRequest(UUID requestId){
         for(Call call : client.dispatcher().queuedCalls()) {
             if(call.request().tag().equals(requestId))
