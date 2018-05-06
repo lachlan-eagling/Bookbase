@@ -278,7 +278,7 @@ public class AddBookActivity extends AppCompatActivity {
             Log.d("Barcode Processing", "Detector operational, processing barcode.");
             Frame frame = new Frame.Builder().setBitmap(barcodeImage).build();
             SparseArray<Barcode> barcodes = detector.detect(frame);
-            Barcode code = null;
+            Barcode code;
             if (barcodes.size() > 0) {
                 code = barcodes.valueAt(0);
                 showSnackBar("Barcode: " + code.rawValue);
@@ -318,7 +318,9 @@ public class AddBookActivity extends AppCompatActivity {
             Log.d("Barcode Processing", "Detector not operational.");
         }
         if (barcodeTemp != null) {
-            barcodeTemp.delete();
+            if(!barcodeTemp.delete()) {
+                Crashlytics.logException(new IOException("Cannot delete barcode temp image."));
+            }
         }
 
     }
