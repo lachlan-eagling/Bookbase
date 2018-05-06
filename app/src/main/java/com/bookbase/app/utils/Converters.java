@@ -7,7 +7,6 @@ import com.bookbase.app.database.AppDatabase;
 import com.bookbase.app.model.entity.Author;
 import com.bookbase.app.model.entity.Genre;
 import com.bookbase.app.model.entity.Review;
-import com.bookbase.app.model.repository.Repository;
 
 import java.sql.Date;
 import java.util.Calendar;
