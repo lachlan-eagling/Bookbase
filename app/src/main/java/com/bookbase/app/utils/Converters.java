@@ -13,7 +13,7 @@ import java.util.Calendar;
 
 public class Converters {
 
-    private static AppDatabase db = AppDatabase.getDatabase(HomeScreen.context);
+    private static final AppDatabase db = AppDatabase.getDatabase(HomeScreen.context);
 
     @TypeConverter
     public static Long dateToLong(Date date){

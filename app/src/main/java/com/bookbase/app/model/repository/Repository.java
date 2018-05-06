@@ -21,15 +21,15 @@ import java.util.concurrent.TimeUnit;
 public class Repository {
 
     // Thread pool parameters.
-    private static int NUM_CORES = Runtime.getRuntime().availableProcessors();
+    private static final int NUM_CORES = Runtime.getRuntime().availableProcessors();
     private static final int KEEP_ALIVE_TIME = 1;
     private static final TimeUnit KEEP_ALIVE_TIME_UNIT = TimeUnit.SECONDS;
-    private ThreadPoolExecutor pool;
+    private final ThreadPoolExecutor pool;
 
     private static Repository repository;
-    private BookDao bookDao;
-    private AuthorDao authorDao;
-    private GenreDao genreDao;
+    private final BookDao bookDao;
+    private final AuthorDao authorDao;
+    private final GenreDao genreDao;
 
     private Repository(Context context){
         final BlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<>();

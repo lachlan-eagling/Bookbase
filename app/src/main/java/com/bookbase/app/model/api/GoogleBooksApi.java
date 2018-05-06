@@ -27,7 +27,7 @@ import okhttp3.Response;
 
 public final class GoogleBooksApi {
 
-    private static OkHttpClient client = new OkHttpClient();
+    private static final OkHttpClient client = new OkHttpClient();
     private static final String API_URL = "https://www.googleapis.com/books/v1/volumes?q=";
     private static final String GOOGLE_BOOKS_API_KEY = String.format("&key=%s", BuildConfig.GOOGLE_BOOKS_API_KEY);
     private static final String FILTERS = "&fields=items(volumeInfo/title,volumeInfo/authors,volumeInfo/description," +
@@ -39,7 +39,7 @@ public final class GoogleBooksApi {
         TITLE ("intitle:"),
         ISBN ("isbn:");
 
-        private String queryParam;
+        private final String queryParam;
 
         SearchType(String type){
             this.queryParam = type;

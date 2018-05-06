@@ -46,7 +46,7 @@ public class ViewBookFragment extends Fragment {
     @BindView(R.id.view_book_lbl_review) TextView reviewLabel;
     @BindView(R.id.view_book_review) TextView review;
     private AppCompatActivity activity;
-    private Repository repository = Repository.getRepository(getActivity());
+    private final Repository repository = Repository.getRepository(getActivity());
 
     public ViewBookFragment() {
         // Required empty public constructor

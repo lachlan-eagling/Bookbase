@@ -14,7 +14,7 @@ import java.util.Locale;
 
 public class SaveImageHelper {
 
-    private Context context;
+    private final Context context;
 
     public SaveImageHelper(Context context) {
         this.context = context;
