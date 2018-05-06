@@ -33,10 +33,10 @@ import java.util.List;
 public class BooksFragment extends Fragment implements Runnable, android.support.v7.widget.SearchView.OnQueryTextListener {
 
     private List<Book> books;
-    RecyclerView bookList;
+    private RecyclerView bookList;
     private Repository repository;
     private TextView emptyView;
-    BooksAdapter adapter;
+    private BooksAdapter adapter;
 
     private final Comparator<Book> comparator = new Comparator<Book>() {
         @Override
@@ -70,10 +70,8 @@ public class BooksFragment extends Fragment implements Runnable, android.support
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.library_menu, menu);
-
-        if(getActivity() != null) {
-            final TextView toolbarTitle = getActivity().findViewById(R.id.toolbar_title);
-        }
+        @SuppressWarnings("ConstantConditions")
+        final TextView toolbarTitle = getActivity().findViewById(R.id.toolbar_title);
 
         final MenuItem searchMenuItem = menu.findItem(R.id.searchButton);
         final android.support.v7.widget.SearchView searchView = (android.support.v7.widget.SearchView) MenuItemCompat.getActionView(searchMenuItem);

@@ -2,9 +2,9 @@ package com.bookbase.app.model.api;
 
 import java.util.List;
 
-public class BookJson {
+class BookJson {
 
-    VolumeInfo volumeInfo;
+    private VolumeInfo volumeInfo;
 
     @Override
     public String toString() {
@@ -31,9 +31,9 @@ public class BookJson {
 
 class VolumeInfo{
     String title;
-    List<String> authors;
+    private List<String> authors;
     String description;
-    ImageLinks imageLinks;
+    private ImageLinks imageLinks;
 
     @Override
     public String toString() {
@@ -74,7 +74,7 @@ class VolumeInfo{
 
 class Authors {
 
-    String name;
+    private String name;
 
     @Override
     public String toString(){

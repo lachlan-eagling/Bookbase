@@ -59,12 +59,12 @@ public class AddBookActivity extends AppCompatActivity {
     private Bitmap imageToStore;
     private File barcodeTemp;
     private String barcodeImagePath;
-    final Book book = new Book();
-    Book bookToEdit = null;
-    boolean bookFromApiCall = false;
+    private final Book book = new Book();
+    private Book bookToEdit = null;
+    private boolean bookFromApiCall = false;
     private Repository repository;
-    public static final int COVER_IMAGE_REQUEST = 1;
-    public static final int BARCODE_IMAGE_REQUEST = 2;
+    private static final int COVER_IMAGE_REQUEST = 1;
+    private static final int BARCODE_IMAGE_REQUEST = 2;
     private SaveImageHelper imageHelper;
 
     private List<Author> authors;
@@ -156,7 +156,7 @@ public class AddBookActivity extends AppCompatActivity {
     }
 
 
-    void populateDetails(final Context context) {
+    private void populateDetails(final Context context) {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -466,7 +466,7 @@ public class AddBookActivity extends AppCompatActivity {
     }
 
     // TODO: Helper method for testing, remove this.
-    void showSnackBar(String message) {
+    private void showSnackBar(String message) {
         if (this.getCurrentFocus() != null) {
             Snackbar.make(this.getCurrentFocus(), message, Snackbar.LENGTH_SHORT).show();
         }
@@ -495,7 +495,7 @@ public class AddBookActivity extends AppCompatActivity {
         }
     }
 
-    public void setImageToStore(Bitmap image) {
+    private void setImageToStore(Bitmap image) {
         imageToStore = image;
     }
 
@@ -519,7 +519,7 @@ public class AddBookActivity extends AppCompatActivity {
 
     }
 
-    void takeBookImage() {
+    private void takeBookImage() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(intent, COVER_IMAGE_REQUEST);
@@ -531,13 +531,15 @@ public class AddBookActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == COVER_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
             Bundle extras = data.getExtras();
-            Bitmap image;
+            Bitmap image = null;
             if (extras != null) {
                 image = (Bitmap) extras.get("data");
             }
             lblNoImage.setVisibility(View.GONE);
             coverImage.setVisibility(View.VISIBLE);
-            coverImage.setImageBitmap(image);
+            if (image != null) {
+                coverImage.setImageBitmap(image);
+            }
             setImageToStore(image);
         } else if (requestCode == BARCODE_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
             processBarcode(this);

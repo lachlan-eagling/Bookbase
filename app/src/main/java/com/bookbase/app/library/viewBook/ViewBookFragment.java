@@ -34,7 +34,7 @@ import butterknife.ButterKnife;
 
 public class ViewBookFragment extends Fragment {
 
-    Book book;
+    private Book book;
     private int bookId;
     @BindView(R.id.view_book_title) TextView title;
     @BindView(R.id.view_book_author) TextView author;
@@ -46,7 +46,7 @@ public class ViewBookFragment extends Fragment {
     @BindView(R.id.view_book_lbl_review) TextView reviewLabel;
     @BindView(R.id.view_book_review) TextView review;
     private AppCompatActivity activity;
-    Repository repository = Repository.getRepository(getActivity());
+    private Repository repository = Repository.getRepository(getActivity());
 
     public ViewBookFragment() {
         // Required empty public constructor
@@ -83,7 +83,7 @@ public class ViewBookFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        View menuActionItem;
+        View menuActionItem = null;
         if (getActivity() != null) {
             menuActionItem = (getActivity()).findViewById(R.id.view_book_options);
         }

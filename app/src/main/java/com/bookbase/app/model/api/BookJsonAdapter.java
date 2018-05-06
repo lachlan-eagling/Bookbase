@@ -5,7 +5,7 @@ import com.bookbase.app.model.entity.Book;
 import com.squareup.moshi.FromJson;
 import com.squareup.moshi.ToJson;
 
-public class BookJsonAdapter {
+class BookJsonAdapter {
 
     @ToJson BookJson toJson(Book book){
         return new BookJson();

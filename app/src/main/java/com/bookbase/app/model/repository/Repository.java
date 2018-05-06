@@ -27,9 +27,9 @@ public class Repository {
     private ThreadPoolExecutor pool;
 
     private static Repository repository;
-    BookDao bookDao;
-    AuthorDao authorDao;
-    GenreDao genreDao;
+    private BookDao bookDao;
+    private AuthorDao authorDao;
+    private GenreDao genreDao;
 
     private Repository(Context context){
         final BlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<>();

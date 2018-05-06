@@ -45,7 +45,7 @@ public final class GoogleBooksApi {
             this.queryParam = type;
         }
 
-        public String queryParam(){
+        String queryParam(){
             return queryParam;
         }
     }
@@ -112,7 +112,7 @@ public final class GoogleBooksApi {
     }
 
     @SuppressWarnings("ConstantConditions")
-    static List<Book> jsonToBookCollection(Response response){
+    private static List<Book> jsonToBookCollection(Response response){
         String responseBody;
         JSONObject json;
         JSONArray jsonArray;
