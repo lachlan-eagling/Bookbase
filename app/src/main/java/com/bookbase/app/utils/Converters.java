@@ -34,8 +34,9 @@ public class Converters {
 
     @TypeConverter
     public static String calendarToString(Calendar calendar){
+        if(calendar == null) { calendar = Calendar.getInstance(); }
         final DateFormat df = new SimpleDateFormat("ddMMyyyy", Locale.ENGLISH);
-        return df.format(calendar);
+        return df.format(calendar.getTime());
     }
 
     @TypeConverter
