@@ -20,10 +20,6 @@ public class Converters {
 
     private static final AppDatabase db = AppDatabase.getDatabase(HomeScreen.context);
 
-    @TypeConverter
-    public static Long dateToLong(Date date){
-        return date == null ? null : date.getTime();
-    }
 
     @TypeConverter
     public static Calendar toCalendar(String date){
