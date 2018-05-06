@@ -25,9 +25,6 @@ public interface BookDao {
     @Query("SELECT * FROM Book where bookId = :id")
     Book getSingleBook(int id);
 
-    @Query("DELETE FROM Book")
-    void deleteAll();
-
     @Update
     int update(Book book);
 
