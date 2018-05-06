@@ -31,6 +31,7 @@ class BookJson {
 
 class VolumeInfo{
     String title;
+    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
     private List<String> authors;
     String description;
     private ImageLinks imageLinks;
