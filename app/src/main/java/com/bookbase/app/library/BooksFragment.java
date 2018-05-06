@@ -20,7 +20,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bookbase.app.R;
-import com.bookbase.app.database.AppDatabase;
 import com.bookbase.app.library.addBook.AddBookActivity;
 import com.bookbase.app.library.viewBook.ViewBookFragment;
 import com.bookbase.app.model.entity.Book;

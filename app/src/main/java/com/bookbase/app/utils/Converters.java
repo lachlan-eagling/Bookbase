@@ -9,7 +9,6 @@ import com.bookbase.app.model.entity.Genre;
 import com.bookbase.app.model.entity.Review;
 import com.crashlytics.android.Crashlytics;
 
-import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
