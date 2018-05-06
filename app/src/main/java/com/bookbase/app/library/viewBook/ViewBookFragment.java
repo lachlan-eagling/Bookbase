@@ -1,5 +1,6 @@
 package com.bookbase.app.library.viewBook;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -151,7 +152,8 @@ public class ViewBookFragment extends Fragment {
 
 
         title.setText(book.getTitle());
-        author.setText(AppDatabase.getDatabase(HomeScreen.getContext()).authorDao().getAuthorById(book.getAuthor().getAuthorId()).getName());
+        Context context = getActivity();
+        author.setText(AppDatabase.getDatabase(context).authorDao().getAuthorById(book.getAuthor().getAuthorId()).getName());
         rating.setRating((float) book.getRating());
         descr.setText(book.getDescription());
         genre.setText(book.getGenre().getGenreName());
