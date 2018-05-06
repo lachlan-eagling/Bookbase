@@ -8,6 +8,7 @@ import android.view.View;
 
 class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
 
+    @SuppressWarnings("unused")
     public interface OnItemClickListener {
         void onItemClick(View view, int position);
         void onItemLongClick(View view, int position);
