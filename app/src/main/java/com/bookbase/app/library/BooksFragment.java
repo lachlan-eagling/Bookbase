@@ -53,7 +53,7 @@ public class BooksFragment extends Fragment implements Runnable, android.support
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        repository = Repository.getRepository();
+        repository = Repository.getRepository(getActivity());
         books = repository.getBookList();
     }
 

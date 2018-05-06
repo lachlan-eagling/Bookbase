@@ -1,5 +1,7 @@
 package com.bookbase.app.database;
 
+import android.app.Activity;
+import android.app.Application;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;

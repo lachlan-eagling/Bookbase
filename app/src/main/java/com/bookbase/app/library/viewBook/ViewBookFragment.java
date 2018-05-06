@@ -46,6 +46,7 @@ public class ViewBookFragment extends Fragment {
     @BindView(R.id.view_book_lbl_review) TextView reviewLabel;
     @BindView(R.id.view_book_review) TextView review;
     private AppCompatActivity activity;
+    Repository repository = Repository.getRepository(getActivity());
 
     public ViewBookFragment() {
         // Required empty public constructor
@@ -63,7 +64,7 @@ public class ViewBookFragment extends Fragment {
         Bundle bundle = this.getArguments();
         //this.book = bundle.getParcelable("book");
         this.bookId = bundle.getInt("bookId");
-        this.book = Repository.getRepository().getBook(bookId);
+        this.book = repository.getBook(bookId);
     }
 
     @Override
@@ -87,7 +88,6 @@ public class ViewBookFragment extends Fragment {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 Toast.makeText(getActivity(), item.getTitle(), Toast.LENGTH_SHORT).show();
-                Repository repository = Repository.getRepository();
                 switch((String) item.getTitle()){
                     case "Edit":
                         Intent intent = new Intent(getActivity(), AddBookActivity.class);
@@ -128,7 +128,7 @@ public class ViewBookFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        this.book = Repository.getRepository().getBook(bookId);
+        this.book = repository.getBook(bookId);
         populateDetails();
     }
 

@@ -1,5 +1,7 @@
 package com.bookbase.app.model.repository;
 
+import android.content.Context;
+
 import com.bookbase.app.database.AppDatabase;
 import com.bookbase.app.library.addBook.AddBookActivity;
 import com.bookbase.app.mainscreen.HomeScreen;
@@ -30,7 +32,7 @@ public class Repository {
     private AuthorDao authorDao;
     private GenreDao genreDao;
 
-    private Repository(){
+    private Repository(Context context){
         final BlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<>();
         pool = new ThreadPoolExecutor(
                 NUM_CORES,
@@ -39,15 +41,15 @@ public class Repository {
                 KEEP_ALIVE_TIME_UNIT,
                 workQueue);
 
-        AppDatabase db = AppDatabase.getDatabase(HomeScreen.getContext());
+        AppDatabase db = AppDatabase.getDatabase(context);
         bookDao = db.bookDao();
         authorDao = db.authorDao();
         genreDao = db.genreDao();
     }
 
-    public static Repository getRepository(){
+    public static Repository getRepository(Context context){
         if(repository == null){
-            repository = new Repository();
+            repository = new Repository(context);
         }
         return  repository;
     }

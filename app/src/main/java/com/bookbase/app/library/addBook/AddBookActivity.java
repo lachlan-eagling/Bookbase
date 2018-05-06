@@ -65,6 +65,7 @@ public class AddBookActivity extends AppCompatActivity {
     private Repository repository;
     public static final int COVER_IMAGE_REQUEST = 1;
     public static final int BARCODE_IMAGE_REQUEST = 2;
+    private SaveImageHelper imageHelper;
 
     private List<Author> authors;
     private List<Genre> genres;
@@ -117,9 +118,10 @@ public class AddBookActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        repository = Repository.getRepository();
+        repository = Repository.getRepository(this);
         authors = repository.getAuthors();
         genres = repository.getGenres();
+        imageHelper = new SaveImageHelper(this);
 
         Intent intent = getIntent();
         bookToEdit = intent.getParcelableExtra("Book");
@@ -378,7 +380,7 @@ public class AddBookActivity extends AppCompatActivity {
                 }
 
                 book.setDescription(description.getText().toString());
-                book.setCoverImage(SaveImageHelper.saveImageToInternalStorage(imageToStore, book));
+                book.setCoverImage(imageHelper.saveImageToInternalStorage(imageToStore, book));
                 book.setReview(new Review(Calendar.getInstance(), review.getText().toString()));
                 book.setPurchaseDate(parseDate(purchaseDate.getText().toString()));
                 book.setPurchasePrice(parseDouble(purchasePrice.getText().toString()));
@@ -405,7 +407,7 @@ public class AddBookActivity extends AppCompatActivity {
                 });
                 return true;
             } else {
-                String newCoverImg = SaveImageHelper.saveImageToInternalStorage(imageToStore, book);
+                String newCoverImg = imageHelper.saveImageToInternalStorage(imageToStore, book);
                 if(newCoverImg == null) {
                     newCoverImg = bookToEdit.getCoverImage();
                 }

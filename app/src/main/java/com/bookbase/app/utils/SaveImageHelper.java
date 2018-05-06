@@ -16,10 +16,14 @@ import java.util.Locale;
 
 public class SaveImageHelper {
 
+    private Context context;
 
-    public static String saveImageToInternalStorage(Bitmap image, Book book){
+    public SaveImageHelper(Context context) {
+        this.context = context;
+    }
+
+    public String saveImageToInternalStorage(Bitmap image, Book book){
         if(image != null){
-            ContextWrapper context = new ContextWrapper(HomeScreen.getContext());
 
             // Setup date format and get current datetime to append to filename.
             SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmm", Locale.ENGLISH);

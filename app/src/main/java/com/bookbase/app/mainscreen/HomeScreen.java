@@ -17,7 +17,8 @@ import butterknife.ButterKnife;
 
 public class HomeScreen extends AppCompatActivity {
 
-    private static Context context;
+    // TODO: This needs to be removed but will require rewrite of Converters class to removed dependency on this.
+    public static Context context;
 
     @BindView(R.id.navigation_drawer) DrawerLayout drawer;
     @BindView(R.id.toolbar) Toolbar toolbar;
@@ -29,7 +30,7 @@ public class HomeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        context = getApplicationContext();
+        context = this;
         
         // Setup toolbar.
         setSupportActionBar(toolbar);
@@ -54,7 +55,4 @@ public class HomeScreen extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public static Context getContext(){
-        return context;
-    }
 }
