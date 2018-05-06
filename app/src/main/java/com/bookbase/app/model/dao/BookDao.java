@@ -32,6 +32,6 @@ public interface BookDao {
     int update(Book book);
 
     @Delete
-    int deleteBook(Book book);
+    void deleteBook(Book book);
 
 }
