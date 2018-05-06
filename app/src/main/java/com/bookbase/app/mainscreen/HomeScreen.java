@@ -34,7 +34,9 @@ public class HomeScreen extends AppCompatActivity {
         
         // Setup toolbar.
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
 
         // Insert fragment.
         FragmentManager fragmentManager = getSupportFragmentManager();

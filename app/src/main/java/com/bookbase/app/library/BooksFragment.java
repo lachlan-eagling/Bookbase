@@ -71,7 +71,10 @@ public class BooksFragment extends Fragment implements Runnable, android.support
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.library_menu, menu);
 
-        final TextView toolbarTitle = getActivity().findViewById(R.id.toolbar_title);
+        if(getActivity() != null) {
+            final TextView toolbarTitle = getActivity().findViewById(R.id.toolbar_title);
+        }
+
         final MenuItem searchMenuItem = menu.findItem(R.id.searchButton);
         final android.support.v7.widget.SearchView searchView = (android.support.v7.widget.SearchView) MenuItemCompat.getActionView(searchMenuItem);
         searchView.setOnQueryTextListener(this);
@@ -95,7 +98,9 @@ public class BooksFragment extends Fragment implements Runnable, android.support
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.searchButton:
-                TransitionManager.beginDelayedTransition((ViewGroup) getActivity().findViewById(R.id.toolbar));
+                if (getActivity() != null) {
+                    TransitionManager.beginDelayedTransition((ViewGroup) getActivity().findViewById(R.id.toolbar));
+                }
                 MenuItemCompat.expandActionView(item);
                 return true;
         }
@@ -157,11 +162,13 @@ public class BooksFragment extends Fragment implements Runnable, android.support
                     Bundle bundle = new Bundle();
                     bundle.putInt("bookId", ((BooksAdapter) bookList.getAdapter()).getBookIdAt(position));
                     fragment.setArguments(bundle);
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
-                            .replace(R.id.content_frame, fragment)
-                            .addToBackStack(null)
-                            .commit();
+                    if (getActivity() != null) {
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+                                .replace(R.id.content_frame, fragment)
+                                .addToBackStack(null)
+                                .commit();
+                    }
                 } catch(IllegalAccessException e){
                     e.printStackTrace();
                 } catch(java.lang.InstantiationException e) {

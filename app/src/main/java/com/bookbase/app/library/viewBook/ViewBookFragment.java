@@ -63,7 +63,9 @@ public class ViewBookFragment extends Fragment {
         super.setArguments(args);
         Bundle bundle = this.getArguments();
         //this.book = bundle.getParcelable("book");
-        this.bookId = bundle.getInt("bookId");
+        if (bundle != null) {
+            this.bookId = bundle.getInt("bookId");
+        }
         this.book = repository.getBook(bookId);
     }
 
@@ -81,7 +83,10 @@ public class ViewBookFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        View menuActionItem = (getActivity()).findViewById(R.id.view_book_options);
+        View menuActionItem;
+        if (getActivity() != null) {
+            menuActionItem = (getActivity()).findViewById(R.id.view_book_options);
+        }
         PopupMenu popupMenu = new PopupMenu(getActivity(), menuActionItem);
         popupMenu.getMenuInflater().inflate(R.menu.view_book_action_items, popupMenu.getMenu());
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -96,7 +101,9 @@ public class ViewBookFragment extends Fragment {
                         break;
                     case "Delete":
                         repository.deleteBook(book);
-                        getFragmentManager().popBackStack();
+                        if (getFragmentManager() != null) {
+                            getFragmentManager().popBackStack();
+                        }
                         break;
                     default:
                         break;
@@ -117,8 +124,10 @@ public class ViewBookFragment extends Fragment {
 
         Toolbar toolbar = activity.findViewById(R.id.toolbar);
         activity.setSupportActionBar(toolbar);
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
+        if (activity.getSupportActionBar() != null) {
+            activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
         setHasOptionsMenu(true);
         populateDetails();
 
@@ -135,7 +144,9 @@ public class ViewBookFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        if (activity.getSupportActionBar() != null) {
+            activity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        }
     }
 
     private void populateDetails() {

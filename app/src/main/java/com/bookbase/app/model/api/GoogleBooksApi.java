@@ -111,6 +111,7 @@ public final class GoogleBooksApi {
         return API_URL + searchType.queryParam() + searchTerm + GOOGLE_BOOKS_API_KEY + FILTERS;
     }
 
+    @SuppressWarnings("ConstantConditions")
     private static List<Book> jsonToBookCollection(Response response){
         String responseBody;
         JSONObject json;

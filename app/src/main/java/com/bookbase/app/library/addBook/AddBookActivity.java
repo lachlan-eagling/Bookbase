@@ -133,8 +133,10 @@ public class AddBookActivity extends AppCompatActivity {
         TextView toolbarTitle = findViewById(R.id.toolbar_title);
         toolbarTitle.setText(R.string.lbl_add_new_book);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
 
         ButterKnife.bind(this);
         if (bookToEdit != null) {
@@ -265,7 +267,9 @@ public class AddBookActivity extends AppCompatActivity {
         }
 
         // Save a file: path for use with ACTION_VIEW intents
-        barcodeImagePath = image.getAbsolutePath();
+        if (image != null) {
+            barcodeImagePath = image.getAbsolutePath();
+        }
         return image;
     }
 
@@ -454,14 +458,19 @@ public class AddBookActivity extends AppCompatActivity {
             }
 
         } else {
-            Snackbar.make(this.getCurrentFocus(), "Missing mandatory fields!", Snackbar.LENGTH_SHORT).show();
+            if (this.getCurrentFocus() != null) {
+                Snackbar.make(this.getCurrentFocus(), "Missing mandatory fields!", Snackbar.LENGTH_SHORT).show();
+            }
             return false;
         }
     }
 
     // TODO: Helper method for testing, remove this.
     private void showSnackBar(String message) {
-        Snackbar.make(this.getCurrentFocus(), message, Snackbar.LENGTH_SHORT).show();
+        if (this.getCurrentFocus() != null) {
+            Snackbar.make(this.getCurrentFocus(), message, Snackbar.LENGTH_SHORT).show();
+        }
+
     }
 
     private Calendar parseDate(String date) {
@@ -522,7 +531,10 @@ public class AddBookActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == COVER_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
             Bundle extras = data.getExtras();
-            Bitmap image = (Bitmap) extras.get("data");
+            Bitmap image;
+            if (extras != null) {
+                image = (Bitmap) extras.get("data");
+            }
             lblNoImage.setVisibility(View.GONE);
             coverImage.setVisibility(View.VISIBLE);
             coverImage.setImageBitmap(image);
