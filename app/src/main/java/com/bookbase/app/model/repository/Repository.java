@@ -79,16 +79,6 @@ public class Repository {
         pool.execute(runnable);
     }
 
-    public void insertBookList(final List<Book> books) {
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                bookDao.insertAll(books);
-            }
-        };
-        pool.execute(runnable);
-    }
-
     public void updateBook(final Book book, final AddBookActivity.AddBookCallback callback){
         Runnable runnable = new Runnable() {
             @Override
@@ -116,26 +106,6 @@ public class Repository {
         pool.execute(runnable);
     }
 
-    public void insertAuthor(final Author author){
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                authorDao.insert(author);
-            }
-        };
-        pool.execute(runnable);
-    }
-
-    public void insertGenre(final Genre genre){
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                genreDao.insert(genre);
-            }
-        };
-        pool.execute(runnable);
-    }
-
     public List<String> getAuthorNames(){
         final List<String> authorNames = new ArrayList<>();
         Runnable runnable = new Runnable() {
@@ -158,36 +128,6 @@ public class Repository {
         };
         pool.execute(runnable);
         return genres;
-   }
-
-   public Author getAuthorByName(final String name) {
-        final List<Author> author = new ArrayList<>();
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                author.add(authorDao.getAuthorByName(name));
-            }
-        };
-        pool.execute(runnable);
-        if(author.isEmpty()){
-            return null;
-        }
-        return author.get(0);
-   }
-
-   public Genre getGenreByName(final String name) {
-        final List<Genre> genre = new ArrayList<>();
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                genre.add(genreDao.getGenreByName(name));
-            }
-        };
-        pool.execute(runnable);
-        if(genre.isEmpty()) {
-            return null;
-        }
-        return genre.get(0);
    }
 
    public List<Author> getAuthors() {
