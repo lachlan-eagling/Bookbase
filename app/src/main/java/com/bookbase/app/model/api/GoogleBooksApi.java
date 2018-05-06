@@ -114,7 +114,7 @@ public final class GoogleBooksApi {
     private static List<Book> jsonToBookCollection(Response response){
         String responseBody;
         JSONObject json;
-        JSONArray jsonArray = null;
+        JSONArray jsonArray;
 
         Moshi moshi = new Moshi.Builder().add(new BookJsonAdapter()).build();
         Type type = Types.newParameterizedType(List.class, Book.class);
