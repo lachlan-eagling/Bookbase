@@ -23,7 +23,4 @@ public interface AuthorDao {
 
     @Query("SELECT name FROM Author")
     List<String> getAuthorNames();
-
-    @Query("SELECT * FROM Author WHERE name=:name")
-    Author getAuthorByName(String name);
 }
