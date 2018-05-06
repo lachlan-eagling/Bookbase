@@ -68,7 +68,7 @@ public final class GoogleBooksApi {
             }
 
             @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) {
                 booksApiCallback.onComplete(jsonToBookCollection(response));
             }
         };
@@ -86,7 +86,7 @@ public final class GoogleBooksApi {
             }
 
             @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) {
                 List<Book> books = jsonToBookCollection(response);
                 if(books.isEmpty()){
                     booksApiCallback.onError();
