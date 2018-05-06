@@ -186,7 +186,6 @@ public class BooksFragment extends Fragment implements Runnable, android.support
 
     @Override
     public void run(){
-        AppDatabase database = AppDatabase.getDatabase(this.getContext());
     }
 
 
