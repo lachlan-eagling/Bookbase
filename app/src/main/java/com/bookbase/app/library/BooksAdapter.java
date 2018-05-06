@@ -1,6 +1,7 @@
 package com.bookbase.app.library;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -122,7 +123,8 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
     }
 
     @Override
-    public BooksAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+    @NonNull
+    public BooksAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
 
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -132,7 +134,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.ViewHolder>{
 
     }
 
-    public void onBindViewHolder(BooksAdapter.ViewHolder viewHolder, int position){
+    public void onBindViewHolder(@NonNull BooksAdapter.ViewHolder viewHolder, int position){
 
         Book book = sortedList.get(position);
         File file = null;
