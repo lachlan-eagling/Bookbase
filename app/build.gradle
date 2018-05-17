@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+ext.versionMajor = 1
+ext.versionMinor = 0
+ext.versionPatch = 1
+
 android {
     compileSdkVersion 27
     buildToolsVersion '27.0.3'
@@ -7,8 +11,8 @@ android {
         applicationId "com.bookbase"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        versionCode generateVersionCode()
+        versionName generateVersionName()
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -25,6 +29,15 @@ android {
             it.buildConfigField('String', 'GOOGLE_BOOKS_API_KEY', googleBooksApiKey)
         }
     }
+}
+
+private Integer generateVersionCode() {
+    def dt = new Date()
+    return ext.versionMajor + ext.versionMinor + ext.versionPatch + dt.getTime()
+}
+
+private String generateVersionName() {
+    return ext.versionMajor + "." + ext.versionMinor + "." + ext.versionPatch
 }
 
 dependencies {
