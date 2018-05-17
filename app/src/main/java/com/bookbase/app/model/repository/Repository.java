@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.bookbase.app.database.AppDatabase;
 import com.bookbase.app.library.addBook.AddBookActivity;
+import com.bookbase.app.library.addBook.AddBookCallback;
 import com.bookbase.app.model.dao.AuthorDao;
 import com.bookbase.app.model.dao.BookDao;
 import com.bookbase.app.model.dao.GenreDao;
@@ -62,7 +63,7 @@ public class Repository {
         return bookDao.getSingleBook(bookId);
     }
 
-    public void insertBook(final Book book, final AddBookActivity.AddBookCallback callback){
+    public void insertBook(final Book book, final AddBookCallback callback){
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -79,7 +80,7 @@ public class Repository {
         pool.execute(runnable);
     }
 
-    public void updateBook(final Book book, final AddBookActivity.AddBookCallback callback){
+    public void updateBook(final Book book, final AddBookCallback callback){
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -153,4 +154,14 @@ public class Repository {
         pool.execute(runnable);
         return genres;
    }
+
+    public Author getAuthorByName(String author) {
+        // TODO: Implement method.
+        return new Author();
+    }
+
+    public Genre getGenreByName(String author) {
+        // TODO: Implement method.
+        return new Genre();
+    }
 }
