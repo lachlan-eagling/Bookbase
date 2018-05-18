@@ -1,8 +1,6 @@
 # Bookbase
 A simple Android app to manage personal book collections.
 
-Currently in development the final product will include the following features.
-
 https://play.google.com/store/apps/details?id=com.bookbase
 
 ### Add and edit books
