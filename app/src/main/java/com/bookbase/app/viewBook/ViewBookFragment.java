@@ -1,4 +1,4 @@
-package com.bookbase.app.library.viewBook;
+package com.bookbase.app.viewBook;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,7 +22,7 @@ import android.widget.Toast;
 
 import com.bookbase.app.R;
 import com.bookbase.app.database.AppDatabase;
-import com.bookbase.app.library.addBook.AddBookActivity;
+import com.bookbase.app.addBook.AddBookActivity;
 import com.bookbase.app.model.entity.Book;
 import com.bookbase.app.model.repository.Repository;
 import com.squareup.picasso.Picasso;

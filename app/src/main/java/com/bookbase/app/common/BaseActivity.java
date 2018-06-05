@@ -14,7 +14,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = attachPresenter();
-        ButterKnife.bind(this);
+        //ButterKnife.bind(this);
     }
 
     /**

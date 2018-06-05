@@ -1,4 +1,4 @@
-package com.bookbase.app.library.addBook;
+package com.bookbase.app.addBook;
 
 import android.graphics.Bitmap;
 
@@ -8,6 +8,7 @@ import com.bookbase.app.model.entity.Author;
 import com.bookbase.app.model.entity.Book;
 import com.bookbase.app.model.entity.Genre;
 import com.bookbase.app.model.entity.Review;
+import com.bookbase.app.model.repository.AddBookCallback;
 import com.bookbase.app.model.repository.Repository;
 import com.bookbase.app.utils.BarcodeService;
 import com.bookbase.app.utils.SaveImageHelper;
@@ -21,7 +22,7 @@ import java.util.Locale;
 
 import static java.lang.Double.parseDouble;
 
-class AddBookPresenter extends BasePresenter{
+class AddBookPresenter extends BasePresenter {
 
     private AddBookViewInterface view;
     private Repository repository;
@@ -75,8 +76,10 @@ class AddBookPresenter extends BasePresenter{
             }
             book.setReview(new Review(Calendar.getInstance(), review));
             book.setPurchaseDate(parseDate(purchaseDate));
+            if(price.isEmpty()) price = "0.00";
             book.setPurchasePrice(parseDouble(price));
             book.setRating(((int) rating));
+
             repository.insertBook(book, new AddBookCallback() {
                 @Override
                 public void inProgress() {
@@ -99,9 +102,9 @@ class AddBookPresenter extends BasePresenter{
     }
 
     public void processBarcode(String image) {
-        barcodeService.decodeBarcode(image, new AddBookPresenterInterface() {
+        barcodeService.decodeBarcode(image, new AddBookBarcodeContract() {
             @Override
-            public void returnBarcode(Book book) {
+            public void returnBook(Book book) {
                 view.sendApiResponse(book);
             }
 
@@ -119,19 +122,19 @@ class AddBookPresenter extends BasePresenter{
 
     private boolean validateMandatoryFields(String title, String author, String description, String genre) {
         boolean result = true;
-        if(validateString(title)) {
+        if(!validateString(title)) {
             view.titleInvalid();
             result = false;
         }
-        if(validateString(author)) {
+        if(!validateString(author)) {
             view.authorInvalid();
             result = false;
         }
-        if(validateString(description)) {
+        if(!validateString(description)) {
             view.descriptionInvalid();
             result = false;
         }
-        if(validateString(genre)) {
+        if(!validateString(genre)) {
             view.genreInvalid();
             result = false;
         }

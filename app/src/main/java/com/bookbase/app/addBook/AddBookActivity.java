@@ -1,4 +1,4 @@
-package com.bookbase.app.library.addBook;
+package com.bookbase.app.addBook;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,7 +12,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.FileProvider;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -37,7 +36,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AddBookActivity extends BaseActivity implements AddBookViewInterface{
+public class AddBookActivity extends BaseActivity implements AddBookViewInterface {
 
     private Bitmap imageToStore;
     private String barcodeImagePath;
@@ -69,13 +68,13 @@ public class AddBookActivity extends BaseActivity implements AddBookViewInterfac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //ButterKnife.bind(this);
-        //presenter = new AddBookPresenter(this);
+        presenter = new AddBookPresenter(this);
 
         Intent intent = getIntent();
         bookToEdit = intent.getParcelableExtra("Book");
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         setContentView(R.layout.fragment_edit_book);
+        ButterKnife.bind(this);
 
         presenter.setupAutoFillFields();
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -182,7 +181,11 @@ public class AddBookActivity extends BaseActivity implements AddBookViewInterfac
                 float _rating = rating.getRating();
 
                 // Delegate save out to presenter
-                presenter.saveBook(bookToEdit.getBookId(), _title, _author, _description, _genre, _review,
+                int id = 0;
+                if(bookToEdit != null) {
+                    id = bookToEdit.getBookId();
+                }
+                presenter.saveBook(id, _title, _author, _description, _genre, _review,
                         _purchaseDate, _price, _rating, imageToStore, bookToEdit != null);
                 return true;
             default:
@@ -199,9 +202,9 @@ public class AddBookActivity extends BaseActivity implements AddBookViewInterfac
             File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
             try {
                 barcodeTemp = File.createTempFile(
-                        imageFileName,  /* prefix */
-                        ".bmp",         /* suffix */
-                        storageDir      /* directory */
+                        imageFileName,  // prefix
+                        ".bmp",         // suffix
+                        storageDir      // directory
                 );
             } catch (IOException e) {
                 Crashlytics.logException(e);

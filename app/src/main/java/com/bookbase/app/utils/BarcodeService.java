@@ -4,18 +4,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.SparseArray;
 
-import com.bookbase.app.library.addBook.AddBookPresenterInterface;
+import com.bookbase.app.addBook.AddBookBarcodeContract;
 import com.bookbase.app.mainscreen.HomeScreen;
 import com.bookbase.app.model.api.BooksApiCallback;
 import com.bookbase.app.model.api.GoogleBooksApi;
 import com.bookbase.app.model.entity.Book;
-import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,7 +27,7 @@ public class BarcodeService {
                 .build();
     }
 
-    public void decodeBarcode(String image, final AddBookPresenterInterface presenterCallback) {
+    public void decodeBarcode(String image, final AddBookBarcodeContract presenterCallback) {
         Bitmap barcodeImage = BitmapFactory.decodeFile(image);
 
         if (detector.isOperational() && barcodeImage != null) {
@@ -50,7 +47,7 @@ public class BarcodeService {
                     @Override
                     public void onComplete(List<Book> books) {
                         if (!books.isEmpty()) {
-                            presenterCallback.returnBarcode(books.get(0));
+                            presenterCallback.returnBook(books.get(0));
                         }
                     }
 
