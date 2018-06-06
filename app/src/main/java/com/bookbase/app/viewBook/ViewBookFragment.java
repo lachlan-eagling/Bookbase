@@ -1,4 +1,4 @@
-package com.bookbase.app.library.viewBook;
+package com.bookbase.app.viewBook;
 
 import android.content.Context;
 import android.content.Intent;
@@ -21,8 +21,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bookbase.app.R;
+import com.bookbase.app.common.BasePresenter;
 import com.bookbase.app.database.AppDatabase;
-import com.bookbase.app.library.addBook.AddBookActivity;
+import com.bookbase.app.addBook.AddBookActivity;
 import com.bookbase.app.model.entity.Book;
 import com.bookbase.app.model.repository.Repository;
 import com.squareup.picasso.Picasso;
@@ -32,10 +33,8 @@ import java.io.File;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ViewBookFragment extends Fragment {
+public class ViewBookFragment extends Fragment implements ViewBookViewInterface {
 
-    private Book book;
-    private int bookId;
     @BindView(R.id.view_book_title) TextView title;
     @BindView(R.id.view_book_author) TextView author;
     @BindView(R.id.view_book_rating) RatingBar rating;
@@ -46,10 +45,10 @@ public class ViewBookFragment extends Fragment {
     @BindView(R.id.view_book_lbl_review) TextView reviewLabel;
     @BindView(R.id.view_book_review) TextView review;
     private AppCompatActivity activity;
-    private final Repository repository = Repository.getRepository(getActivity());
+    private final ViewBookPresenter presenter;
 
     public ViewBookFragment() {
-        // Required empty public constructor
+        presenter = new ViewBookPresenter(this);
     }
 
     @SuppressWarnings("unused")
@@ -63,11 +62,9 @@ public class ViewBookFragment extends Fragment {
     public void setArguments(@Nullable Bundle args) {
         super.setArguments(args);
         Bundle bundle = this.getArguments();
-        //this.book = bundle.getParcelable("book");
         if (bundle != null) {
-            this.bookId = bundle.getInt("bookId");
+            presenter.setBook(bundle.getInt("bookId"));
         }
-        this.book = repository.getBook(bookId);
     }
 
     @Override
@@ -93,18 +90,12 @@ public class ViewBookFragment extends Fragment {
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                Toast.makeText(getActivity(), item.getTitle(), Toast.LENGTH_SHORT).show();
                 switch((String) item.getTitle()){
                     case "Edit":
-                        Intent intent = new Intent(getActivity(), AddBookActivity.class);
-                        intent.putExtra("Book", book);
-                        startActivity(intent);
+                        presenter.startEditActivity();
                         break;
                     case "Delete":
-                        repository.deleteBook(book);
-                        if (getFragmentManager() != null) {
-                            getFragmentManager().popBackStack();
-                        }
+                        presenter.deleteBook();
                         break;
                     default:
                         break;
@@ -130,7 +121,7 @@ public class ViewBookFragment extends Fragment {
             activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
         setHasOptionsMenu(true);
-        populateDetails();
+        presenter.updateBook();
 
         return view;
     }
@@ -138,8 +129,7 @@ public class ViewBookFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        this.book = repository.getBook(bookId);
-        populateDetails();
+        presenter.updateBook();
     }
 
     @Override
@@ -150,7 +140,8 @@ public class ViewBookFragment extends Fragment {
         }
     }
 
-    private void populateDetails() {
+    @Override
+    public void populateDetails(Book book) {
 
         if (book.getDescription().isEmpty()) {
             descrLabel.setVisibility(View.GONE);
@@ -162,38 +153,32 @@ public class ViewBookFragment extends Fragment {
             review.setVisibility(View.GONE);
         }
 
-
         title.setText(book.getTitle());
-        Context context = getActivity();
-        author.setText(AppDatabase.getDatabase(context).authorDao().getAuthorById(book.getAuthor().getAuthorId()).getName());
+        author.setText(book.getAuthor().getName());
         rating.setRating((float) book.getRating());
         descr.setText(book.getDescription());
         genre.setText(book.getGenre().getGenreName());
         review.setText(book.getReview().getReviewContent());
 
-        File file = null;
-        boolean fromWeb = false;
-        if (book.getCoverImage() != null
-                ) {
-            if (book.getCoverImage().contains("http://")) {
-                fromWeb = true;
-            } else {
-                file = new File(book.getCoverImage());
-            }
-        }
+        Picasso.with(getActivity())
+                .load(book.getCoverImage())
+                .placeholder(R.mipmap.no_cover)
+                .error(R.mipmap.no_cover)
+                .into(cover);
 
-        if (fromWeb) {
-            Picasso.with(getActivity())
-                    .load(book.getCoverImage())
-                    .placeholder(R.mipmap.no_cover)
-                    .error(R.mipmap.no_cover)
-                    .into(cover);
-        } else {
-            Picasso.with(getActivity())
-                    .load(file)
-                    .placeholder(R.mipmap.no_cover)
-                    .error(R.mipmap.no_cover)
-                    .into(cover);
+    }
+
+    @Override
+    public void closeScreen() {
+        if (getFragmentManager() != null) {
+            getFragmentManager().popBackStack();
         }
+    }
+
+    @Override
+    public void editBook(Book book) {
+        Intent intent = new Intent(getActivity(), AddBookActivity.class);
+        intent.putExtra("Book", book);
+        startActivity(intent);
     }
 }
