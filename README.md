@@ -1,4 +1,9 @@
 # Bookbase
+
+<h1 align=center>
+<img src="Logo/horizontal.png" width=50%>
+</h1>
+
 A simple Android app to manage personal book collections.
 
 ### Add and edit books
